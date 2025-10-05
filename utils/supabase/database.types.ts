@@ -96,13 +96,6 @@ export type Database = {
             referencedRelation: "comments"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "fk_post_id"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
         ]
       }
       facilities: {
@@ -170,7 +163,8 @@ export type Database = {
           body: string | null
           category: string
           created_at: string | null
-          id: string
+          id: number
+          slug: string | null
           title: string
           updated_at: string | null
         }
@@ -179,7 +173,8 @@ export type Database = {
           body?: string | null
           category?: string
           created_at?: string | null
-          id?: string
+          id: number
+          slug?: string | null
           title: string
           updated_at?: string | null
         }
@@ -188,7 +183,8 @@ export type Database = {
           body?: string | null
           category?: string
           created_at?: string | null
-          id?: string
+          id?: number
+          slug?: string | null
           title?: string
           updated_at?: string | null
         }
@@ -205,65 +201,36 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
-          created_at: string | null
+          created_at: string
           email: string
-          full_name: string | null
+          first_name: string | null
           id: string
           last_name: string | null
-          role: string
-          room_id: number
-          updated_at: string | null
+          role: string | null
+          updated_at: string
+          username: string
         }
         Insert: {
           avatar_url?: string | null
-          created_at?: string | null
+          created_at?: string
           email: string
-          full_name?: string | null
+          first_name?: string | null
           id: string
           last_name?: string | null
-          role?: string
-          room_id: number
-          updated_at?: string | null
+          role?: string | null
+          updated_at?: string
+          username: string
         }
         Update: {
           avatar_url?: string | null
-          created_at?: string | null
+          created_at?: string
           email?: string
-          full_name?: string | null
+          first_name?: string | null
           id?: string
           last_name?: string | null
-          role?: string
-          room_id?: number
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_profiles_room_id"
-            columns: ["room_id"]
-            isOneToOne: false
-            referencedRelation: "rooms"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      rooms: {
-        Row: {
-          area: number | null
-          id: number
-          room_plan_url: string | null
-          type: string | null
-        }
-        Insert: {
-          area?: number | null
-          id?: never
-          room_plan_url?: string | null
-          type?: string | null
-        }
-        Update: {
-          area?: number | null
-          id?: never
-          room_plan_url?: string | null
-          type?: string | null
+          role?: string | null
+          updated_at?: string
+          username?: string
         }
         Relationships: []
       }

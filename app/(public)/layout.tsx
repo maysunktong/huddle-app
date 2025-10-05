@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import { QueryClientProvider } from "../providers/provider-tanstack";
+import "../globals.css";
+import { QueryClientProvider } from "../../providers/provider-tanstack";
 
 export const metadata: Metadata = {
   title: "Huddle",

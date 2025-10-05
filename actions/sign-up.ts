@@ -28,7 +28,6 @@ export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
     await supabaseServer.auth.signOut();
   }
 
-
   revalidatePath("/", "layout");
   redirect("login");
 };

@@ -1,39 +1,37 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useMutation } from "@tanstack/react-query";
-import ErrorMessage from "../../components/Form/ErrorMessage";
-import { logInSchema } from "../../schemas/zod.schemas";
-import { LogIn } from "../../actions/log-in";
+import { SignUp } from "../../../actions/sign-up";
+import ErrorMessage from "../../../components/Form/ErrorMessage";
+import { signUpSchema } from "../../../schemas/zod.schemas";
 
-const LogInForm = () => {
+const SignUpForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof logInSchema>>({
-    resolver: zodResolver(logInSchema),
+  } = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
   });
 
-  /* Mutation helps with try catch error */
   const { mutate, isPending, error } = useMutation({
-    mutationFn: LogIn,
+    mutationFn: SignUp,
   });
 
   return (
     <>
       <form
         onSubmit={handleSubmit((values) => mutate(values))}
-        className="flex flex-col"
+        className="p-4 flex flex-col w-[700px] mx-auto"
       >
         <fieldset>
-          {/* Email */}
           <label htmlFor="email">Enter your email</label>
           <input
-            id="main"
+            id="email"
             placeholder="Enter your email"
             {...register("email")}
           />
@@ -42,8 +40,19 @@ const LogInForm = () => {
           )}
         </fieldset>
         <fieldset>
-          {/* Password */}
-          <label htmlFor="password">Enter your password</label>
+          <label htmlFor="username">Username</label>
+          <input
+            type="username"
+            id="username"
+            placeholder="Enter your username"
+            {...register("username")}
+          />
+          {errors.username?.message && (
+            <ErrorMessage message={errors.username.message} />
+          )}
+        </fieldset>
+        <fieldset>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -54,7 +63,7 @@ const LogInForm = () => {
             <ErrorMessage message={errors.password.message} />
           )}
         </fieldset>
-        <button type="submit">{isPending ? "Logging in..." : "log in"}</button>
+        <button type="submit">{isPending ? "Signing up..." : "Sign up"}</button>
       </form>
       {error && error.message !== "NEXT_REDIRECT" && (
         <ErrorMessage message={error.message} />
@@ -62,4 +71,5 @@ const LogInForm = () => {
     </>
   );
 };
-export default LogInForm;
+
+export default SignUpForm;

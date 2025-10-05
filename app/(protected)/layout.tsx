@@ -1,13 +1,19 @@
-export default function ProtectedLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import "../globals.css";
+import { QueryClientProvider } from "../../providers/provider-tanstack";
 
+export default function AuthLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <>
-      <h1>Protected Layout</h1>
-      {children}
-    </>
+    <html lang="en">
+      <body>
+        <QueryClientProvider>
+          <h1>Auth Layout</h1>
+          {children}
+        </QueryClientProvider>
+      </body>
+    </html>
   );
 }
