@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "../providers/provider-tanstack";
 
 export const metadata: Metadata = {
   title: "Huddle",
   description: "Inner circle",
 };
-
-const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -17,7 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <QueryClientProvider client={queryClient}>
+        <QueryClientProvider>
+          <h1>Main layout</h1>
           {children}
         </QueryClientProvider>
       </body>
