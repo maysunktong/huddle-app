@@ -164,7 +164,7 @@ export type Database = {
           category: string
           created_at: string | null
           id: number
-          slug: string | null
+          slug: string
           title: string
           updated_at: string | null
         }
@@ -174,7 +174,7 @@ export type Database = {
           category?: string
           created_at?: string | null
           id: number
-          slug?: string | null
+          slug?: string
           title: string
           updated_at?: string | null
         }
@@ -184,7 +184,7 @@ export type Database = {
           category?: string
           created_at?: string | null
           id?: number
-          slug?: string | null
+          slug?: string
           title?: string
           updated_at?: string | null
         }
