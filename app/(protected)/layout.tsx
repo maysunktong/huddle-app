@@ -1,7 +1,13 @@
-export default function ProtectedLayout() {
+export default function ProtectedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+
   return (
-    <div>
-      Protected Layout for /account and /dashboard
-    </div>
+    <>
+      <h1>Protected Layout</h1>
+      {children}
+    </>
   );
 }
