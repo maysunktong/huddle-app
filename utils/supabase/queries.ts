@@ -42,8 +42,8 @@ export async function getUsersPosts(supabase: ReturnType<typeof createClient> ) 
 
   const { data, error } = await supabase
     .from("posts")
-    .select("id, title, slug, created_at, users(username, email)")
-    .eq("user_id", user.id)
+    .select("id, title, slug, created_at, profiles(username)")
+    .eq("author_id", user.id)
     .order("created_at", { ascending: false });
 
   return { data, error };
@@ -52,4 +52,4 @@ export async function getUsersPosts(supabase: ReturnType<typeof createClient> ) 
 
 export type HomePostsType = QueryData<ReturnType<typeof getHomePosts>>;
 export type SinglePostsType = QueryData<ReturnType<typeof getSinglePost>>;
-export type AccountPostsType = QueryData<ReturnType<typeof getUsersPosts>>;
+export type UsersPostsType = QueryData<ReturnType<typeof getUsersPosts>>;

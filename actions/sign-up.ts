@@ -29,5 +29,5 @@ export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
   }
 
   revalidatePath("/", "layout");
-  redirect("login");
+  redirect("/");
 };

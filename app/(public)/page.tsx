@@ -6,7 +6,7 @@ export const revalidate = 600;
 
 export default async function Home() {
   const supabase = createClient();
-  const { data, error } = await getHomePosts(supabase);
+  const { data: posts, error } = await getHomePosts(supabase);
   if (error) {
     console.error("Error fetching posts:", error.message);
     return (
@@ -16,13 +16,13 @@ export default async function Home() {
     );
   }
 
-  if (!data || data.length === 0) {
+  if (!posts || posts.length === 0) {
     return <p>No posts found.</p>;
   }
 
   return (
     <>
-      <PostsList posts={data!} />
+      <PostsList posts={posts!} />
     </>
   );
 }
