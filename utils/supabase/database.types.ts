@@ -163,7 +163,8 @@ export type Database = {
           body: string | null
           category: string
           created_at: string | null
-          id: number
+          id: string
+          images: string | null
           slug: string
           title: string
           updated_at: string | null
@@ -173,8 +174,9 @@ export type Database = {
           body?: string | null
           category?: string
           created_at?: string | null
-          id: number
-          slug?: string
+          id?: string
+          images?: string | null
+          slug: string
           title: string
           updated_at?: string | null
         }
@@ -183,7 +185,8 @@ export type Database = {
           body?: string | null
           category?: string
           created_at?: string | null
-          id?: number
+          id?: string
+          images?: string | null
           slug?: string
           title?: string
           updated_at?: string | null

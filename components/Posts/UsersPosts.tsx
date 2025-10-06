@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "../../utils/supabase/client";
+import { DeleteButton } from "./DeleteButton";
 
 export default function UsersPosts() {
   const supabase = createClient();
@@ -10,7 +11,9 @@ export default function UsersPosts() {
   const { data, error } = useQuery({
     queryKey: ["users-posts"],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase
@@ -22,8 +25,9 @@ export default function UsersPosts() {
       if (error) throw new Error(error.message);
       return data;
     },
-    refetchOnMount: true,
-    refetchInterval: 10000,
+    refetchOnMount: "always",
+    refetchInterval: 3000,
+    staleTime: 10000,
   });
 
   if (error) return <p className="text-red-500">Error loading posts</p>;
@@ -33,16 +37,18 @@ export default function UsersPosts() {
   return (
     <div className="flex flex-col space-y-2">
       {data.map(({ id, title, slug, profiles }) => (
-        <Link
-          key={id}
-          href={`/posts/${slug}`}
-          className="block rounded-md border border-yellow-500 p-3 hover:bg-yellow-100"
-        >
-          <div className="font-semibold">{title}</div>
-          <div className="text-sm text-gray-600">
-            by {profiles?.username ?? "Unknown"}
-          </div>
-        </Link>
+        <div key={id}>
+          <Link
+            href={`/posts/${slug}`}
+            className="block rounded-md border border-yellow-500 p-3 hover:bg-yellow-100"
+          >
+            <div className="font-semibold">{title}</div>
+            <div className="text-sm text-gray-600">
+              by {profiles?.username ?? "Unknown"}
+            </div>
+          </Link>
+          <DeleteButton postId={id} />
+        </div>
       ))}
     </div>
   );

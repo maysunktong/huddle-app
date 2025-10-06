@@ -1,5 +1,5 @@
 
-import { QueryData} from "@supabase/supabase-js";
+import { QueryData } from "@supabase/supabase-js";
 import { createClient } from "./client";
 
 export const getHomePosts = async (
@@ -33,20 +33,18 @@ export const getSearchedPosts = async (
     .abortSignal(signal);
 };
 
-export async function getUsersPosts(supabase: ReturnType<typeof createClient> ) {
+export async function getUsersPosts(supabase: ReturnType<typeof createClient>) {
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
     return { data: [], error: null };
   }
 
-  const { data, error } = await supabase
+  return await supabase
     .from("posts")
     .select("id, title, slug, created_at, profiles(username)")
     .eq("author_id", user.id)
     .order("created_at", { ascending: false });
-
-  return { data, error };
 }
 
 

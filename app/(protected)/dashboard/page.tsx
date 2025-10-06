@@ -1,5 +1,6 @@
 "use client";
 import { LogOut } from "../../../actions/log-out";
+import CreatePostForm from "../../../components/Posts/CreatePost";
 import UsersPosts from "../../../components/Posts/UsersPosts";
 
 export default function Dashboard() {
@@ -12,6 +13,7 @@ export default function Dashboard() {
       >
         Log out
       </button>
+      <CreatePostForm />
       <UsersPosts />
     </div>
   );

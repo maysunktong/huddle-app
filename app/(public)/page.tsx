@@ -1,3 +1,4 @@
+import CreatePostForm from "../../components/Posts/CreatePost";
 import PostsList from "../../components/Posts/PostsList";
 import { createClient } from "../../utils/supabase/client";
 import { getHomePosts } from "../../utils/supabase/queries";
@@ -22,6 +23,7 @@ export default async function Home() {
 
   return (
     <>
+      <CreatePostForm />
       <PostsList posts={posts!} />
     </>
   );

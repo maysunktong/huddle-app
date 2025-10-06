@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { HomePostsType, getHomePosts } from "../../utils/supabase/queries";
 import { createClient } from "../../utils/supabase/client";
+import { DeleteButton } from "./DeleteButton";
 
 export default function PostsList({ posts }: { posts: HomePostsType }) {
   const supabase = createClient();
@@ -16,8 +17,9 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
       return data;
     },
     initialData: posts,
-    refetchOnMount: false,
-    refetchInterval: 10000,
+    refetchOnMount: "always",
+    refetchInterval: 3000,
+    staleTime: 10000,
   });
 
   return (
@@ -34,6 +36,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                 by {profiles?.username}
               </div>
             </Link>
+            <DeleteButton postId={id} />
           </div>
         ))}
 
