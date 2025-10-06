@@ -9,13 +9,13 @@ export default async function SinglePost({
   params: SinglePostsType;
 }) {
   const { slug } = params;
-  const { data, error } = await getSinglePost(slug);
+  const { data: post, error } = await getSinglePost(slug);
 
-  if (!data) return <p>Post not found</p>;
+  if (!post) return <p>Post not found</p>;
 
   return (
     <>
-      <p>{data?.title}</p>
+      <p>{post?.title}</p>
     </>
   );
 }

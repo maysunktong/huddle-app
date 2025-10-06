@@ -20,5 +20,5 @@ export const LogIn = async (userdata: z.infer<typeof logInSchema>) => {
   if (error) throw new Error(error.message);
 
   revalidatePath("/", "layout");
-  redirect("/account")
+  redirect("/");
 };

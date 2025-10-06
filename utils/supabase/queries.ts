@@ -33,7 +33,7 @@ export const getSearchedPosts = async (
     .abortSignal(signal);
 };
 
-export async function getAccountPosts(supabase: ReturnType<typeof createClient> ) {
+export async function getUsersPosts(supabase: ReturnType<typeof createClient> ) {
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
@@ -52,4 +52,4 @@ export async function getAccountPosts(supabase: ReturnType<typeof createClient> 
 
 export type HomePostsType = QueryData<ReturnType<typeof getHomePosts>>;
 export type SinglePostsType = QueryData<ReturnType<typeof getSinglePost>>;
-export type AccountPostsType = QueryData<ReturnType<typeof getAccountPosts>>;
+export type AccountPostsType = QueryData<ReturnType<typeof getUsersPosts>>;

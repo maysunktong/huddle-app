@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { HomePostsType, getHomePosts } from "../utils/supabase/queries";
-import { createClient } from "../utils/supabase/client";
+import { HomePostsType, getHomePosts } from "../../utils/supabase/queries";
+import { createClient } from "../../utils/supabase/client";
 
-export default function HomePosts({ posts }: { posts: HomePostsType }) {
+export default function PostsList({ posts }: { posts: HomePostsType }) {
   const supabase = createClient();
 
   const { data, error } = useQuery({

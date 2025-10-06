@@ -6,7 +6,7 @@ export const middleware = async (request: NextRequest) => {
   let supabaseResponse = NextResponse.next({ request });
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {
@@ -33,11 +33,12 @@ export const middleware = async (request: NextRequest) => {
   } = await supabase.auth.getUser();
 
   /* Protected Route */
-  const protectedRoutes = [/^\/account/, /^\/dashboard/];
+  const protectedRoutes = [/^\/$/, /^\/account/, /^\/dashboard/];
 
   if (!user && protectedRoutes.some(route => route.test(request.nextUrl.pathname))) {
     const newrUrl: NextURL = request.nextUrl.clone();
     newrUrl.pathname = '/login';
+
     return NextResponse.redirect(newrUrl);
   }
   return supabaseResponse;
