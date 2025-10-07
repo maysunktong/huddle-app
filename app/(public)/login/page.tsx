@@ -1,12 +1,9 @@
-import { GalleryVerticalEnd, Spool } from "lucide-react";
-import { LoginForm } from "../../../components/login-form";
+import { Spool } from "lucide-react";
 import LogInForm from "./LogInForm";
 
 export default function LogInPage() {
   return (
     <div>
-      Log In page
-      <LogInForm />
       <div className="grid min-h-svh lg:grid-cols-2">
         <div className="bg-muted relative hidden lg:block">
           <img
@@ -26,7 +23,7 @@ export default function LogInPage() {
           </div>
           <div className="flex flex-1 items-center justify-center">
             <div className="w-full max-w-xs">
-              <LoginForm />
+              <LogInForm />
             </div>
           </div>
         </div>

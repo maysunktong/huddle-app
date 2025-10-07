@@ -1,7 +1,8 @@
-import CreatePostForm from "../../components/Posts/CreatePost";
-import PostsList from "../../components/Posts/PostsList";
-import { createClient } from "../../utils/supabase/client";
-import { getHomePosts } from "../../utils/supabase/queries";
+import LogOutButton from "@/components/auth-ui/LogOutButton";
+import CreatePostForm from "@/components/Posts/CreatePost";
+import PostsList from "@/components/Posts/PostsList";
+import { createClient } from "@/utils/supabase/client";
+import { getHomePosts } from "@/utils/supabase/queries";
 
 export const revalidate = 600;
 
@@ -23,6 +24,7 @@ export default async function Home() {
 
   return (
     <>
+      <LogOutButton />
       <CreatePostForm />
       <PostsList posts={posts!} />
     </>

@@ -1,7 +1,6 @@
 "use server";
 
 import { redirect } from "next/navigation";
-
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { signUpSchema } from "../schemas/zod.schemas";
@@ -10,18 +9,30 @@ import { createServerClient } from "../utils/supabase/server";
 export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
   const supabaseServer = await createServerClient();
 
-  const {
-    data: { user },
-    error,
-  } = await supabaseServer.auth.signUp(userdata);
-  console.log(error);
+  const { data, error } = await supabaseServer.auth.signUp({
+    email: userdata.email,
+    password: userdata.password,
+    options: {
+      data: { username: userdata.username },
+    },
+  });
 
-  if (user && user.email) {
+  if (error) {
+    if (error.message.includes("User already registered")) {
+      throw new Error("This email is already registered. Please sign in.");
+    }
+
+    throw new Error(error.message);
+  }
+
+  if (data.user && data.user.email) {
     const { error: profileError } = await supabaseServer
       .from("profiles")
-      .insert(
-        { id: user.id, email: user.email, username: userdata.username },
-      );
+      .insert({
+        id: data.user.id,
+        email: data.user.email,
+        username: userdata.username,
+      });
 
     if (profileError) throw new Error(profileError.message);
 
