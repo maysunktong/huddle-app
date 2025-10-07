@@ -27,7 +27,7 @@ const AddPost = async (userdata: z.infer<typeof addPostSchema>) => {
       .insert({
         author_id: user.id,
         title: parsedData.title,
-        body: parsedData.body,
+        content: parsedData.body,
         slug: slugify(parsedData.title)
       });
 

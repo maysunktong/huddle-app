@@ -60,10 +60,10 @@ const CreatePostForm = () => {
           <textarea
             id="content"
             placeholder="Write your post..."
-            {...register("body")}
+            {...register("content")}
           />
-          {errors.body?.message && (
-            <ErrorMessage message={errors.body.message} />
+          {errors.content?.message && (
+            <ErrorMessage message={errors.content.message} />
           )}
         </fieldset>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "../../utils/supabase/client";
 import { DeleteButton } from "./DeleteButton";
+import { EditButton } from "./UpdateButton";
 
 export default function UsersPosts() {
   const supabase = createClient();
@@ -48,6 +49,7 @@ export default function UsersPosts() {
             </div>
           </Link>
           <DeleteButton postId={id} />
+          <EditButton postId={id} initialTitle={title} />
         </div>
       ))}
     </div>

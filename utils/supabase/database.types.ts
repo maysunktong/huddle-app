@@ -160,8 +160,8 @@ export type Database = {
       posts: {
         Row: {
           author_id: string | null
-          body: string | null
           category: string
+          content: string | null
           created_at: string | null
           id: string
           images: string | null
@@ -171,8 +171,8 @@ export type Database = {
         }
         Insert: {
           author_id?: string | null
-          body?: string | null
           category?: string
+          content?: string | null
           created_at?: string | null
           id?: string
           images?: string | null
@@ -182,8 +182,8 @@ export type Database = {
         }
         Update: {
           author_id?: string | null
-          body?: string | null
           category?: string
+          content?: string | null
           created_at?: string | null
           id?: string
           images?: string | null

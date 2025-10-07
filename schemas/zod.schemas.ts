@@ -14,5 +14,5 @@ export const signUpSchema = z.object({
 
 export const addPostSchema = z.object({
   title: z.string().min(1, "Please add you title"),
-  body: z.string("").optional()
+  content: z.string("").optional()
 })
