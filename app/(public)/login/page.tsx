@@ -1,7 +1,7 @@
-import { Spool } from "lucide-react";
 import LogInForm from "./LogInForm";
 import Background from "../../../components/home/Background";
 import DiscoBall from "../../../components/home/DiscoBall";
+import Logo from "../../../components/Logo";
 
 export default function LogInPage() {
   return (
@@ -12,12 +12,7 @@ export default function LogInPage() {
         </div>
         <div className="flex flex-col gap-4 p-6 md:p-10 bg-[#C2D8BE] lg:bg-background">
           <div className="flex justify-center items-center gap-2">
-            <a href="#" className="flex items-center gap-2 font-medium text-xl">
-              <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-                <Spool className="size-4" />
-              </div>
-              Huddle
-            </a>
+            <Logo />
           </div>
           <div className="block lg:hidden">
             <DiscoBall />

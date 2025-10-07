@@ -189,10 +189,6 @@ export default function Background() {
             src={src}
             alt={`avatar-${i}`}
             className="w-16 h-16 rounded-full border border-white absolute object-cover shadow-sm"
-            style={{
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
           />
         ))}
       </div>
