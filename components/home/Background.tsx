@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import gsap from "gsap";
+import { Spool } from "lucide-react";
 
 const palette = ["#E5AFAF", "#C4BCFF", "#C2D8BE"];
 const words = ["Community", "Hustle", "Huddle"];
@@ -22,8 +23,9 @@ export default function Background() {
       const randomColor = palette[Math.floor(Math.random() * palette.length)];
       gsap.to("#bg", {
         backgroundColor: randomColor,
-        duration: 1.3,
-        ease: "power2.inOut",
+        duration: 1,
+        delay: 0.5,
+        ease: "power2.in",
         onComplete: flashBackground,
       });
     };
@@ -141,8 +143,7 @@ export default function Background() {
         duration: 1.5,
         ease: "power2.inOut",
         stagger: 0.7,
-      })
-      .to(
+      }).to(
         avatarEls,
         {
           x: 0,
@@ -158,10 +159,12 @@ export default function Background() {
   }, []);
 
   return (
+    <>
     <div
       id="bg"
       className="relative flex h-screen flex-col items-center justify-center text-gray-800"
     >
+      
       <div className="relative flex items-center justify-center">
         <img
           id="discoball"
@@ -199,5 +202,6 @@ export default function Background() {
         className="mt-12 flex flex-col items-center justify-center text-center w-full pointer-events-none"
       ></div>
     </div>
+    </>
   );
 }

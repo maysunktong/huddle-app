@@ -47,7 +47,7 @@ const LogInForm = ({ className }: { className?: string }) => {
         <FieldGroup>
           {/* Header */}
           <div className="flex flex-col items-center gap-1 text-center">
-            <h1 className="text-2xl font-bold">Login to your account</h1>
+            <h1 className="text-2xl font-bold text-white md:text-foreground">Login to your account</h1>
           </div>
 
           {/* Email */}
