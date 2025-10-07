@@ -5,7 +5,16 @@ import gsap from "gsap";
 
 const palette = ["#E5AFAF", "#C4BCFF", "#C2D8BE"];
 const words = ["Community", "Hustle", "Huddle"];
-const lines = ["Build your community", "Discover new hustles", "Huddle every day"];
+const lines = [
+  "Build your community",
+  "Discover new hustles",
+  "Huddle every day",
+];
+const avatars = [
+  "/avatars/avatar1.png",
+  "/avatars/avatar2.png",
+  "/avatars/avatar3.png",
+];
 
 export default function Background() {
   useEffect(() => {
@@ -20,6 +29,7 @@ export default function Background() {
     };
     flashBackground();
 
+    // Disco ball rotation
     const tween = gsap.to("#discoball", {
       rotation: 360,
       duration: 10,
@@ -27,15 +37,13 @@ export default function Background() {
       ease: "none",
       transformOrigin: "50% 50%",
     });
-
     const disco = document.getElementById("discoball");
     if (disco) {
-      const handleEnter = () => tween.timeScale(6);
-      const handleLeave = () => tween.timeScale(1);
-      disco.addEventListener("mouseenter", handleEnter);
-      disco.addEventListener("mouseleave", handleLeave);
+      disco.addEventListener("mouseenter", () => tween.timeScale(6));
+      disco.addEventListener("mouseleave", () => tween.timeScale(1));
     }
 
+    // Rotating word in the center
     const rotateText = (index = 0) => {
       const el = document.getElementById("text");
       if (!el) return;
@@ -58,10 +66,9 @@ export default function Background() {
         },
       });
     };
-
     rotateText();
 
-    /* Split line to words */
+    // Lines animation (word chunks)
     const container = document.getElementById("text-container");
     if (!container) return;
 
@@ -102,8 +109,8 @@ export default function Background() {
         onComplete: () => {
           gsap.to(line, {
             opacity: 0,
-            duration: 2,
-            delay: 2,
+            duration: 1,
+            delay: 1,
             onComplete: () => {
               currentLine = (currentLine + 1) % linesEl.length;
               animateLine();
@@ -113,8 +120,41 @@ export default function Background() {
       });
       gsap.set(line, { opacity: 1 });
     };
-
     animateLine();
+
+    /* Avatars */
+    const avatarEls: HTMLImageElement[] = [];
+    avatars.forEach((src, i) => {
+      const avatar = document.getElementById(`avatar-${i}`) as HTMLImageElement;
+      if (avatar) avatarEls.push(avatar);
+    });
+
+    if (avatarEls.length) {
+      const spreadDistance = 50;
+
+      const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+
+      tl.to(avatarEls, {
+        x: (i) => (i - (avatarEls.length - 1) / 2) * spreadDistance,
+        opacity: 1,
+        scale: 1.2,
+        duration: 1.5,
+        ease: "power2.inOut",
+        stagger: 0.7,
+      })
+      .to(
+        avatarEls,
+        {
+          x: 0,
+          opacity: 0.8,
+          scale: 1,
+          duration: 1,
+          ease: "power2.inOut",
+          stagger: 0.2,
+        },
+        "+=0.5"
+      );
+    }
   }, []);
 
   return (
@@ -136,9 +176,27 @@ export default function Background() {
           Community
         </div>
       </div>
+
+      {/* Avatars container */}
+      <div className="relative mt-10 flex items-center justify-center h-24 w-full">
+        {avatars.map((src, i) => (
+          <img
+            key={i}
+            id={`avatar-${i}`}
+            src={src}
+            alt={`avatar-${i}`}
+            className="w-16 h-16 rounded-full border border-white absolute object-cover shadow-sm"
+            style={{
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          />
+        ))}
+      </div>
+
       <div
         id="text-container"
-        className="mt-10 flex flex-col items-center justify-center text-center w-full pointer-events-none"
+        className="mt-12 flex flex-col items-center justify-center text-center w-full pointer-events-none"
       ></div>
     </div>
   );
