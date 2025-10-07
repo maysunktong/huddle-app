@@ -24,8 +24,8 @@ export default function Background() {
       gsap.to("#bg", {
         backgroundColor: randomColor,
         duration: 1,
-        delay: 0.5,
-        ease: "power2.in",
+        delay: 0.2,
+        ease: "power1.inOut",
         onComplete: flashBackground,
       });
     };
