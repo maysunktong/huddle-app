@@ -5,12 +5,19 @@ import { revalidatePath } from "next/cache";
 import { addPostSchema } from "../schemas/zod.schemas";
 import { slugify } from "../utils/slugify";
 import { createServerClient } from "../utils/supabase/server";
-import { redirect } from "next/navigation";
+import { uploadImage } from "../utils/supabase/upload-image";
 
-const AddPost = async (userdata: z.infer<typeof addPostSchema>) => {
+const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
   const parsedData = addPostSchema.parse(userdata);
 
   const supabase = await createServerClient();
+
+  const imageFile = userdata.image?.get('image');
+  if (!(imageFile instanceof File) && imageFile !== null) {
+    throw new Error("Malformed image file")
+  }
+
+  const publicImageUrl = imageFile ? await uploadImage(imageFile) : null;
 
   const {
     data: { user },
@@ -22,13 +29,13 @@ const AddPost = async (userdata: z.infer<typeof addPostSchema>) => {
   }
 
   if (user) {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("posts")
       .insert({
         author_id: user.id,
-        title: parsedData.title,
-        content: parsedData.body,
-        slug: slugify(parsedData.title)
+        slug: slugify(parsedData.title),
+        ...parsedData,
+        image: publicImageUrl
       });
 
     if (error) throw new Error(error.message)
@@ -37,4 +44,4 @@ const AddPost = async (userdata: z.infer<typeof addPostSchema>) => {
   revalidatePath("/", "layout");
 };
 
-export default AddPost;
+export default CreatePost;

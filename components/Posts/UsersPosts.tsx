@@ -19,7 +19,9 @@ export default function UsersPosts() {
 
       const { data, error } = await supabase
         .from("posts")
-        .select("id, title, slug, created_at, profiles(username)")
+        .select(
+          "id, title, slug, content, created_at, profiles(username), image"
+        )
         .eq("author_id", user.id)
         .order("created_at", { ascending: false });
 
@@ -37,16 +39,18 @@ export default function UsersPosts() {
 
   return (
     <div className="flex flex-col space-y-2">
-      {data.map(({ id, title, slug, profiles }) => (
+      {data.map(({ id, title, content, slug, profiles, image}) => (
         <div key={id}>
           <Link
             href={`/posts/${slug}`}
             className="block rounded-md border border-yellow-500 p-3 hover:bg-yellow-100"
           >
             <div className="font-semibold">{title}</div>
+            <div>{content}</div>
             <div className="text-sm text-gray-600">
               by {profiles?.username ?? "Unknown"}
             </div>
+            {image && <img src={image} alt="" width="100" height="100" /> }
           </Link>
           <DeleteButton postId={id} />
           <EditButton postId={id} initialTitle={title} />

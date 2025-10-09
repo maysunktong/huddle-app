@@ -36,7 +36,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
   return (
     <div className="flex flex-col space-y-2">
       {data &&
-        data.map(({ id, title, slug, profiles }) => {
+        data.map(({ id, title, content, slug, profiles, image }) => {
           const isOwner = profiles?.id === currentUserId;
 
           return (
@@ -46,9 +46,11 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                 className="block rounded-md border border-yellow-500 p-3 hover:bg-yellow-100"
               >
                 <div className="font-semibold">{title}</div>
+                <div>{content}</div>
                 <div className="text-sm text-gray-600">
                   by {profiles?.username}
                 </div>
+                {image && <img src={image} alt="" width="100%" />}
               </Link>
 
               {isOwner && (

@@ -164,7 +164,7 @@ export type Database = {
           content: string | null
           created_at: string | null
           id: string
-          images: string | null
+          image: string | null
           slug: string
           title: string
           updated_at: string | null
@@ -175,7 +175,7 @@ export type Database = {
           content?: string | null
           created_at?: string | null
           id?: string
-          images?: string | null
+          image?: string | null
           slug: string
           title: string
           updated_at?: string | null
@@ -186,7 +186,7 @@ export type Database = {
           content?: string | null
           created_at?: string | null
           id?: string
-          images?: string | null
+          image?: string | null
           slug?: string
           title?: string
           updated_at?: string | null

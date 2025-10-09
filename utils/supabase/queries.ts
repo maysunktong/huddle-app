@@ -7,7 +7,7 @@ export const getHomePosts = async (
 ) => {
   return await supabase
     .from("posts")
-    .select("id, title, slug, created_at, profiles(id, username)")
+    .select("id, title, content, slug, created_at, profiles(id, username), image")
     .order("created_at", { ascending: false });
 };
 
@@ -20,7 +20,7 @@ export async function getUsersPosts(supabase: ReturnType<typeof createClient>) {
 
   return await supabase
     .from("posts")
-    .select("id, title, slug, created_at, profiles(username)")
+    .select("id, title, content, slug, created_at, profiles(id, username)")
     .eq("author_id", user.id)
     .order("created_at", { ascending: false });
 }

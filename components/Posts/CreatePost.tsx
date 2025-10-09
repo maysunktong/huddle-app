@@ -8,20 +8,28 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import ErrorMessage from "../Form/ErrorMessage";
 import { addPostSchema } from "../../schemas/zod.schemas";
-import AddPost from "../../actions/add-post";
+import CreatePost from "../../actions/create-post";
 
 const CreatePostForm = () => {
+  const schemaWithImage = addPostSchema.omit({ image: true }).extend({
+    image: z
+      .unknown()
+      .transform((value) => {
+        return value as FileList;
+      })
+      .optional(),
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<z.infer<typeof addPostSchema>>({
-    resolver: zodResolver(addPostSchema),
+    resolver: zodResolver(schemaWithImage),
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: AddPost,
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: CreatePost,
     onSuccess: () => {
       toast.success("Post added successfully!");
       reset();
@@ -40,7 +48,11 @@ const CreatePostForm = () => {
   return (
     <>
       <form
-        onSubmit={handleSubmit((values) => mutate(values))}
+        onSubmit={handleSubmit((values) => {
+          const imageForm = new FormData();
+          if (values.image) imageForm.append("image", values.image[0]);
+          mutate({title: values.title, content: values.content, image:imageForm});
+        })}
         className="p-4 flex flex-col w-[700px] mx-auto"
       >
         <fieldset>
@@ -50,9 +62,7 @@ const CreatePostForm = () => {
             placeholder="Enter your title"
             {...register("title")}
           />
-          {errors.title?.message && (
-            <ErrorMessage message={errors.title.message} />
-          )}
+          {errors.title && <ErrorMessage message={errors.title.message!} />}
         </fieldset>
 
         <fieldset>
@@ -62,12 +72,15 @@ const CreatePostForm = () => {
             placeholder="Write your post..."
             {...register("content")}
           />
-          {errors.content?.message && (
-            <ErrorMessage message={errors.content.message} />
-          )}
+          {errors.content && <ErrorMessage message={errors.content.message!} />}
         </fieldset>
-
+        <fieldset>
+          <label htmlFor="image">Upload image</label>
+          <input type="file" {...register("image")} id="image" />
+          {errors.image && <ErrorMessage message={errors.image.message!} />}
+        </fieldset>
         <button type="submit">{isPending ? "Posting..." : "Add Post"}</button>
+        {error && <ErrorMessage message={error.message} />}
       </form>
     </>
   );
