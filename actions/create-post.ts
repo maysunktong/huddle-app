@@ -12,7 +12,7 @@ const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
 
   const supabase = await createServerClient();
 
-  const imageFile = userdata.image?.get('image');
+  const imageFile = userdata.image!.get('image');
   if (!(imageFile instanceof File) && imageFile !== null) {
     throw new Error("Malformed image file")
   }
