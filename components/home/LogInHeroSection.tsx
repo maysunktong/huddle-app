@@ -17,7 +17,7 @@ const avatars = [
   "/avatars/avatar3.png",
 ];
 
-export default function Background() {
+export default function LogInHeroSection() {
   useEffect(() => {
     const flashBackground = () => {
       const randomColor = palette[Math.floor(Math.random() * palette.length)];
@@ -77,7 +77,7 @@ export default function Background() {
     container.innerHTML = lines
       .map(
         (line) =>
-          `<div class="line absolute opacity-0 text-4xl font-bold text-white whitespace-nowrap"></div>`
+          `<div class="line absolute opacity-0 text-5xl font-thin text-white whitespace-nowrap"></div>`
       )
       .join("");
 
@@ -88,7 +88,7 @@ export default function Background() {
       lineEl.innerHTML = words
         .map(
           (w) =>
-            `<span class="word inline-block opacity-0 mr-2 font-thin">${w}</span>`
+            `<span class="word inline-block opacity-0 mr-2">${w}</span>`
         )
         .join(" ");
     });
@@ -104,7 +104,7 @@ export default function Background() {
       gsap.to(words, {
         opacity: 1,
         repeat: -1,
-        y: [20, 0],
+        y: 20,
         duration: 2,
         stagger: 0.5,
         ease: "power2.inOut",
@@ -195,7 +195,7 @@ export default function Background() {
 
       <div
         id="text-container"
-        className="mt-12 flex flex-col items-center justify-center text-center w-full pointer-events-none"
+        className="pt-20 flex flex-col items-center justify-center text-center w-full pointer-events-none"
       ></div>
     </div>
     </>

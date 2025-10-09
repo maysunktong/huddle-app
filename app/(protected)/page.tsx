@@ -1,6 +1,6 @@
 import LogOutButton from "@/components/auth-ui/LogOutButton";
-import CreatePostForm from "@/components/Posts/CreatePost";
-import PostsList from "@/components/Posts/PostsList";
+import CreatePostForm from "@/components/posts/CreatePost";
+import PostsList from "@/components/posts/PostsList";
 import { createClient } from "@/utils/supabase/client";
 import { getHomePosts } from "@/utils/supabase/queries";
 
