@@ -103,7 +103,6 @@ export default function LogInHeroSection() {
 
       gsap.to(words, {
         opacity: 1,
-        repeat: -1,
         y: 20,
         duration: 2,
         stagger: 0.5,
