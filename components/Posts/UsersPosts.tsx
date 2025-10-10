@@ -113,12 +113,6 @@ export default function UsersPosts() {
                 </p>
               </CardContent>
             </Link>
-
-            {/* Extra Action Buttons */}
-            <div className="flex justify-end gap-2 p-3">
-              <EditButton postId={id} initialTitle={title} />
-              <DeleteButton postId={id} />
-            </div>
           </Card>
         );
       })}
