@@ -24,8 +24,7 @@ export default function AuthLayout({
             <AppSidebar variant="inset" />
             <SidebarInset>
               <SiteHeader />
-              <div className="bg-background">{children}</div>
-              
+              <div className="bg-background">{children}</div>    
             </SidebarInset>
           </SidebarProvider>
         </QueryClientProvider>

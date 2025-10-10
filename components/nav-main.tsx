@@ -37,7 +37,7 @@ export function NavMain({
                   <SidebarMenuButton
                     tooltip={item.title}
                     className={cn(
-                      "flex items-center gap-2 duration-200 ease-linear",
+                      "flex items-center gap-2 duration-200 ease-linear cursor-pointer",
                       isActive
                         ? "bg-black text-white hover:bg-black hover:text-white"
                         : "text-black hover:bg-accent hover:text-foreground"

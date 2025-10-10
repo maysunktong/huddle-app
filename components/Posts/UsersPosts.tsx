@@ -20,7 +20,6 @@ export default function UsersPosts() {
   const supabase = createClient();
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
-  // ✅ Fetch current user ID
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -29,7 +28,6 @@ export default function UsersPosts() {
     getUser();
   }, [supabase]);
 
-  // ✅ Fetch posts belonging to user
   const { data, error } = useQuery({
     queryKey: ["users-posts"],
     queryFn: async () => {
