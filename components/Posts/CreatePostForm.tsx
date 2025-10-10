@@ -79,7 +79,7 @@ const CreatePostDialog = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       {/* Trigger */}
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="cursor-pointer">
           <CirclePlusIcon />
           Post
         </Button>

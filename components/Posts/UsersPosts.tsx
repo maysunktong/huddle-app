@@ -1,14 +1,35 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "../../utils/supabase/client";
 import { DeleteButton } from "../buttons/DeleteButton";
 import { EditButton } from "../buttons/EditButton";
+import { CardSettingButton } from "../buttons/CardSettingButton";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function UsersPosts() {
   const supabase = createClient();
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
+  // ✅ Fetch current user ID
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setCurrentUserId(data.user?.id ?? null);
+    };
+    getUser();
+  }, [supabase]);
+
+  // ✅ Fetch posts belonging to user
   const { data, error } = useQuery({
     queryKey: ["users-posts"],
     queryFn: async () => {
@@ -20,7 +41,7 @@ export default function UsersPosts() {
       const { data, error } = await supabase
         .from("posts")
         .select(
-          "id, title, slug, content, created_at, profiles(username), image"
+          "id, title, slug, content, created_at, author_id, profiles(username), image"
         )
         .eq("author_id", user.id)
         .order("created_at", { ascending: false });
@@ -33,29 +54,74 @@ export default function UsersPosts() {
     staleTime: 10000,
   });
 
-  if (error) return <p className="text-red-500">Error loading posts</p>;
-  if (!data) return <p>Loading...</p>;
-  if (data.length === 0) return <p>No posts found.</p>;
+  if (error)
+    return <p className="text-red-500 text-center">Error loading posts</p>;
+  if (!data) return <p className="text-center">Loading...</p>;
+  if (data.length === 0)
+    return <p className="text-center text-gray-500">No posts found.</p>;
 
   return (
-    <div className="flex flex-col space-y-2">
-      {data.map(({ id, title, content, slug, profiles, image }) => (
-        <div key={id}>
-          <Link
-            href={`/posts/${slug}`}
-            className="block rounded-md border border-yellow-500 p-3 hover:bg-yellow-100"
+    <div className="grid grid-cols-1 gap-6 p-4 max-w-2xl mx-auto">
+      {data.map(({ id, title, content, slug, profiles, image, author_id }) => {
+        const isOwner = author_id === currentUserId;
+
+        return (
+          <Card
+            key={id}
+            className="relative group transition-all duration-200 hover:shadow-lg"
           >
-            <div className="font-semibold">{title}</div>
-            <div>{content}</div>
-            <div className="text-sm text-gray-600">
-              by {profiles?.username ?? "Unknown"}
+            {/* Floating Settings Button */}
+            {isOwner && (
+              <div className="absolute top-3 right-3 z-10">
+                <CardSettingButton postId={id} initialTitle={title} />
+              </div>
+            )}
+
+            {/* Header */}
+            <CardHeader className="flex gap-2 justify-start items-center">
+              <Avatar className="rounded-md">
+                <AvatarImage
+                  src="https://github.com/evilrabbit.png"
+                  alt="@evilrabbit"
+                />
+                <AvatarFallback>ER</AvatarFallback>
+              </Avatar>
+              <CardDescription className="text-sm text-muted-foreground">
+                by {profiles?.username ?? "Unknown"}
+              </CardDescription>
+            </CardHeader>
+
+            {/* Content */}
+            <Link href={`/posts/${slug}`}>
+              <CardContent>
+                <CardTitle className="text-2xl pb-6 font-semibold">
+                  {title}
+                </CardTitle>
+
+                {image && (
+                  <div>
+                    <img
+                      src={image}
+                      alt={title}
+                      className="w-full h-full object-cover rounded-md border"
+                    />
+                  </div>
+                )}
+
+                <p className="mt-2 text-sm text-gray-700 line-clamp-3">
+                  {content}
+                </p>
+              </CardContent>
+            </Link>
+
+            {/* Extra Action Buttons */}
+            <div className="flex justify-end gap-2 p-3">
+              <EditButton postId={id} initialTitle={title} />
+              <DeleteButton postId={id} />
             </div>
-            {image && <img src={image} alt="" width="100" height="100" />}
-          </Link>
-          <DeleteButton postId={id} />
-          <EditButton postId={id} initialTitle={title} />
-        </div>
-      ))}
+          </Card>
+        );
+      })}
     </div>
   );
 }

@@ -57,7 +57,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                 </div>
               )}
 
-              <CardHeader className="flex gap-4 justify-start items-center">
+              <CardHeader className="flex gap-2 justify-start items-center">
                 <Avatar className="rounded-md">
                   <AvatarImage
                     src="https://github.com/evilrabbit.png"
@@ -71,9 +71,9 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
               </CardHeader>
               <Link href={`/posts/${slug}`}>
                 <CardContent>
-                  <CardTitle className="line-clamp-1 pb-4 font-semibold">{title}</CardTitle>
+                  <CardTitle className="text-2xl pb-6 font-semibold">{title}</CardTitle>
                   {image && (
-                    <div className="px-4">
+                    <div>
                       <img
                         src={image}
                         alt={title}
