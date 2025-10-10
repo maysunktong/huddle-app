@@ -1,10 +1,19 @@
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Dialog, DialogContent, DialogTrigger } from "@radix-ui/react-dialog";
-import { CirclePlusIcon } from "lucide-react";
-import CreatePostForm from "./posts/CreatePost";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@radix-ui/react-dialog";
 import { Button } from "./ui/button";
 import Logo from "./Logo";
+import { DialogHeader, DialogFooter } from "./ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import CreatePostForm from "./Posts/CreatePostForm";
 
 export function SiteHeader() {
   return (
@@ -19,19 +28,7 @@ export function SiteHeader() {
           <Logo />
         </div>
         <div className="ml-auto flex items-center gap-2">
-          <Dialog>
-            <form>
-              <DialogTrigger asChild>
-                <Button variant="outline">
-                  <CirclePlusIcon />
-                  Create post
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <CreatePostForm />
-              </DialogContent>
-            </form>
-          </Dialog>
+          <CreatePostForm />
         </div>
       </div>
     </header>

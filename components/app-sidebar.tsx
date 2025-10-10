@@ -2,21 +2,10 @@
 
 import * as React from "react";
 import {
-  IconCamera,
   IconChartBar,
-  IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
   IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
+  IconHome,
   IconListDetails,
-  IconReport,
-  IconSearch,
-  IconSettings,
-  IconUsers,
 } from "@tabler/icons-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -40,31 +29,26 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
-      url: "#",
-      icon: IconDashboard,
+      title: "Home",
+      url: "/",
+      icon: IconHome,
     },
     {
-      title: "Lifecycle",
-      url: "#",
+      title: "Dashboard",
+      url: "/dashboard",
       icon: IconListDetails,
     },
     {
-      title: "Analytics",
-      url: "#",
+      title: "Account",
+      url: "/account",
       icon: IconChartBar,
     },
     {
-      title: "Projects",
-      url: "#",
+      title: "Activity Log",
+      url: "/log",
       icon: IconFolder,
     },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ]
+  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

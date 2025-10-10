@@ -22,11 +22,7 @@ export function DeleteButton({ postId }: DeleteButtonProps) {
   });
 
   return (
-    <button
-      onClick={() => mutate()}
-      disabled={isPending}
-      className="px-3 py-1 bg-red-500 text-white rounded disabled:opacity-50"
-    >
+    <button type="button" onClick={() => mutate()} disabled={isPending}>
       {isPending ? "Deleting..." : "Delete"}
     </button>
   );

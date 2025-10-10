@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "../../utils/supabase/client";
-import { DeleteButton } from "./DeleteButton";
-import { EditButton } from "./UpdateButton";
+import { DeleteButton } from "../buttons/DeleteButton";
+import { EditButton } from "../buttons/EditButton";
 
 export default function UsersPosts() {
   const supabase = createClient();
@@ -39,7 +39,7 @@ export default function UsersPosts() {
 
   return (
     <div className="flex flex-col space-y-2">
-      {data.map(({ id, title, content, slug, profiles, image}) => (
+      {data.map(({ id, title, content, slug, profiles, image }) => (
         <div key={id}>
           <Link
             href={`/posts/${slug}`}
@@ -50,7 +50,7 @@ export default function UsersPosts() {
             <div className="text-sm text-gray-600">
               by {profiles?.username ?? "Unknown"}
             </div>
-            {image && <img src={image} alt="" width="100" height="100" /> }
+            {image && <img src={image} alt="" width="100" height="100" />}
           </Link>
           <DeleteButton postId={id} />
           <EditButton postId={id} initialTitle={title} />
