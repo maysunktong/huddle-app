@@ -10,7 +10,7 @@ import { uploadImage } from "../utils/supabase/upload-image";
 const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
   const parsedData = addPostSchema.parse(userdata);
 
-  const supabase = await createServerClient();
+
 
   const imageFile = userdata.image!.get('image');
   if (!(imageFile instanceof File) && imageFile !== null) {
@@ -19,6 +19,7 @@ const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
 
   const publicImageUrl = imageFile ? await uploadImage(imageFile) : null;
 
+  const supabase = await createServerClient();
   const {
     data: { user },
     error: userError,

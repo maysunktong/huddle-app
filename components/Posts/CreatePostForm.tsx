@@ -43,7 +43,7 @@ const CreatePostDialog = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<z.infer<typeof addPostSchema>>({
+  } = useForm({
     resolver: zodResolver(schemaWithImage),
   });
 
