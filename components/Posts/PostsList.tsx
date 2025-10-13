@@ -41,7 +41,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-6 p-4 max-w-2xl mx-auto">
+    <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto">
       {data &&
         data.map(({ id, title, content, slug, profiles, image }) => {
           const isOwner = profiles?.id === currentUserId;
@@ -49,10 +49,10 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
           return (
             <Card
               key={id}
-              className="relative group transition-all duration-200 hover:shadow-lg"
+              className="relative group duration-200 border-0"
             >
               {isOwner && (
-                <div className="absolute top-3 right-3 z-10">
+                <div className="absolute top-5 right-0 z-10">
                   <CardSettingButton postId={id} initialTitle={title} />
                 </div>
               )}
@@ -73,7 +73,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                 <CardContent>
                   <CardTitle className="text-2xl pb-6 font-semibold">{title}</CardTitle>
                   {image && (
-                    <div>
+                    <div className="shadow-xs">
                       <img
                         src={image}
                         alt={title}
@@ -81,8 +81,8 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                       />
                     </div>
                   )}
-                  <p className="mt-2 text-sm text-gray-700 line-clamp-3">
-                    {content}
+                  <p className="mt-4 text-md text-foreground line-clamp-3">
+                  <b>{profiles?.username}</b> {content}
                   </p>
                 </CardContent>
               </Link>

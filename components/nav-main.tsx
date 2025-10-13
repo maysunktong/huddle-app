@@ -40,7 +40,7 @@ export function NavMain({
                       "flex items-center gap-2 duration-200 ease-linear cursor-pointer",
                       isActive
                         ? "bg-black text-white hover:bg-black hover:text-white"
-                        : "text-black hover:bg-accent hover:text-foreground"
+                        : "text-foreground hover:bg-accent hover:text-foreground"
                     )}
                   >
                     {item.icon && <item.icon className="w-4 h-4" />}

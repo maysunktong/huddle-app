@@ -64,7 +64,7 @@ export default function SinglePost() {
         )}
         <CardHeader className="flex gap-2 justify-between items-center">
           <Link href="/" className="hover:underline text-sm font-bold rounded-full bg-[#dfdcf8] hover:bg-[#C4BCFF]  p-2">
-            <ArrowLeft size={24} />
+            <ArrowLeft size={24} className="text-black"/>
           </Link>
           <div className="flex gap-2">
             <Avatar className="rounded-md">

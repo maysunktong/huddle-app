@@ -59,18 +59,18 @@ export default function UsersPosts() {
     return <p className="text-center text-gray-500">No posts found.</p>;
 
   return (
-    <div className="grid grid-cols-1 gap-6 p-4 max-w-2xl mx-auto">
+    <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto">
       {data.map(({ id, title, content, slug, profiles, image, author_id }) => {
         const isOwner = author_id === currentUserId;
 
         return (
           <Card
             key={id}
-            className="relative group transition-all duration-200 hover:shadow-lg"
+            className="relative group transition-all duration-200"
           >
             {/* Floating Settings Button */}
             {isOwner && (
-              <div className="absolute top-3 right-3 z-10">
+              <div className="absolute top-5 right-0 z-10">
                 <CardSettingButton postId={id} initialTitle={title} />
               </div>
             )}
