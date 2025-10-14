@@ -5,6 +5,12 @@ import { SiteHeader } from "../../components/site-header";
 import { SidebarProvider, SidebarInset } from "../../components/ui/sidebar";
 import { ThemeProviderWrapper } from "../../providers/theme-provider";
 import { Toaster } from "sonner";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Huddle",
+  description: "Inner circle",
+};
 
 export default function AuthLayout({
   children,
