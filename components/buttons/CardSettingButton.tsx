@@ -47,7 +47,7 @@ export function CardSettingButton({
           <DropdownMenuContent
             side={isMobile ? "bottom" : "right"}
             align="end"
-            sideOffset={2}
+            sideOffset={0}
           >
             <DropdownMenuGroup>
               <div>

@@ -11,17 +11,20 @@ export const getHomePosts = async (
     .order("created_at", { ascending: false });
 };
 
-export async function getUsersPosts(supabase: ReturnType<typeof createClient>) {
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return { data: [], error: null };
-  }
-
+export async function getUserPosts(supabase: ReturnType<typeof createClient>, userId: string) {
   return await supabase
     .from("posts")
-    .select("id, title, content, slug, created_at, profiles(id, username)")
-    .eq("author_id", user.id)
+    .select(`
+      id,
+      title,
+      content,
+      slug,
+      image,
+      author_id,
+      created_at,
+      profiles(username)
+    `)
+    .eq("author_id", userId) 
     .order("created_at", { ascending: false });
 }
 

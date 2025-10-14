@@ -21,8 +21,10 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
 
   useEffect(() => {
     const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setCurrentUserId(data.user?.id ?? null);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setCurrentUserId(user?.id ?? null);
     };
     getUser();
   }, [supabase]);
@@ -47,10 +49,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
           const isOwner = profiles?.id === currentUserId;
 
           return (
-            <Card
-              key={id}
-              className="relative group duration-200 border-0"
-            >
+            <Card key={id} className="relative group duration-200 border-0">
               {isOwner && (
                 <div className="absolute top-5 right-0 z-10">
                   <CardSettingButton postId={id} initialTitle={title} />
@@ -71,7 +70,9 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
               </CardHeader>
               <Link href={`/posts/${slug}`}>
                 <CardContent>
-                  <CardTitle className="text-2xl pb-6 font-semibold">{title}</CardTitle>
+                  <CardTitle className="text-2xl pb-6 font-semibold">
+                    {title}
+                  </CardTitle>
                   {image && (
                     <div className="shadow-xs">
                       <img
@@ -82,7 +83,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                     </div>
                   )}
                   <p className="mt-4 text-md text-foreground line-clamp-3">
-                  <b>{profiles?.username}</b> {content}
+                    <b>{profiles?.username}</b> {content}
                   </p>
                 </CardContent>
               </Link>

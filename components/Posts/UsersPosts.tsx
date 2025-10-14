@@ -14,7 +14,7 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { getUserPosts } from "../../utils/supabase/queries";
 
 export default function UsersPosts() {
   const supabase = createClient();
@@ -22,31 +22,23 @@ export default function UsersPosts() {
 
   useEffect(() => {
     const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setCurrentUserId(data.user?.id ?? null);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setCurrentUserId(user?.id ?? null);
     };
     getUser();
   }, [supabase]);
 
-  const { data, error } = useQuery({
-    queryKey: ["users-posts"],
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["user-posts", currentUserId],
     queryFn: async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return [];
-
-      const { data, error } = await supabase
-        .from("posts")
-        .select(
-          "id, title, slug, content, created_at, author_id, profiles(username), image"
-        )
-        .eq("author_id", user.id)
-        .order("created_at", { ascending: false });
-
+      if (!currentUserId) return []; 
+      const { data, error } = await getUserPosts(supabase, currentUserId);
       if (error) throw new Error(error.message);
       return data;
     },
+    enabled: !!currentUserId,
     refetchOnMount: "always",
     refetchInterval: 3000,
     staleTime: 10000,
@@ -59,24 +51,21 @@ export default function UsersPosts() {
     return <p className="text-center text-gray-500">No posts found.</p>;
 
   return (
-    <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto">
+    <div className="grid grid-col-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
       {data.map(({ id, title, content, slug, profiles, image, author_id }) => {
         const isOwner = author_id === currentUserId;
 
         return (
-          <Card
-            key={id}
-            className="relative group transition-all duration-200"
-          >
+          <Card key={id} className="relative group transition-all duration-200">
             {/* Floating Settings Button */}
             {isOwner && (
-              <div className="absolute top-5 right-0 z-10">
+              <div className="absolute top-5 right-1 z-10">
                 <CardSettingButton postId={id} initialTitle={title} />
               </div>
             )}
 
             {/* Header */}
-            <CardHeader className="flex gap-2 justify-start items-center">
+            {/* <CardHeader className="flex gap-2 justify-start items-center">
               <Avatar className="rounded-md">
                 <AvatarImage
                   src="https://github.com/evilrabbit.png"
@@ -87,12 +76,12 @@ export default function UsersPosts() {
               <CardDescription className="text-sm text-muted-foreground">
                 by {profiles?.username ?? "Unknown"}
               </CardDescription>
-            </CardHeader>
+            </CardHeader> */}
 
             {/* Content */}
             <Link href={`/posts/${slug}`}>
               <CardContent>
-                <CardTitle className="text-2xl pb-6 font-semibold">
+                <CardTitle className="text-md pb-6 font-semibold">
                   {title}
                 </CardTitle>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { createClient } from "../../../../utils/supabase/client";
 import {
@@ -19,6 +19,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { CardSettingButton } from "../../../../components/buttons/CardSettingButton";
 import { ArrowLeft, ArrowLeftCircle } from "lucide-react";
+import router from "next/router";
 
 export default function SinglePost() {
   const params = useParams();
@@ -28,6 +29,8 @@ export default function SinglePost() {
   const [post, setPost] = useState<SinglePostsType | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -63,9 +66,14 @@ export default function SinglePost() {
           </div>
         )}
         <CardHeader className="flex gap-2 justify-between items-center">
-          <Link href="/" className="hover:underline text-sm font-bold rounded-full bg-[#dfdcf8] hover:bg-[#C4BCFF]  p-2">
-            <ArrowLeft size={24} className="text-black"/>
-          </Link>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="hover:underline text-sm font-bold rounded-full bg-[#dfdcf8] hover:bg-[#C4BCFF]  p-2"
+          >
+            {""}
+            <ArrowLeft size={24} className="text-black" />
+          </button>
           <div className="flex gap-2">
             <Avatar className="rounded-md">
               <AvatarImage
@@ -85,9 +93,7 @@ export default function SinglePost() {
         </CardHeader>
 
         <CardContent>
-          <CardTitle className="text-3xl pb-6 font-semibold">
-            {title}
-          </CardTitle>
+          <CardTitle className="text-3xl pb-6 font-semibold">{title}</CardTitle>
 
           {image && (
             <div className="px-2">
