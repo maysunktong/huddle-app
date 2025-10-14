@@ -50,7 +50,7 @@ export default function SinglePost() {
   }, [slug, supabase]);
 
   if (error) return <p className="text-red-500 text-center">{error}</p>;
-  if (!post) return <p className="text-center">Loading...</p>;
+  if (!post) return;
 
   const { id, title, content, image, author_id, profiles } = post;
   const isOwner = author_id === currentUserId;

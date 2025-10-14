@@ -39,7 +39,7 @@ export default function UsersPosts() {
 
   if (error)
     return <p className="text-red-500 text-center">Error loading posts</p>;
-  if (!data) return <p className="text-center">Loading...</p>;
+  if (!data) return;
   if (data.length === 0) return <NoPostElement />;
 
   return (
