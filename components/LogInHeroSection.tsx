@@ -167,7 +167,7 @@ export default function LogInHeroSection() {
       <div className="relative flex items-center justify-center">
         <img
           id="discoball"
-          src="/background/discoball.png"
+          src="/images/discoball.png"
           alt="disco-ball"
           className="w-80 h-80 select-none"
         />

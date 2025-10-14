@@ -53,7 +53,7 @@ export default function DiscoBallWithWords() {
       <div className="relative flex items-center justify-center">
         <img
           id="discoball"
-          src="/background/discoball.png"
+          src="/images/discoball.png"
           alt="disco-ball"
           className="w-40 h-40 select-none"
         />
