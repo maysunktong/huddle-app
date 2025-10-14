@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/sidebar";
 import { DeleteButton } from "./DeleteButton";
 import { EditButton } from "./EditButton";
-import { PencilIcon } from "lucide-react";
 
 export function CardSettingButton({
   postId,

@@ -1,6 +1,6 @@
 import LogInForm from "./LogInForm";
-import LogInHeroSection from "../../../components/home/LogInHeroSection";
-import DiscoBall from "../../../components/home/DiscoBall";
+import LogInHeroSection from "../../../components/LogInHeroSection";
+import DiscoBall from "../../../components/DiscoBall";
 import Logo from "../../../components/Logo";
 
 export default function LogInPage() {

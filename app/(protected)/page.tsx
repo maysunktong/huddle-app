@@ -1,8 +1,8 @@
 import { createClient } from "@/utils/supabase/client";
 import { getHomePosts } from "@/utils/supabase/queries";
 import PostsList from "../../components/PostsList";
-import { NoPostElement } from "../../components/posts/NoPostElement";
-import LoginToast from "../../components/auth-ui/LogInToast";
+import { NoPostElement } from "../../components/NoPostElement";
+import LoginToast from "../../components/LogInToast";
 
 export const revalidate = 600;
 

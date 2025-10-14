@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { SignUp } from "../../../actions/sign-up";
 import { signUpSchema } from "../../../schemas/zod.schemas";
-import ErrorMessage from "../../../components/Form/ErrorMessage";
+import ErrorMessage from "../../../components/ErrorMessage";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";

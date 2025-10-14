@@ -23,7 +23,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import ErrorMessage from "../../../components/Form/ErrorMessage";
+import ErrorMessage from "../../../components/ErrorMessage";
 import { toast } from "sonner";
 import router from "next/router";
 

@@ -1,17 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { createClient } from "../../utils/supabase/client";
-import { CardSettingButton } from "../buttons/CardSettingButton";
-import {
-  Card,
-  CardContent,
-  CardTitle,
-} from "@/components/ui/card";
-import { getUserPosts } from "../../utils/supabase/queries";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { getUserPosts } from "../utils/supabase/queries";
+import { CardSettingButton } from "./CardSettingButton";
 import { NoPostElement } from "./NoPostElement";
+import { Card, CardContent, CardTitle } from "./ui/card";
+import { createClient } from "../utils/supabase/client";
 
 export default function UsersPosts() {
   const supabase = createClient();

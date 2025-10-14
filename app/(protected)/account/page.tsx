@@ -1,6 +1,6 @@
 "use client";
 
-import LogOutButton from "../../../components/auth-ui/LogOutButton";
+import LogOutButton from "../../../components/LogOutButton";
 
 export default function AccountPage() {
   return (

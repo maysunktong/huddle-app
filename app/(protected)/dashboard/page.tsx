@@ -1,6 +1,6 @@
 "use client";
 
-import UsersPosts from "../../../components/posts/UsersPosts";
+import UsersPosts from "@/components/UsersPosts";
 
 export default function Dashboard() {
   return (

@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CardSettingButton } from "./buttons/CardSettingButton";
+import { CardSettingButton } from "./CardSettingButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function PostsList({ posts }: { posts: HomePostsType }) {

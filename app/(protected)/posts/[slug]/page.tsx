@@ -3,7 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { createClient } from "../../../../utils/supabase/client";
-import { SinglePostsType, getSinglePost } from "../../../../utils/supabase/queries";
+import {
+  SinglePostsType,
+  getSinglePost,
+} from "../../../../utils/supabase/queries";
 
 import {
   Card,
@@ -13,7 +16,7 @@ import {
   CardTitle,
 } from "../../../../components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { CardSettingButton } from "../../../../components/buttons/CardSettingButton";
+import { CardSettingButton } from "../../../../components/CardSettingButton";
 import { ArrowLeft } from "lucide-react";
 
 export default function SinglePost() {
@@ -74,7 +77,9 @@ export default function SinglePost() {
           <div className="flex gap-2 items-center">
             <Avatar className="rounded-md">
               <AvatarImage
-                src={profiles?.avatar_url || "https://github.com/evilrabbit.png"}
+                src={
+                  profiles?.avatar_url || "https://github.com/evilrabbit.png"
+                }
                 alt={profiles?.username || "User"}
               />
               <AvatarFallback>
@@ -100,7 +105,9 @@ export default function SinglePost() {
             </div>
           )}
 
-          <p className="mt-4 text-sm text-gray-700 whitespace-pre-line">{content}</p>
+          <p className="mt-4 text-sm text-gray-700 whitespace-pre-line">
+            {content}
+          </p>
         </CardContent>
       </Card>
     </div>
