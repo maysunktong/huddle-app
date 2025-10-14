@@ -24,8 +24,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import ErrorMessage from "../../../components/ErrorMessage";
-import { toast } from "sonner";
-import router from "next/router";
 
 const LogInForm = ({ className }: { className?: string }) => {
   const {

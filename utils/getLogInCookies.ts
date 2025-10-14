@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export async function checkLoginCookie() {
+export async function getLoginCookie() {
   const cookieStore = await cookies();
   const hasCookie = cookieStore.get("login_success");
   if (hasCookie) {

@@ -3,12 +3,12 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { createClient } from "../utils/supabase/client";
-import { checkLoginCookie } from "../utils/getLogInCookies";
+import { getLoginCookie } from "../utils/getLogInCookies";
 
 export default function LoginToast() {
   useEffect(() => {
     const checkCookie = async () => {
-      const hasToastCookie = await checkLoginCookie();
+      const hasToastCookie = await getLoginCookie();
       if (!hasToastCookie) return;
 
       const supabase = createClient();
@@ -26,7 +26,7 @@ export default function LoginToast() {
 
       const username = profileData?.username ?? "User";
 
-      toast.success(`Welcome back, ${username}!`);
+      toast.success(`Welcome, ${username}!`);
     };
 
     checkCookie();
