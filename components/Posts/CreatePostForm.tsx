@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CirclePlusIcon } from "lucide-react";
+import { toast } from "sonner";
 
 const CreatePostDialog = () => {
   const [open, setOpen] = useState(false);
@@ -50,7 +51,7 @@ const CreatePostDialog = () => {
     onSuccess: () => {
       toast.success("Post added successfully!");
       reset();
-      setOpen(false); // 👈 Close modal after success
+      setOpen(false);
     },
     onError: (err: any) => {
       if (

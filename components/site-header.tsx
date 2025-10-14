@@ -13,7 +13,7 @@ import Logo from "./Logo";
 import { DialogHeader, DialogFooter } from "./ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import CreatePostForm from "./Posts/CreatePostForm";
+import CreatePostForm from "./posts/CreatePostForm";
 
 export function SiteHeader() {
   return (
