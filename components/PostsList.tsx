@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { HomePostsType, getHomePosts } from "../../utils/supabase/queries";
-import { createClient } from "../../utils/supabase/client";
+import { HomePostsType, getHomePosts } from "../utils/supabase/queries";
+import { createClient } from "../utils/supabase/client";
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CardSettingButton } from "../buttons/CardSettingButton";
+import { CardSettingButton } from "./buttons/CardSettingButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function PostsList({ posts }: { posts: HomePostsType }) {

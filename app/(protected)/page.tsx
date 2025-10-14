@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/client";
 import { getHomePosts } from "@/utils/supabase/queries";
-import PostsList from "../../components/posts/PostsList";
+import PostsList from "../../components/PostsList";
 import { NoPostElement } from "../../components/posts/NoPostElement";
 import LoginToast from "../../components/auth-ui/LogInToast";
 
