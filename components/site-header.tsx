@@ -1,7 +1,7 @@
-"use client"
+"use client";
 import { Separator } from "@/components/ui/separator";
 import Logo from "./Logo";
-import CreatePostForm from "./posts/CreatePostForm";
+import CreatePostForm from "./CreatePostForm";
 import { SidebarTrigger } from "./ui/sidebar";
 
 export function SiteHeader() {
