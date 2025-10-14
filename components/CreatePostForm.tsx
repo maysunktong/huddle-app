@@ -27,7 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CirclePlusIcon } from "lucide-react";
 import { toast } from "sonner";
 
-const CreatePostDialog = () => {
+const CreatePostDialog = ({text = "Create Post"}: {text:string}) => {
   const [open, setOpen] = useState(false);
 
   const schemaWithImage = addPostSchema.omit({ image: true }).extend({
@@ -80,7 +80,7 @@ const CreatePostDialog = () => {
       <DialogTrigger asChild>
         <Button variant="outline">
           <CirclePlusIcon />
-          Post
+          {text}
         </Button>
       </DialogTrigger>
 

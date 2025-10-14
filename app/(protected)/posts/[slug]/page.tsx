@@ -68,7 +68,7 @@ export default function SinglePost() {
           <button
             type="button"
             onClick={() => router.back()}
-            className="hover:underline text-sm font-bold rounded-full bg-[#dfdcf8] hover:bg-[#C4BCFF] p-2"
+            className="hover:underline text-sm font-bold rounded-full bg-[#dfdcf8] hover:bg-[#C4BCFF] p-2 cursor-pointer"
           >
             {""}
             <ArrowLeft size={24} className="text-black" />

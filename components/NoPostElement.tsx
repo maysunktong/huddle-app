@@ -1,5 +1,4 @@
-import { IconFolderCode } from "@tabler/icons-react";
-import { ArrowUpRightIcon } from "lucide-react";
+import { ArrowUpRightIcon, Spool } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,36 +9,28 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import CreatePostDialog from "./CreatePostForm";
 
 export function NoPostElement() {
   return (
-    <Empty>
+    <Empty className="flex flex-col items-center justify-center h-[80vh] w-full">
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <IconFolderCode />
+          <Spool />
         </EmptyMedia>
-        <EmptyTitle>No Projects Yet</EmptyTitle>
+        <EmptyTitle>No Posts Yet</EmptyTitle>
         <EmptyDescription>
-          You haven&apos;t created any projects yet. Get started by creating
-          your first project.
+          You haven&apos;t created any posts yet.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <div className="flex gap-2">
-          <Button>Create Project</Button>
-          <Button variant="outline">Import Project</Button>
+          <Button variant="default">
+            <a href="/">Go to Home</a>
+          </Button>
+          <CreatePostDialog text="New Post" />
         </div>
       </EmptyContent>
-      <Button
-        variant="link"
-        asChild
-        className="text-muted-foreground"
-        size="sm"
-      >
-        <a href="#">
-          Learn More <ArrowUpRightIcon />
-        </a>
-      </Button>
     </Empty>
   );
 }
