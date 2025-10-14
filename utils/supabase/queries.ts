@@ -77,5 +77,5 @@ export async function updatePost(
 
 export type HomePostsType = QueryData<ReturnType<typeof getHomePosts>>;
 export type SinglePostsType = QueryData<ReturnType<typeof getSinglePost>>;
-export type UsersPostsType = QueryData<ReturnType<typeof getUsersPosts>>;
+export type UsersPostsType = QueryData<ReturnType<typeof getUserPosts>>;
 export type UpdatePostType = QueryData<ReturnType<typeof updatePost>>;
