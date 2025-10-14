@@ -41,7 +41,6 @@ export function NavUser() {
     avatar: string;
   } | null>(null);
 
-  // ✅ Fetch current user info from Supabase
   useEffect(() => {
     const fetchUser = async () => {
       const { data: authData } = await supabase.auth.getUser();
