@@ -8,7 +8,7 @@ import { getLoginCookie } from "../utils/getLogInCookies";
 export default function LoginToast() {
   useEffect(() => {
     const checkCookie = async () => {
-      const hasToastCookie = getLoginCookie();
+      const hasToastCookie = await getLoginCookie();
       if (!hasToastCookie) return;
 
       const supabase = createClient();

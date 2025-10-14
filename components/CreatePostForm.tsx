@@ -27,7 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CirclePlusIcon } from "lucide-react";
 import { toast } from "sonner";
 
-const CreatePostDialog = ({text = "Create Post"}: {text?:string}) => {
+const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
   const [open, setOpen] = useState(false);
 
   const schemaWithImage = addPostSchema.omit({ image: true }).extend({
@@ -49,9 +49,11 @@ const CreatePostDialog = ({text = "Create Post"}: {text?:string}) => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: CreatePost,
     onSuccess: () => {
-      toast.success("Post added successfully!");
       reset();
       setOpen(false);
+      setTimeout(() => {
+        toast.success("Post added successfully!");
+      }, 1000);
     },
     onError: (err: any) => {
       if (

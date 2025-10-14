@@ -14,7 +14,9 @@ export function DeleteButton({ postId }: DeleteButtonProps) {
   const { mutate, isPending } = useMutation({
     mutationFn: () => deletePost(postId),
     onSuccess: () => {
-      toast.success("Post deleted successfully!");
+      setTimeout(() => {
+        toast.success("Post deleted successfully!");
+      }, 1000);
     },
     onError: (err: any) => {
       toast.error(err.message || "Failed to delete post");
