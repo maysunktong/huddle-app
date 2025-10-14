@@ -57,7 +57,7 @@ export function EditButton({
         <Button
           variant="ghost"
           size="sm"
-          className="border-0 w-full flex justify-start items-center shadow-0 cursor-pointer"
+          className="border-0 w-full flex justify-start items-center shadow-0"
         >
           <PencilIcon />
           Edit
