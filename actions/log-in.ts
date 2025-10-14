@@ -9,7 +9,7 @@ import { createServerClient } from "../utils/supabase/server";
 import { cookies } from "next/headers";
 
 export const LogIn = async (userdata: z.infer<typeof logInSchema>) => {
-
+  const cookieStore = await cookies();
   const parsedData = logInSchema.parse(userdata);
 
   const supabase = await createServerClient();
@@ -19,7 +19,7 @@ export const LogIn = async (userdata: z.infer<typeof logInSchema>) => {
   } = await supabase.auth.signInWithPassword(parsedData);
 
 
-  cookies().set("login_success", "true", {
+  cookieStore.set("login_success", "true", {
     path: "/",
     maxAge: 10,
   });
