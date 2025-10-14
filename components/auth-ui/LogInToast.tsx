@@ -2,13 +2,14 @@
 
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { checkLoginCookie } from "../editor/utils/getLogInCookies";
 import { createClient } from "../../utils/supabase/client";
+import { checkLoginCookie } from "../../utils/getLogInCookies";
 
 export default function LoginToast() {
   useEffect(() => {
     const checkCookie = async () => {
       const hasToastCookie = await checkLoginCookie();
+      if (!hasToastCookie) return;
 
       const supabase = createClient();
       const {
