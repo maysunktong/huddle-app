@@ -1,19 +1,8 @@
+"use client"
 import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from "@radix-ui/react-dialog";
-import { Button } from "./ui/button";
 import Logo from "./Logo";
-import { DialogHeader, DialogFooter } from "./ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import CreatePostForm from "./posts/CreatePostForm";
+import { SidebarTrigger } from "./ui/sidebar";
 
 export function SiteHeader() {
   return (
