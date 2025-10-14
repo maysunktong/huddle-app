@@ -24,6 +24,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import ErrorMessage from "../../../components/Form/ErrorMessage";
+import { toast } from "sonner";
+import router from "next/router";
 
 const LogInForm = ({ className }: { className?: string }) => {
   const {
@@ -47,7 +49,9 @@ const LogInForm = ({ className }: { className?: string }) => {
         <FieldGroup>
           {/* Header */}
           <div className="flex flex-col items-center gap-1 text-center">
-            <h1 className="text-2xl font-bold text-white md:text-foreground">Login to your account</h1>
+            <h1 className="text-2xl font-bold text-white md:text-foreground">
+              Login to your account
+            </h1>
           </div>
 
           {/* Email */}

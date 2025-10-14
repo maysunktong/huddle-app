@@ -4,8 +4,6 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createClient } from "../../utils/supabase/client";
 import { updatePost } from "../../utils/supabase/queries";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -55,7 +53,7 @@ export function EditButton({
     <Dialog open={open} onOpenChange={setOpen}>
       {/* Trigger */}
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="border-0 w-full flex justify-start items-center shadow-0">
+        <Button variant="ghost" size="sm" className="border-0 w-full flex justify-start items-center shadow-0 cursor-pointer">
           <PencilIcon />
           Edit
         </Button>

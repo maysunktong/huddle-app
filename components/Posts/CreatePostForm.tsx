@@ -5,8 +5,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import ErrorMessage from "../Form/ErrorMessage";
 import { addPostSchema } from "../../schemas/zod.schemas";

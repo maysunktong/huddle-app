@@ -1,10 +1,9 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { deletePost } from "@/actions/delete-post";
+import { IconTrash } from "@tabler/icons-react";
 
 type DeleteButtonProps = {
   postId: string;
@@ -22,7 +21,8 @@ export function DeleteButton({ postId }: DeleteButtonProps) {
   });
 
   return (
-    <button type="button" onClick={() => mutate()} disabled={isPending}>
+    <button type="button" onClick={() => mutate()} disabled={isPending} className="flex gap-2 justify-center items-center cursor-pointer">
+      <IconTrash />
       {isPending ? "Deleting..." : "Delete"}
     </button>
   );

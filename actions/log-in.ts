@@ -6,6 +6,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { logInSchema } from "../schemas/zod.schemas";
 import { createServerClient } from "../utils/supabase/server";
+import { cookies } from "next/headers";
 
 export const LogIn = async (userdata: z.infer<typeof logInSchema>) => {
 
@@ -13,9 +14,16 @@ export const LogIn = async (userdata: z.infer<typeof logInSchema>) => {
 
   const supabase = await createServerClient();
   const {
-    data,
+    data: { user },
     error,
   } = await supabase.auth.signInWithPassword(parsedData);
+
+
+  cookies().set("login_success", "true", {
+    path: "/",
+    maxAge: 10,
+  });
+
 
   if (error) throw new Error(error.message);
 

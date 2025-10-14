@@ -4,17 +4,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "../../utils/supabase/client";
-import { DeleteButton } from "../buttons/DeleteButton";
-import { EditButton } from "../buttons/EditButton";
 import { CardSettingButton } from "../buttons/CardSettingButton";
 import {
   Card,
-  CardHeader,
   CardContent,
-  CardDescription,
   CardTitle,
 } from "@/components/ui/card";
 import { getUserPosts } from "../../utils/supabase/queries";
+import { NoPostElement } from "./NoPostElement";
 
 export default function UsersPosts() {
   const supabase = createClient();
@@ -33,7 +30,7 @@ export default function UsersPosts() {
   const { data, error, isLoading } = useQuery({
     queryKey: ["user-posts", currentUserId],
     queryFn: async () => {
-      if (!currentUserId) return []; 
+      if (!currentUserId) return [];
       const { data, error } = await getUserPosts(supabase, currentUserId);
       if (error) throw new Error(error.message);
       return data;
@@ -47,11 +44,10 @@ export default function UsersPosts() {
   if (error)
     return <p className="text-red-500 text-center">Error loading posts</p>;
   if (!data) return <p className="text-center">Loading...</p>;
-  if (data.length === 0)
-    return <p className="text-center text-gray-500">No posts found.</p>;
+  if (data.length === 0) return <NoPostElement />;
 
   return (
-    <div className="grid grid-col-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
+    <div className="grid grid-col-1 gap-6 max-w-xl mx-auto">
       {data.map(({ id, title, content, slug, profiles, image, author_id }) => {
         const isOwner = author_id === currentUserId;
 
@@ -81,7 +77,7 @@ export default function UsersPosts() {
             {/* Content */}
             <Link href={`/posts/${slug}`}>
               <CardContent>
-                <CardTitle className="text-md pb-6 font-semibold">
+                <CardTitle className="text-lg pb-6 font-semibold">
                   {title}
                 </CardTitle>
 

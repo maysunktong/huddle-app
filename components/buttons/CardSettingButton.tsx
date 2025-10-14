@@ -41,7 +41,7 @@ export function CardSettingButton({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton>
-              <IconDotsVertical className="ml-auto size-4" />
+              <IconDotsVertical className="ml-auto cursor-pointer" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -54,7 +54,6 @@ export function CardSettingButton({
                 <EditButton postId={postId} initialTitle={initialTitle} />
               </div>
               <DropdownMenuItem className="text-gray-500">
-                <IconTrash />
                 <DeleteButton postId={postId} />
               </DropdownMenuItem>
             </DropdownMenuGroup>

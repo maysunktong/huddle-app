@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import { QueryClientProvider } from "../../providers/provider-tanstack";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Huddle",
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <QueryClientProvider>
+          <Toaster />
           {children}
         </QueryClientProvider>
       </body>

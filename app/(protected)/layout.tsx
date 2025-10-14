@@ -4,6 +4,7 @@ import { AppSidebar } from "../../components/app-sidebar";
 import { SiteHeader } from "../../components/site-header";
 import { SidebarProvider, SidebarInset } from "../../components/ui/sidebar";
 import { ThemeProviderWrapper } from "../../providers/theme-provider";
+import { Toaster } from "sonner";
 
 export default function AuthLayout({
   children,
@@ -13,6 +14,7 @@ export default function AuthLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
+        <Toaster />
         <ThemeProviderWrapper>
           <QueryClientProvider>
             <SidebarProvider

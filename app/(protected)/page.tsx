@@ -1,11 +1,14 @@
 import { createClient } from "@/utils/supabase/client";
 import { getHomePosts } from "@/utils/supabase/queries";
 import PostsList from "../../components/Posts/PostsList";
+import { NoPostElement } from "../../components/Posts/NoPostElement";
+import LoginToast from "../../components/auth-ui/LogInToast";
 
 export const revalidate = 600;
 
 export default async function Home() {
   const supabase = createClient();
+
   const { data: posts, error } = await getHomePosts(supabase);
   if (error) {
     console.error("Error fetching posts:", error.message);
@@ -17,11 +20,12 @@ export default async function Home() {
   }
 
   if (!posts || posts.length === 0) {
-    return <p>No posts found.</p>;
+    return <NoPostElement />;
   }
 
   return (
     <>
+      <LoginToast />
       <PostsList posts={posts!} />
     </>
   );
