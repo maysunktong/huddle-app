@@ -130,20 +130,26 @@ export type Database = {
       }
       logs: {
         Row: {
-          action: string | null
+          action: string
           created_at: string | null
+          entity: string | null
+          entity_id: string | null
           id: string
           user_id: string
         }
         Insert: {
-          action?: string | null
+          action: string
           created_at?: string | null
+          entity?: string | null
+          entity_id?: string | null
           id?: string
           user_id: string
         }
         Update: {
-          action?: string | null
+          action?: string
           created_at?: string | null
+          entity?: string | null
+          entity_id?: string | null
           id?: string
           user_id?: string
         }

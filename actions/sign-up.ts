@@ -5,6 +5,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { signUpSchema } from "../schemas/zod.schemas";
 import { createServerClient } from "../utils/supabase/server";
+import { id } from "zod/v4/locales";
 
 export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
   const supabaseServer = await createServerClient();
@@ -12,9 +13,6 @@ export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
   const { data, error } = await supabaseServer.auth.signUp({
     email: userdata.email,
     password: userdata.password,
-    options: {
-      data: { username: userdata.username },
-    },
   });
 
   if (error) {
@@ -35,6 +33,16 @@ export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
       });
 
     if (profileError) throw new Error(profileError.message);
+
+    const { error: activityLogError } = await supabaseServer.from("logs")
+      .insert({
+        user_id: data.user.id,
+        action: "Sign up",
+        entity: "new account",
+        entity_id: data.user.id
+      })
+
+    if (activityLogError) throw new Error(activityLogError.message);
 
     await supabaseServer.auth.signOut();
   }

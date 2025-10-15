@@ -7,7 +7,16 @@ export const getHomePosts = async (
 ) => {
   return await supabase
     .from("posts")
-    .select("id, title, content, slug, created_at, profiles(id, username), image")
+    .select(`
+      id,
+      title,
+      content,
+      slug,
+      image,
+      author_id,
+      created_at,
+      profiles(id, username)
+    `)
     .order("created_at", { ascending: false });
 };
 
@@ -24,7 +33,7 @@ export async function getUserPosts(supabase: ReturnType<typeof createClient>, us
       created_at,
       profiles(username)
     `)
-    .eq("author_id", userId) 
+    .eq("author_id", userId)
     .order("created_at", { ascending: false });
 }
 
@@ -69,13 +78,39 @@ export async function updatePost(
     .from("posts")
     .update(values)
     .eq("id", postId)
-    .select()
+    .select(`
+      id,
+      title,
+      content,
+      slug,
+      image,
+      author_id,
+      created_at,
+      profiles(username)
+    `)
     .single();
 
   return { data, error };
+}
+
+export async function getActivityLogs(
+  supabase: ReturnType<typeof createClient>,
+  userId: string,
+  values: { action?: string; slug?: string; content?: string }
+) {
+  const { data, error } = await supabase
+    .from("logs")
+    .update(values)
+    .eq("id", userId)
+    .select("id, action, entity, entity_id, created_at")
+    .single();
+
+  return { data, error };
+
 }
 
 export type HomePostsType = QueryData<ReturnType<typeof getHomePosts>>;
 export type SinglePostsType = QueryData<ReturnType<typeof getSinglePost>>;
 export type UsersPostsType = QueryData<ReturnType<typeof getUserPosts>>;
 export type UpdatePostType = QueryData<ReturnType<typeof updatePost>>;
+export type ActivityLogsType = QueryData<ReturnType<typeof getActivityLogs>>
