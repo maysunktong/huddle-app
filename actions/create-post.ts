@@ -10,8 +10,6 @@ import { uploadImage } from "../utils/supabase/upload-image";
 const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
   const parsedData = addPostSchema.parse(userdata);
 
-
-
   const imageFile = userdata.image!.get('image');
   if (!(imageFile instanceof File) && imageFile !== null) {
     throw new Error("Malformed image file")
@@ -24,10 +22,6 @@ const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
     data: { user },
     error: userError,
   } = await supabase.auth.getUser();
-
-  if (userError || !user) {
-    throw new Error("Not authenticated");
-  }
 
   if (user) {
     const { error } = await supabase
