@@ -23,7 +23,8 @@ const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
     error: userError,
   } = await supabase.auth.getUser();
 
-  if (user) {
+  if (!user) return { error: 'Not Authorized' };
+
     const { error } = await supabase
       .from("posts")
       .insert({
@@ -34,7 +35,6 @@ const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
       });
 
     if (error) throw new Error(error.message)
-  }
 
   revalidatePath("/", "layout");
 };
