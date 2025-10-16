@@ -35,13 +35,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "fk_booking_facility_id"
-            columns: ["facility_id"]
-            isOneToOne: false
-            referencedRelation: "facilities"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "fk_booking_user_id"
             columns: ["user_id"]
             isOneToOne: false
@@ -98,36 +91,6 @@ export type Database = {
           },
         ]
       }
-      facilities: {
-        Row: {
-          description: string | null
-          duration: string | null
-          id: number
-          location: string | null
-          service_name: string | null
-          time_closed: string | null
-          time_open: string | null
-        }
-        Insert: {
-          description?: string | null
-          duration?: string | null
-          id?: never
-          location?: string | null
-          service_name?: string | null
-          time_closed?: string | null
-          time_open?: string | null
-        }
-        Update: {
-          description?: string | null
-          duration?: string | null
-          id?: never
-          location?: string | null
-          service_name?: string | null
-          time_closed?: string | null
-          time_open?: string | null
-        }
-        Relationships: []
-      }
       logs: {
         Row: {
           action: string
@@ -170,7 +133,7 @@ export type Database = {
           content: string | null
           created_at: string | null
           id: string
-          image: string | null
+          images: string[] | null
           slug: string
           title: string
           updated_at: string | null
@@ -181,7 +144,7 @@ export type Database = {
           content?: string | null
           created_at?: string | null
           id?: string
-          image?: string | null
+          images?: string[] | null
           slug: string
           title: string
           updated_at?: string | null
@@ -192,7 +155,7 @@ export type Database = {
           content?: string | null
           created_at?: string | null
           id?: string
-          image?: string | null
+          images?: string[] | null
           slug?: string
           title?: string
           updated_at?: string | null

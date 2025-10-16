@@ -1,17 +1,32 @@
 import { v4 as uuid } from 'uuid';
 import { createServerClient } from './server';
 
-export const uploadImage = async (image: File) => {
+export const uploadImages = async (images: File[]): Promise<string[]> => {
   const supabase = await createServerClient();
-  const BUCKET_NAME = 'images';
+  const BUCKET_NAME = "images";
 
-  const imageName: string[] = image.name.split(".");
-  const path: string = `${imageName[0]}-${uuid()}.${imageName[1]}`;
+  if (!images || images.length === 0) return [];
 
-  const { data, error } = await supabase.storage.from(BUCKET_NAME).upload(path, image);
+  const limitedImages = images.slice(0, 3)
 
-  if (error) throw error;
+  const urls = await Promise.all(
+    limitedImages.map(async (image): Promise<string> => {
+      const [name, ext] = image.name.split(".");
+      const path = `${name}-${uuid()}.${ext}`;
 
-  const { data: { publicUrl } } = await supabase.storage.from(BUCKET_NAME).getPublicUrl(data.path);
-  return publicUrl;
-}
+      const { data, error } = await supabase.storage
+        .from(BUCKET_NAME)
+        .upload(path, image);
+
+      if (error) throw error;
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from(BUCKET_NAME).getPublicUrl(data.path);
+
+      return publicUrl;
+    })
+  );
+
+  return urls;
+};

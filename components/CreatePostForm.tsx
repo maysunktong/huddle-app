@@ -30,7 +30,7 @@ import { toast } from "sonner";
 const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
   const [open, setOpen] = useState(false);
 
-  const schemaWithImage = addPostSchema.omit({ image: true }).extend({
+  const schemaWithImage = addPostSchema.omit({ images: true }).extend({
     image: z
       .unknown()
       .transform((value) => value as FileList)
@@ -67,12 +67,23 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
   });
 
   const onSubmit = handleSubmit((values) => {
+    const files = Array.from(values.image || []);
+
+    if (files.length > 3) {
+      toast.error("You can upload a maximum of 3 images.");
+      return;
+    }
+
     const imageForm = new FormData();
-    if (values.image) imageForm.append("image", values.image[0]);
+    if (values.image && values.image.length > 0) {
+      Array.from(values.image)
+        .filter((file) => file.type.startsWith("image/"))
+        .forEach((file) => imageForm.append("images", file));
+    }
     mutate({
       title: values.title,
       content: values.content,
-      image: imageForm,
+      images: imageForm,
     });
   });
 
@@ -85,7 +96,6 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
           {text}
         </Button>
       </DialogTrigger>
-
       {/* Content */}
       <DialogContent className="sm:max-w-[600px]">
         <form onSubmit={onSubmit}>
@@ -95,7 +105,6 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
               Fill out the details below to publish your post.
             </DialogDescription>
           </DialogHeader>
-
           <div className="grid gap-4 py-4">
             {/* Title */}
             <div className="grid gap-2">
@@ -107,7 +116,6 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
               />
               {errors.title && <ErrorMessage message={errors.title.message!} />}
             </div>
-
             {/* Content */}
             <div className="grid gap-2">
               <Label htmlFor="content">Content</Label>
@@ -120,15 +128,19 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
                 <ErrorMessage message={errors.content.message!} />
               )}
             </div>
-
             {/* Image */}
             <div className="grid gap-2">
               <Label htmlFor="image">Upload image</Label>
-              <Input type="file" id="image" {...register("image")} />
+              <Input
+                type="file"
+                multiple
+                id="image"
+                accept="image/*"
+                {...register("image")}
+              />
               {errors.image && <ErrorMessage message={errors.image.message!} />}
             </div>
           </div>
-
           {/* Footer */}
           <DialogFooter>
             <DialogClose asChild>
@@ -138,7 +150,6 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
               {isPending ? "Posting..." : "Add Post"}
             </Button>
           </DialogFooter>
-
           {error && <ErrorMessage message={error.message} />}
         </form>
       </DialogContent>

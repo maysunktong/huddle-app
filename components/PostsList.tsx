@@ -14,6 +14,13 @@ import {
 } from "@/components/ui/card";
 import { CardSettingButton } from "./CardSettingButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "./ui/carousel";
 
 export default function PostsList({ posts }: { posts: HomePostsType }) {
   const supabase = createClient();
@@ -45,7 +52,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
   return (
     <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto">
       {data &&
-        data.map(({ id, title, content, slug, profiles, image }) => {
+        data.map(({ id, title, content, slug, profiles, images }) => {
           const isOwner = profiles?.id === currentUserId;
 
           return (
@@ -55,7 +62,6 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                   <CardSettingButton postId={id} initialTitle={title} />
                 </div>
               )}
-
               <CardHeader className="flex gap-2 justify-start items-center">
                 <Avatar className="rounded-md">
                   <AvatarImage
@@ -68,29 +74,45 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                   by {profiles?.username}
                 </CardDescription>
               </CardHeader>
-              <Link href={`/posts/${slug}`}>
-                <CardContent>
-                  <CardTitle className="text-2xl pb-6 font-semibold">
+
+              <CardContent>
+                <Link href={`/posts/${slug}`}>
+                  <CardTitle className="text-lg pb-6 font-semibold">
                     {title}
                   </CardTitle>
-                  {image && (
-                    <div className="shadow-xs">
-                      <img
-                        src={image}
-                        alt={title}
-                        className="w-full h-full object-cover rounded-md border"
-                      />
-                    </div>
-                  )}
-                  <p className="mt-4 text-md text-foreground line-clamp-3">
-                    <b>{profiles?.username}</b> {content}
-                  </p>
-                </CardContent>
-              </Link>
+                </Link>
+                {/* Images Carousel */}
+                <Carousel
+                  opts={{
+                    align: "center",
+                    loop: true,
+                  }}
+                  className="w-full h-auto relative"
+                >
+                  <CarouselContent className="h-full w-full">
+                    {images &&
+                      images.map((item, index) => (
+                        <CarouselItem
+                          key={index}
+                          className="max-h-full w-full flex justify-center items-center"
+                        >
+                          <img
+                            src={item}
+                            alt={title || `Image ${index + 1}`}
+                            className="h-full w-full object-cover rounded-md"
+                          />
+                        </CarouselItem>
+                      ))}
+                  </CarouselContent>
+                  <CarouselNext className="absolute top-1/2 right-2 transform -translate-y-1/2 z-50" />
+                </Carousel>
+                <p className="mt-2 text-sm text-gray-700 line-clamp-3">
+                  {content}
+                </p>
+              </CardContent>
             </Card>
           );
         })}
-
       {error && (
         <p className="text-red-500 text-center col-span-full">
           Error loading posts...

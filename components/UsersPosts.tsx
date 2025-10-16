@@ -6,8 +6,23 @@ import { useState, useEffect } from "react";
 import { getUserPosts } from "../utils/supabase/queries";
 import { CardSettingButton } from "./CardSettingButton";
 import { NoPostElement } from "./NoPostElement";
-import { Card, CardContent, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { createClient } from "../utils/supabase/client";
+import image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "./ui/carousel";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 
 export default function UsersPosts() {
   const supabase = createClient();
@@ -44,7 +59,7 @@ export default function UsersPosts() {
 
   return (
     <div className="grid grid-col-1 gap-6 max-w-xl mx-auto">
-      {data.map(({ id, title, content, slug, profiles, image, author_id }) => {
+      {data.map(({ id, title, content, slug, profiles, images, author_id }) => {
         const isOwner = author_id === currentUserId;
 
         return (
@@ -57,7 +72,7 @@ export default function UsersPosts() {
             )}
 
             {/* Header */}
-            {/* <CardHeader className="flex gap-2 justify-start items-center">
+            <CardHeader className="flex gap-2 justify-start items-center">
               <Avatar className="rounded-md">
                 <AvatarImage
                   src="https://github.com/evilrabbit.png"
@@ -68,30 +83,45 @@ export default function UsersPosts() {
               <CardDescription className="text-sm text-muted-foreground">
                 by {profiles?.username ?? "Unknown"}
               </CardDescription>
-            </CardHeader> */}
+            </CardHeader>
 
             {/* Content */}
-            <Link href={`/posts/${slug}`}>
-              <CardContent>
+
+            <CardContent>
+              <Link href={`/posts/${slug}`}>
                 <CardTitle className="text-lg pb-6 font-semibold">
                   {title}
                 </CardTitle>
-
-                {image && (
-                  <div>
-                    <img
-                      src={image}
-                      alt={title}
-                      className="w-full h-full object-cover rounded-md border"
-                    />
-                  </div>
-                )}
-
-                <p className="mt-2 text-sm text-gray-700 line-clamp-3">
-                  {content}
-                </p>
-              </CardContent>
-            </Link>
+              </Link>
+              {/* Images Carousel */}
+              <Carousel
+                opts={{
+                  align: "center",
+                  loop: true,
+                }}
+                className="w-full h-auto relative"
+              >
+                <CarouselContent className="h-full w-full">
+                  {images &&
+                    images.map((item, index) => (
+                      <CarouselItem
+                        key={index}
+                        className="h-full w-full flex justify-center items-center"
+                      >
+                        <img
+                          src={item}
+                          alt={title || `Image ${index + 1}`}
+                          className="h-full w-full object-cover rounded-md"
+                        />
+                      </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselNext className="absolute top-1/2 right-2 transform -translate-y-1/2 z-50" />
+              </Carousel>
+              <p className="mt-2 text-sm text-gray-700 line-clamp-3">
+                {content}
+              </p>
+            </CardContent>
           </Card>
         );
       })}

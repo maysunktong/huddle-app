@@ -12,7 +12,7 @@ export const getHomePosts = async (
       title,
       content,
       slug,
-      image,
+      images,
       author_id,
       created_at,
       profiles(id, username)
@@ -28,7 +28,7 @@ export async function getUserPosts(supabase: ReturnType<typeof createClient>, us
       title,
       content,
       slug,
-      image,
+      images,
       author_id,
       created_at,
       profiles(username)
@@ -46,7 +46,7 @@ export const getSinglePost = async (slug: string) => {
       title,
       content,
       slug,
-      image,
+      images,
       author_id,
       created_at,
       profiles(username, avatar_url)
@@ -83,7 +83,7 @@ export async function updatePost(
       title,
       content,
       slug,
-      image,
+      images,
       author_id,
       created_at,
       profiles(username)
