@@ -18,7 +18,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
   CarouselNext,
 } from "./ui/carousel";
 
@@ -50,13 +49,13 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto">
+    <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto h-full">
       {data &&
         data.map(({ id, title, content, slug, profiles, images }) => {
           const isOwner = profiles?.id === currentUserId;
 
           return (
-            <Card key={id} className="relative group duration-200 border-0">
+            <Card key={id} className="relative group duration-200">
               {isOwner && (
                 <div className="absolute top-5 right-0 z-10">
                   <CardSettingButton postId={id} initialTitle={title} />
@@ -74,7 +73,6 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                   by {profiles?.username}
                 </CardDescription>
               </CardHeader>
-
               <CardContent>
                 <Link href={`/posts/${slug}`}>
                   <CardTitle className="text-lg pb-6 font-semibold">
@@ -94,7 +92,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                       images.map((item, index) => (
                         <CarouselItem
                           key={index}
-                          className="max-h-full w-full flex justify-center items-center"
+                          className="h-[400px] md:h-[550px] w-full flex justify-center items-center"
                         >
                           <img
                             src={item}

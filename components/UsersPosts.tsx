@@ -4,25 +4,23 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getUserPosts } from "../utils/supabase/queries";
-import { CardSettingButton } from "./CardSettingButton";
 import { NoPostElement } from "./NoPostElement";
+import { createClient } from "../utils/supabase/client";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { createClient } from "../utils/supabase/client";
-import image from "next/image";
+} from "@/components/ui/card";
+import { CardSettingButton } from "./CardSettingButton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
   CarouselNext,
 } from "./ui/carousel";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 
 export default function UsersPosts() {
   const supabase = createClient();
@@ -58,20 +56,17 @@ export default function UsersPosts() {
   if (data.length === 0) return <NoPostElement />;
 
   return (
-    <div className="grid grid-col-1 gap-6 max-w-xl mx-auto">
+    <div className="grid grid-col-1 gap-6 max-w-xl mx-auto h-full">
       {data.map(({ id, title, content, slug, profiles, images, author_id }) => {
         const isOwner = author_id === currentUserId;
 
         return (
-          <Card key={id} className="relative group transition-all duration-200">
-            {/* Floating Settings Button */}
+          <Card key={id} className="relative group duration-200">
             {isOwner && (
-              <div className="absolute top-5 right-1 z-10">
+              <div className="absolute top-5 right-0 z-10">
                 <CardSettingButton postId={id} initialTitle={title} />
               </div>
             )}
-
-            {/* Header */}
             <CardHeader className="flex gap-2 justify-start items-center">
               <Avatar className="rounded-md">
                 <AvatarImage
@@ -81,12 +76,9 @@ export default function UsersPosts() {
                 <AvatarFallback>ER</AvatarFallback>
               </Avatar>
               <CardDescription className="text-sm text-muted-foreground">
-                by {profiles?.username ?? "Unknown"}
+                by {profiles?.username}
               </CardDescription>
             </CardHeader>
-
-            {/* Content */}
-
             <CardContent>
               <Link href={`/posts/${slug}`}>
                 <CardTitle className="text-lg pb-6 font-semibold">
@@ -106,7 +98,7 @@ export default function UsersPosts() {
                     images.map((item, index) => (
                       <CarouselItem
                         key={index}
-                        className="h-full w-full flex justify-center items-center"
+                        className="h-[400px] md:h-[550px] w-full flex justify-center items-center"
                       >
                         <img
                           src={item}

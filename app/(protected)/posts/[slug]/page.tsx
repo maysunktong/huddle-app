@@ -107,7 +107,7 @@ export default function SinglePost() {
                 images.map((item, index) => (
                   <CarouselItem
                     key={index}
-                    className="max-h-full w-full flex justify-center items-center"
+                    className="h-[400px] md:h-[550px] w-full flex justify-center items-center"
                   >
                     <img
                       src={item}
