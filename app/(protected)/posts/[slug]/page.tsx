@@ -17,7 +17,13 @@ import {
 } from "../../../../components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { CardSettingButton } from "../../../../components/CardSettingButton";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Link } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+} from "../../../../components/ui/carousel";
 
 export default function SinglePost() {
   const params = useParams();
@@ -52,62 +58,60 @@ export default function SinglePost() {
   if (error) return <p className="text-red-500 text-center">{error}</p>;
   if (!post) return;
 
-  const { id, title, content, image, author_id, profiles } = post;
+  const { id, title, content, images, author_id, profiles } = post;
   const isOwner = author_id === currentUserId;
 
   return (
-    <div className="flex justify-center p-6">
-      <Card className="relative max-w-2xl w-full border-0">
+    <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto h-full">
+      <Card key={id} className="relative group duration-200 border-0">
         {isOwner && (
-          <div className="absolute top-3 right-3 z-10">
+          <div className="absolute top-5 right-0 z-10">
             <CardSettingButton postId={id} initialTitle={title} />
           </div>
         )}
-
-        <CardHeader className="flex gap-2 justify-between items-center">
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="hover:underline text-sm font-bold rounded-full bg-[#dfdcf8] hover:bg-[#C4BCFF] p-2 cursor-pointer"
-          >
-            {""}
-            <ArrowLeft size={24} className="text-black" />
-          </button>
-
-          <div className="flex gap-2 items-center">
-            <Avatar className="rounded-md">
-              <AvatarImage
-                src={
-                  profiles?.avatar_url || "https://github.com/evilrabbit.png"
-                }
-                alt={profiles?.username || "User"}
-              />
-              <AvatarFallback>
-                {profiles?.username?.[0]?.toUpperCase() || "U"}
-              </AvatarFallback>
-            </Avatar>
-            <CardDescription className="text-sm text-muted-foreground">
-              by {profiles?.username || "Unknown"}
-            </CardDescription>
-          </div>
+        <CardHeader className="flex gap-2 justify-start items-center">
+          <Avatar className="rounded-md">
+            <AvatarImage
+              src="https://github.com/evilrabbit.png"
+              alt="@evilrabbit"
+            />
+            <AvatarFallback>ER</AvatarFallback>
+          </Avatar>
+          <CardDescription className="text-sm text-muted-foreground">
+            by {profiles?.username}
+          </CardDescription>
         </CardHeader>
 
         <CardContent>
-          <CardTitle className="text-3xl pb-6 font-semibold">{title}</CardTitle>
-
-          {image && (
-            <div className="px-2">
-              <img
-                src={image}
-                alt={title}
-                className="w-full h-auto object-cover rounded-md border"
-              />
-            </div>
-          )}
-
-          <p className="mt-4 text-sm text-gray-700 whitespace-pre-line">
-            {content}
-          </p>
+            <CardTitle className="text-lg pb-6 font-semibold">
+              {title}
+            </CardTitle>
+          {/* Images Carousel */}
+          <Carousel
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            className="w-full h-auto relative"
+          >
+            <CarouselContent className="h-full w-full">
+              {images &&
+                images.map((item, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="max-h-full w-full flex justify-center items-center"
+                  >
+                    <img
+                      src={item}
+                      alt={title || `Image ${index + 1}`}
+                      className="h-full w-full object-cover rounded-md"
+                    />
+                  </CarouselItem>
+                ))}
+            </CarouselContent>
+            <CarouselNext className="absolute top-1/2 right-2 transform -translate-y-1/2 z-50" />
+          </Carousel>
+          <p className="mt-2 text-sm text-gray-700 line-clamp-3">{content}</p>
         </CardContent>
       </Card>
     </div>
