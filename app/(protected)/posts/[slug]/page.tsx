@@ -69,23 +69,31 @@ export default function SinglePost() {
             <CardSettingButton postId={id} initialTitle={title} />
           </div>
         )}
-        <CardHeader className="flex gap-2 justify-start items-center">
-          <Avatar className="rounded-md">
-            <AvatarImage
-              src="https://github.com/evilrabbit.png"
-              alt="@evilrabbit"
-            />
-            <AvatarFallback>ER</AvatarFallback>
-          </Avatar>
-          <CardDescription className="text-sm text-muted-foreground">
-            by {profiles?.username}
-          </CardDescription>
+        <CardHeader className="flex gap-2 justify-between items-center">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="hover:underline text-sm font-bold rounded-full bg-[#dfdcf8] hover:bg-[#C4BCFF] p-2 cursor-pointer"
+          >
+            {""}
+            <ArrowLeft size={24} className="text-black" />
+          </button>
+          <div>
+            <Avatar className="rounded-md">
+              <AvatarImage
+                src="https://github.com/evilrabbit.png"
+                alt="@evilrabbit"
+              />
+              <AvatarFallback>ER</AvatarFallback>
+            </Avatar>
+            <CardDescription className="text-sm text-muted-foreground">
+              by {profiles?.username}
+            </CardDescription>
+          </div>
         </CardHeader>
 
         <CardContent>
-            <CardTitle className="text-lg pb-6 font-semibold">
-              {title}
-            </CardTitle>
+          <CardTitle className="text-lg pb-6 font-semibold">{title}</CardTitle>
           {/* Images Carousel */}
           <Carousel
             opts={{
