@@ -58,7 +58,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
             <Card key={id} className="relative group duration-200">
               {isOwner && (
                 <div className="absolute top-5 right-0 z-10">
-                  <CardSettingButton postId={id} initialTitle={title} />
+                  <CardSettingButton postId={id} initialTitle={title} initialContent={content} />
                 </div>
               )}
               <CardHeader className="flex gap-2 justify-start items-center">
