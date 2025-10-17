@@ -20,12 +20,16 @@ export default async function Home() {
   }
 
   if (!posts || posts.length === 0) {
-    return <NoPostElement />;
+    return (
+      <>
+        <LoginToast />
+        <NoPostElement />
+      </>
+    );
   }
 
   return (
     <>
-      <LoginToast />
       <PostsList posts={posts!} />
     </>
   );
