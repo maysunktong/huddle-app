@@ -18,12 +18,10 @@ export const LogIn = async (userdata: z.infer<typeof logInSchema>) => {
     error,
   } = await supabase.auth.signInWithPassword(parsedData);
 
-
   cookieStore.set("login_success", "true", {
     path: "/",
     maxAge: 10,
   });
-
 
   if (error) throw new Error(error.message);
 

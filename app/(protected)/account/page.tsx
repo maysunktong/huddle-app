@@ -1,12 +1,9 @@
-"use client";
-
-import LogOutButton from "../../../components/LogOutButton";
+"use client"
 
 export default function AccountPage() {
   return (
     <div>
       Account Page
-      <LogOutButton />
     </div>
   );
 }

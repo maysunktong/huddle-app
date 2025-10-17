@@ -95,18 +95,15 @@ export async function updatePost(
 
 export async function getActivityLogs(
   supabase: ReturnType<typeof createClient>,
-  userId: string,
-  values: { action?: string; slug?: string; content?: string }
+  userId: string
 ) {
   const { data, error } = await supabase
     .from("logs")
-    .update(values)
-    .eq("id", userId)
     .select("id, action, entity, entity_id, created_at")
+    .eq("id", userId)
     .single();
 
   return { data, error };
-
 }
 
 export type HomePostsType = QueryData<ReturnType<typeof getHomePosts>>;

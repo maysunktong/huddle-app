@@ -8,43 +8,42 @@ import { createServerClient } from "../utils/supabase/server";
 import { id } from "zod/v4/locales";
 
 export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
-  const supabaseServer = await createServerClient();
+  const supabase = await createServerClient();
 
-  const { data, error } = await supabaseServer.auth.signUp({
+  const { data: { user }, error: signUpError } = await supabase.auth.signUp({
     email: userdata.email,
     password: userdata.password,
   });
 
-  if (error) {
-    if (error.message.includes("User already registered")) {
+  if (signUpError) {
+    if (signUpError.message.includes("User already registered")) {
       throw new Error("This email is already registered. Please sign in.");
     }
-
-    throw new Error(error.message);
+    throw new Error(signUpError.message);
   }
 
-  if (data.user && data.user.email) {
-    const { error: profileError } = await supabaseServer
+  if (!user) return;
+
+  if (user && user.email) {
+    const { error: profileError } = await supabase
       .from("profiles")
       .insert({
-        id: data.user.id,
-        email: data.user.email,
+        id: user.id,
+        email: user.email,
         username: userdata.username,
       });
 
-    if (profileError) throw new Error(profileError.message);
+    if (profileError) console.error(profileError.message);
 
-    const { error: activityLogError } = await supabaseServer.from("logs")
+    const { error: activityLogError } = await supabase.from("logs")
       .insert({
-        user_id: data.user.id,
+        user_id: user.id,
         action: "Sign up",
-        entity: "new account",
-        entity_id: data.user.id
+        entity: "Create new account",
+        entity_id: user.id
       })
 
-    if (activityLogError) throw new Error(activityLogError.message);
-
-    await supabaseServer.auth.signOut();
+    if (activityLogError) console.error(activityLogError.message)
   }
 
   revalidatePath("/", "layout");
