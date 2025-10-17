@@ -45,7 +45,7 @@ const data = {
     },
     {
       title: "Activity Log",
-      url: "/log",
+      url: "/activity-logs",
       icon: IconFolder,
     },
   ],
