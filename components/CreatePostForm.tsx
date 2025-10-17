@@ -69,8 +69,18 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
   const onSubmit = handleSubmit((values) => {
     const files = Array.from(values.image || []);
 
-    if (files.length > 3) {
-      toast.error("You can upload a maximum of 3 images.");
+    const MAX_IMAGES_AMOUNT = 3;
+    if (files.length > MAX_IMAGES_AMOUNT) {
+      toast.error(`You can upload a maximum of ${MAX_IMAGES_AMOUNT} images.`);
+      return;
+    }
+
+    const MAX_FILE_SIZE_MB = 1;
+    const tooLarge = files.find(
+      (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
+    );
+    if (tooLarge) {
+      toast.error(`Each image must be smaller than ${MAX_FILE_SIZE_MB} MB.`);
       return;
     }
 
@@ -123,6 +133,7 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
                 id="content"
                 placeholder="Write your post..."
                 {...register("content")}
+                rows={5}
               />
               {errors.content && (
                 <ErrorMessage message={errors.content.message!} />

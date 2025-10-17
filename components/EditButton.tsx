@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createClient } from "../utils/supabase/client";
 import { updatePost } from "../utils/supabase/queries";
@@ -20,29 +20,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PencilIcon } from "lucide-react";
 import { toast } from "sonner";
+import { Textarea } from "./ui/textarea";
+import { slugify } from "../utils/slugify";
 
 export function EditButton({
   postId,
   initialTitle,
+  initialContent,
 }: {
   postId: string;
   initialTitle: string;
+  initialContent: string;
 }) {
   const supabase = createClient();
   const queryClient = useQueryClient();
 
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(initialTitle);
+  const [content, setContent] = useState(initialContent);
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const { data, error } = await updatePost(supabase, postId, { title });
+      const slug = slugify(title);
+      const { data, error } = await updatePost(supabase, postId, {
+        title,
+        content,
+        slug
+      });
       if (error) throw new Error(error.message);
       return data;
     },
     onSuccess: () => {
-      toast.success("Post title updated!");
-      queryClient.invalidateQueries({ queryKey: ["home-posts"] });
+      toast.success("Post is updated!");
       setOpen(false);
     },
     onError: (err: any) => {
@@ -81,6 +90,16 @@ export function EditButton({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter new title"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="content">New Content</Label>
+            <Textarea
+              id="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="Enter new content"
+              className="border rounded p-2 w-full"
             />
           </div>
         </div>

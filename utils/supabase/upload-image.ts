@@ -6,11 +6,9 @@ export const uploadImages = async (images: File[]): Promise<string[]> => {
   const BUCKET_NAME = "images";
 
   if (!images || images.length === 0) return [];
-
-  const limitedImages = images.slice(0, 3)
-
+  
   const urls = await Promise.all(
-    limitedImages.map(async (image): Promise<string> => {
+    images.map(async (image): Promise<string> => {
       const [name, ext] = image.name.split(".");
       const path = `${name}-${uuid()}.${ext}`;
 

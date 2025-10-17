@@ -72,7 +72,7 @@ export const getSearchedPosts = async (
 export async function updatePost(
   supabase: ReturnType<typeof createClient>,
   postId: string,
-  values: { title?: string; slug?: string; content?: string }
+  values: { title: string; slug?: string; content?: string }
 ) {
   const { data, error } = await supabase
     .from("posts")
