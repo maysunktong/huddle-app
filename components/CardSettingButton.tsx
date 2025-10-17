@@ -25,13 +25,17 @@ import {
 import { DeleteButton } from "./DeleteButton";
 import { EditButton } from "./EditButton";
 
+export type CardSettingTypes = {
+  postId: string;
+  initialTitle: string;
+  initialContent: string | null;
+};
+
 export function CardSettingButton({
   postId,
   initialTitle,
-}: {
-  postId: string;
-  initialTitle: string;
-}) {
+  initialContent
+}: CardSettingTypes) {
   const { isMobile } = useSidebar();
 
   return (
@@ -50,7 +54,11 @@ export function CardSettingButton({
           >
             <DropdownMenuGroup>
               <div>
-                <EditButton postId={postId} initialTitle={initialTitle} />
+                <EditButton
+                  postId={postId}
+                  initialTitle={initialTitle}
+                  initialContent={initialContent}
+                />
               </div>
               <DropdownMenuItem className="text-gray-500">
                 <DeleteButton postId={postId} />

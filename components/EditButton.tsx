@@ -22,22 +22,19 @@ import { PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "./ui/textarea";
 import { slugify } from "../utils/slugify";
+import { CardSettingTypes } from "./CardSettingButton";
 
 export function EditButton({
   postId,
   initialTitle,
   initialContent,
-}: {
-  postId: string;
-  initialTitle: string;
-  initialContent: string;
-}) {
+}: CardSettingTypes) {
   const supabase = createClient();
   const queryClient = useQueryClient();
 
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(initialTitle);
-  const [content, setContent] = useState(initialContent);
+  const [content, setContent] = useState(initialContent || "");
 
   const mutation = useMutation({
     mutationFn: async () => {
