@@ -66,7 +66,11 @@ export default function SinglePost() {
       <Card key={id} className="relative group duration-200 border-0">
         {isOwner && (
           <div className="absolute top-5 right-0 z-10">
-            <CardSettingButton postId={id} initialTitle={title} initialContent={content} />
+            <CardSettingButton
+              postId={id}
+              initialTitle={title}
+              initialContent={content}
+            />
           </div>
         )}
         <CardHeader className="flex gap-2 justify-between items-center">
@@ -102,7 +106,7 @@ export default function SinglePost() {
             }}
             className="w-full h-auto relative"
           >
-            <CarouselContent className="h-full w-full">
+            <CarouselContent>
               {images &&
                 images.map((item, index) => (
                   <CarouselItem
@@ -117,7 +121,7 @@ export default function SinglePost() {
                   </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselNext className="absolute top-1/2 right-2 transform -translate-y-1/2 z-50" />
+            <CarouselNext className="absolute top-1/2 right-1 transform -translate-y-1/2 z-50" />
           </Carousel>
           <p className="mt-2 text-sm text-gray-700 line-clamp-3">{content}</p>
         </CardContent>

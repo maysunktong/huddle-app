@@ -55,10 +55,17 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
           const isOwner = profiles?.id === currentUserId;
 
           return (
-            <Card key={id} className="relative group duration-200">
+            <Card
+              key={id}
+              className="relative group duration-200 w-full h-full"
+            >
               {isOwner && (
                 <div className="absolute top-5 right-0 z-10">
-                  <CardSettingButton postId={id} initialTitle={title} initialContent={content} />
+                  <CardSettingButton
+                    postId={id}
+                    initialTitle={title}
+                    initialContent={content}
+                  />
                 </div>
               )}
               <CardHeader className="flex gap-2 justify-start items-center">
@@ -87,12 +94,12 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                   }}
                   className="w-full h-auto relative"
                 >
-                  <CarouselContent className="h-full w-full">
+                  <CarouselContent>
                     {images &&
                       images.map((item, index) => (
                         <CarouselItem
                           key={index}
-                          className="h-[400px] md:h-[550px] w-full flex justify-center items-center"
+                          className="w-full h-[400px] md:h-[550px]"
                         >
                           <img
                             src={item}
@@ -102,7 +109,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                         </CarouselItem>
                       ))}
                   </CarouselContent>
-                  <CarouselNext className="absolute top-1/2 right-2 transform -translate-y-1/2 z-50" />
+                  <CarouselNext className="absolute top-1/2 right-1 transform -translate-y-1/2 z-50" />
                 </Carousel>
                 <p className="mt-2 text-sm text-gray-700 line-clamp-3">
                   {content}
