@@ -30,6 +30,7 @@ export default async function Home() {
 
   return (
     <>
+      <LoginToast />
       <PostsList posts={posts!} />
     </>
   );
