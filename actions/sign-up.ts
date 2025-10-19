@@ -5,24 +5,15 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { signUpSchema } from "../schemas/zod.schemas";
 import { createServerClient } from "../utils/supabase/server";
-import { id } from "zod/v4/locales";
 
 export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
   const supabase = await createServerClient();
-
   const { data: { user }, error: signUpError } = await supabase.auth.signUp({
     email: userdata.email,
     password: userdata.password,
   });
-
-  if (signUpError) {
-    if (signUpError.message.includes("User already registered")) {
-      throw new Error("This email is already registered. Please sign in.");
-    }
-    throw new Error(signUpError.message);
-  }
-
   if (!user) return;
+  if (signUpError) console.error(signUpError.message);
 
   if (user && user.email) {
     const { error: profileError } = await supabase
@@ -32,7 +23,6 @@ export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
         email: user.email,
         username: userdata.username,
       });
-
     if (profileError) console.error(profileError.message);
 
     const { error: activityLogError } = await supabase.from("logs")
@@ -42,7 +32,6 @@ export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
         entity: "Create new account",
         entity_id: user.id
       })
-
     if (activityLogError) console.error(activityLogError.message)
   }
 
