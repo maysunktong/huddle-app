@@ -1,10 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createClient } from "../utils/supabase/client";
-import { updatePost } from "../utils/supabase/queries";
-
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,37 +18,31 @@ import { Label } from "@/components/ui/label";
 import { PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "./ui/textarea";
-import { slugify } from "../utils/slugify";
 import { CardSettingTypes } from "./CardSettingButton";
+import { UpdatePost } from "../actions/update-post";
 
 export function EditButton({
   postId,
   initialTitle,
   initialContent,
 }: CardSettingTypes) {
-  const supabase = createClient();
-
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent || "");
 
-  const mutation = useMutation({
+  // create the mutation as a function that calls the server action when executed
+  const {mutate, isPending} = useMutation({
+    // mutationFn should be a function returning a Promise
     mutationFn: async () => {
-      const slug = slugify(title);
-      const { data, error } = await updatePost(supabase, postId, {
-        title,
-        content,
-        slug
-      });
-      if (error) throw new Error(error.message);
-      return data;
+      // call the server action with the current title/content
+      return await UpdatePost(postId, { title: title.trim(), content });
     },
     onSuccess: () => {
       toast.success("Post is updated!");
       setOpen(false);
     },
     onError: (err: any) => {
-      toast.error(err.message || "Failed to update post");
+      toast.error(err?.message || "Failed to update post");
     },
   });
 
@@ -73,9 +64,7 @@ export function EditButton({
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Edit Post Title</DialogTitle>
-          <DialogDescription>
-            Update the title of your post below.
-          </DialogDescription>
+          <DialogDescription>Update the title of your post below.</DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
@@ -105,11 +94,12 @@ export function EditButton({
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
+
           <Button
-            onClick={() => mutation.mutate()}
-            disabled={mutation.isPending || !title.trim()}
+            onClick={() => mutate()}
+            disabled={isPending || !title.trim()}
           >
-            {mutation.isPending ? "Saving..." : "Save"}
+            {isPending ? "Saving..." : "Save"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -68,31 +68,6 @@ export const getSearchedPosts = async (
     .abortSignal(signal);
 };
 
-
-export async function updatePost(
-  supabase: ReturnType<typeof createClient>,
-  postId: string,
-  values: { title: string; slug?: string; content?: string }
-) {
-  const { data, error } = await supabase
-    .from("posts")
-    .update(values)
-    .eq("id", postId)
-    .select(`
-      id,
-      title,
-      content,
-      slug,
-      images,
-      author_id,
-      created_at,
-      profiles(username)
-    `)
-    .single();
-
-  return { data, error };
-}
-
 export async function getActivityLogs(
   supabase: ReturnType<typeof createClient>,
   userId: string
@@ -109,5 +84,4 @@ export async function getActivityLogs(
 export type HomePostsType = QueryData<ReturnType<typeof getHomePosts>>;
 export type SinglePostsType = QueryData<ReturnType<typeof getSinglePost>>;
 export type UsersPostsType = QueryData<ReturnType<typeof getUserPosts>>;
-export type UpdatePostType = QueryData<ReturnType<typeof updatePost>>;
 export type ActivityLogsType = QueryData<ReturnType<typeof getActivityLogs>>

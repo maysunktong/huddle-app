@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createServerClient } from "../utils/supabase/server";
 import { redirect } from "next/navigation";
 
-export async function deletePost(postId: string) {
+export const deletePost = async (postId: string) => {
   const supabase = await createServerClient();
   const {
     data: { user },
@@ -30,4 +30,5 @@ export async function deletePost(postId: string) {
   if (activityLogError) console.error("Create New Post Error", activityLogError.message);
 
   revalidatePath("/", "layout");
+  redirect("/");
 }

@@ -7,7 +7,7 @@ import { slugify } from "../utils/slugify";
 import { createServerClient } from "../utils/supabase/server";
 import { uploadImages } from "../utils/supabase/upload-image";
 
-const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
+export const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
   const parsedData = addPostSchema.parse(userdata);
 
   const imageFiles: File[] = [];
@@ -52,10 +52,8 @@ const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
     .update({ slug })
     .eq("id", post.id);
 
-  if (updateError) {
-    console.error("Slug update error:", updateError.message);
-    throw updateError;
-  }
+  if (updateError) console.error("Slug update error:", updateError.message);
+
 
   /* Put create post on logs */
   const { error: activityLogError } = await supabase.from("logs")
@@ -69,5 +67,3 @@ const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
 
   revalidatePath("/", "layout");
 };
-
-export default CreatePost;

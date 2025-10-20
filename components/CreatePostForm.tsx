@@ -8,7 +8,6 @@ import { useMutation } from "@tanstack/react-query";
 
 import ErrorMessage from "./ErrorMessage";
 import { addPostSchema } from "../schemas/zod.schemas";
-import CreatePost from "../actions/create-post";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +25,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CirclePlusIcon } from "lucide-react";
 import { toast } from "sonner";
+import { CreatePost } from "../actions/create-post";
 
 const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
   const [open, setOpen] = useState(false);
