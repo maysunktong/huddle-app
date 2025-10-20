@@ -17,7 +17,7 @@ export const LogIn = async (userdata: z.infer<typeof logInSchema>) => {
     data: { user },
     error: logInError,
   } = await supabase.auth.signInWithPassword(parsedData);
-  if (!user) return;
+  if (!user) throw Error("Not authorized");
   if (logInError) console.error("Log In Error", logInError.message);
 
   cookieStore.set("login_success", "true", {

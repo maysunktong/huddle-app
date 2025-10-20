@@ -12,7 +12,7 @@ export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
     email: userdata.email,
     password: userdata.password,
   });
-  if (!user) return;
+  if (!user) throw Error("Not authorized");
   if (signUpError) console.error(signUpError.message);
 
   if (user && user.email) {
