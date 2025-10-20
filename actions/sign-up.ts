@@ -23,7 +23,7 @@ export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
         email: user.email,
         username: userdata.username,
       });
-    if (profileError) console.error(profileError.message);
+    if (profileError) console.error("Sign Up Profile Error", profileError.message);
 
     const { error: activityLogError } = await supabase.from("logs")
       .insert({
@@ -32,7 +32,7 @@ export const SignUp = async (userdata: z.infer<typeof signUpSchema>) => {
         entity: "Create new account",
         entity_id: user.id
       })
-    if (activityLogError) console.error(activityLogError.message)
+    if (activityLogError) console.error("Sign Up Log Error", activityLogError.message);
   }
 
   revalidatePath("/", "layout");

@@ -10,18 +10,18 @@ import { uploadImages } from "../utils/supabase/upload-image";
 const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
   const parsedData = addPostSchema.parse(userdata);
 
-  const files: File[] = [];
-  const formData = userdata.images as FormData;
+  const imageFiles: File[] = [];
+  const imagesData = userdata.images as FormData;
 
-  if (formData && formData instanceof FormData) {
-    for (const [, value] of formData.entries()) {
+  if (imagesData && imagesData instanceof FormData) {
+    for (const [, value] of imagesData.entries()) {
       if (value instanceof File && value.size > 0) {
-        files.push(value);
+        imageFiles.push(value);
       }
     }
   }
 
-  const uploadedUrls = files.length > 0 ? await uploadImages(files) : [];
+  const uploadedUrls = imageFiles.length > 0 ? await uploadImages(imageFiles) : [];
 
   const supabase = await createServerClient();
   const {
@@ -30,14 +30,42 @@ const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
 
   if (!user) return { error: "Not Authorized" };
 
-  const { error } = await supabase.from("posts").insert({
-    author_id: user.id,
-    slug: slugify(parsedData.title),
-    ...parsedData,
-    images: uploadedUrls,
-  });
+  const { data: post, error: postInsertError } = await supabase.from("posts")
+    .insert({
+      author_id: user.id,
+      slug: slugify(parsedData.title),
+      ...parsedData,
+      images: uploadedUrls,
+    })
+    .select("id")
+    .single();
+  if (postInsertError) {
+    console.error("Post insert error:", postInsertError?.message || postInsertError);
+    throw postInsertError;
+  }
+  if (!post) return;
 
-  if (error) throw new Error(error.message);
+  /* Update the slug followed by post.id */
+  const slug = `${slugify(parsedData.title)}-${post.id}`;
+  const { error: updateError } = await supabase
+    .from("posts")
+    .update({ slug })
+    .eq("id", post.id);
+
+  if (updateError) {
+    console.error("Slug update error:", updateError.message);
+    throw updateError;
+  }
+
+  /* Put create post on logs */
+  const { error: activityLogError } = await supabase.from("logs")
+    .insert({
+      user_id: user.id,
+      action: "Create new post",
+      entity: "New post",
+      entity_id: post.id
+    })
+  if (activityLogError) console.error("Create New Post Error", activityLogError.message);
 
   revalidatePath("/", "layout");
 };
