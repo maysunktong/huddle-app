@@ -30,7 +30,6 @@ export function EditButton({
   initialContent,
 }: CardSettingTypes) {
   const supabase = createClient();
-  const queryClient = useQueryClient();
 
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(initialTitle);
