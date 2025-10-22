@@ -30,5 +30,4 @@ export const deletePost = async (postId: string) => {
   if (activityLogError) console.error("Create New Post Error", activityLogError.message);
 
   revalidatePath("/", "layout");
-  redirect("/");
 }

@@ -1,15 +1,43 @@
-import { Spool } from "lucide-react";
+"use client";
 
-export default function Logo({ className = "text-black" }: { className?: string }) {
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+
+export default function Logo() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <a href="/">
+        <img
+          src="./logo/logo-light.png"
+          alt="Logo"
+          width={150}
+          height={150}
+          className="opacity-0"
+        />
+      </a>
+    );
+  }
+
   return (
-    <a
-      href="/"
-      className={`flex items-center gap-2 font-medium text-3xl ${className}`}
-    >
-      <div className="bg-primary text-primary-foreground flex w-8 h-8 items-center justify-center rounded-md">
-        <Spool className="w-5 h-5" />
-      </div>
-      Huddle
+    <a href="/">
+      <img
+        src={
+          resolvedTheme === "dark"
+            ? "./logo/logo-dark.png"
+            : "./logo/logo-light.png"
+        }
+        alt="Logo"
+        width={150}
+        height={150}
+        className="transition-opacity duration-300"
+      />
     </a>
   );
 }

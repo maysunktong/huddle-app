@@ -25,7 +25,7 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupContent className="flex flex-col gap-2">
+      <SidebarGroupContent className="flex flex-col gap-4">
         {/* Dynamic Items */}
         <SidebarMenu>
           {items.map((item) => {
@@ -43,8 +43,8 @@ export function NavMain({
                         : "text-foreground hover:bg-accent hover:text-foreground"
                     )}
                   >
-                    {item.icon && <item.icon className="w-4 h-4" />}
-                    <span>{item.title}</span>
+                    {item.icon && <item.icon className="w-6 h-6" />}
+                    <span className="text-md">{item.title}</span>
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>
