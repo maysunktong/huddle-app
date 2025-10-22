@@ -121,7 +121,9 @@ export default function SinglePost() {
                   </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselNext className="absolute top-1/2 right-1 transform -translate-y-1/2 z-50" />
+            {images && images.length > 1 && (
+              <CarouselNext className="absolute top-1/2 right-1 transform -translate-y-1/2 z-50" />
+            )}
           </Carousel>
           <p className="mt-2 text-sm text-gray-700 line-clamp-3">{content}</p>
         </CardContent>
