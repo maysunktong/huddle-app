@@ -4,8 +4,6 @@ import PostsList from "../../components/PostsList";
 import { NoPostElement } from "../../components/NoPostElement";
 import LoginToast from "../../components/LogInToast";
 
-export const revalidate = 600;
-
 export default async function Home() {
   const supabase = createClient();
 

@@ -69,7 +69,7 @@ export type Database = {
           entity: string | null
           entity_id: string | null
           id: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           action: string
@@ -77,7 +77,7 @@ export type Database = {
           entity?: string | null
           entity_id?: string | null
           id?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           action?: string
@@ -85,7 +85,7 @@ export type Database = {
           entity?: string | null
           entity_id?: string | null
           id?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {

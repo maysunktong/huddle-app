@@ -1,29 +1,13 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { useState, useEffect } from "react";
-import { getUserPosts } from "../utils/supabase/queries";
+import { HomePostsType, getUserPosts } from "../utils/supabase/queries";
 import { NoPostElement } from "./NoPostElement";
-import { createClient } from "../utils/supabase/client";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { CardSettingButton } from "./CardSettingButton";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-} from "./ui/carousel";
 import PostCard from "./PostCard";
+import { Card } from "./ui/card";
+import { error } from "console";
+import { createClient } from "../utils/supabase/client";
 
-export default function UsersPosts() {
+export default function UsersPosts({ posts }: { posts: HomePostsType }) {
   const supabase = createClient();
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
@@ -35,7 +19,7 @@ export default function UsersPosts() {
       setCurrentUserId(user?.id ?? null);
     };
     getUser();
-  });
+  }, [supabase]);
 
   const { data, error } = useQuery({
     queryKey: ["user-posts", currentUserId],
@@ -45,26 +29,18 @@ export default function UsersPosts() {
       if (error) throw new Error(error.message);
       return data;
     },
+    initialData: posts,
     refetchOnMount: "always",
     refetchInterval: 3000,
     staleTime: 10000,
+    enabled: !!currentUserId,
   });
-
-  if (error)
-    return <p className="text-red-500 text-center">Error loading posts</p>;
-
-  if (!data || data.length === 0) return <NoPostElement />;
 
   return (
     <Card className="grid grid-cols-1 gap-6 max-w-xl mx-auto h-full">
-      {data?.map((post) => (
+      {data.map((post) => (
         <PostCard key={post.id} post={post} currentUserId={currentUserId} />
       ))}
-      {error && (
-        <p className="text-red-500 text-center col-span-full">
-          Error loading posts...
-        </p>
-      )}
     </Card>
   );
 }

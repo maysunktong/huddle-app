@@ -3,13 +3,11 @@
 import { useEffect, useState } from "react";
 import { createClient } from "../utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
-import { getActivityLogs } from "../utils/supabase/queries";
+import { ActivityLogsType, getActivityLogs } from "../utils/supabase/queries";
 import { NoPostElement } from "./NoPostElement";
 import { Card, CardTitle, CardContent } from "./ui/card";
-import { Separator } from "@/components/ui/separator";
-import LoginToast from "./LogInToast";
 
-export default function ActivityLogs() {
+export default function ActivityLogs({ logs }: { logs: ActivityLogsType }) {
   const supabase = createClient();
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
@@ -31,9 +29,11 @@ export default function ActivityLogs() {
       if (error) throw new Error(error.message);
       return data;
     },
+    initialData: logs,
     refetchOnMount: "always",
     refetchInterval: 3000,
     staleTime: 10000,
+    enabled: !!currentUserId,
   });
 
   if (error)

@@ -20,7 +20,7 @@ export const getHomePosts = async (
     .order("created_at", { ascending: false });
 };
 
-export async function getUserPosts(supabase: ReturnType<typeof createClient>, userId: string) {
+export async function getUserPosts(supabase: ReturnType<typeof createClient>, currentUserId: string) {
   return await supabase
     .from("posts")
     .select(`
@@ -31,9 +31,9 @@ export async function getUserPosts(supabase: ReturnType<typeof createClient>, us
       images,
       author_id,
       created_at,
-      profiles(username)
+      profiles(id, username)
     `)
-    .eq("author_id", userId)
+    .eq("author_id", currentUserId)
     .order("created_at", { ascending: false });
 }
 
@@ -70,15 +70,13 @@ export const getSearchedPosts = async (
 
 export async function getActivityLogs(
   supabase: ReturnType<typeof createClient>,
-  userId: string
+  currentUserId: string
 ) {
-  const { data, error } = await supabase
+  return await supabase
     .from("logs")
     .select("id, action, entity, entity_id, created_at, user_id")
-    .eq("user_id", userId)
+    .eq("user_id", currentUserId)
     .order("created_at", { ascending: false });
-
-  return { data, error };
 }
 
 export type HomePostsType = QueryData<ReturnType<typeof getHomePosts>>;
