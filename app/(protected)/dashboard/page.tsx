@@ -28,8 +28,8 @@ export default function Dashboard() {
         if (error) throw new Error(error.message);
         setUserPosts(posts);
       } catch (err: any) {
-        console.error("Error loading post:", err.message);
-        toast.error("Failed to load post.");
+        console.error("Error loading users post:", err.message);
+        toast.error("Failed to load users posts.");
       } finally {
         setLoading(false);
       }
@@ -44,7 +44,6 @@ export default function Dashboard() {
         <Spinner className="size-8" />
       </div>
     );
-
   if (!userPosts || userPosts.length === 0) return <NoPostElement />;
 
   return (
