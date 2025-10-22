@@ -3,8 +3,6 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 
-const words = ["Community", "Hustle", "Huddle"];
-
 export default function DiscoBallWithWords() {
   useEffect(() => {
     const tween = gsap.to("#discoball", {
@@ -19,31 +17,6 @@ export default function DiscoBallWithWords() {
       disco.addEventListener("mouseenter", () => tween.timeScale(6));
       disco.addEventListener("mouseleave", () => tween.timeScale(1));
     }
-
-    // Rotating word in the center
-    const rotateText = (index = 0) => {
-      const el = document.getElementById("text");
-      if (!el) return;
-
-      gsap.to(el, {
-        opacity: 0,
-        duration: 1,
-        ease: "power2.in",
-        onComplete: () => {
-          el.textContent = words[index];
-
-          gsap.to(el, {
-            opacity: 1,
-            duration: 2,
-            ease: "power2.out",
-            onComplete: () => {
-              setTimeout(() => rotateText((index + 1) % words.length), 1000);
-            },
-          });
-        },
-      });
-    };
-    rotateText();
   }, []);
 
   return (
@@ -57,12 +30,6 @@ export default function DiscoBallWithWords() {
           alt="disco-ball"
           className="w-40 h-40 select-none"
         />
-        <div
-          id="text"
-          className="absolute text-4xl font-extrabold text-white drop-shadow-lg pointer-events-none"
-        >
-          Community
-        </div>
       </div>
     </div>
   );

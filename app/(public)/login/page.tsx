@@ -1,6 +1,7 @@
 import LogInForm from "./LogInForm";
 import LogInHeroSection from "../../../components/LogInHeroSection";
 import DiscoBall from "../../../components/DiscoBall";
+import Logo from "../../../components/Logo";
 
 export default function LogInPage() {
   return (
@@ -9,14 +10,14 @@ export default function LogInPage() {
         <div className="bg-muted relative hidden lg:block">
           <LogInHeroSection />
         </div>
-        <div className="flex flex-col justify-center p-6 bg-[#C2D8BE] lg:bg-sidebar-primary-foreground">
+        <div className="flex flex-col justify-center p-6 bg-[#C4BCFF] md:bg-sidebar-primary-foreground">
           <div className="block lg:hidden">
             <DiscoBall />
           </div>
           <div className="flex flex-col flex-1 justify-center items-center">
             <div className="w-full max-w-xs text-center">
               <div className="flex justify-center items-center gap-2 py-8">
-                <img src="./logo/logo-light.png" alt="logo" width={200} height={200} />
+                <Logo />
               </div>
               <LogInForm />
             </div>
