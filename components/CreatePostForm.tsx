@@ -75,7 +75,7 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
       return;
     }
 
-    const MAX_FILE_SIZE_MB = 1;
+    const MAX_FILE_SIZE_MB = 2;
     const tooLarge = files.find(
       (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
     );

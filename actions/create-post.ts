@@ -54,7 +54,6 @@ export const CreatePost = async (userdata: z.infer<typeof addPostSchema>) => {
 
   if (updateError) console.error("Slug update error:", updateError.message);
 
-
   /* Put create post on logs */
   const { error: activityLogError } = await supabase.from("logs")
     .insert({
