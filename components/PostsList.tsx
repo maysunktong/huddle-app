@@ -112,7 +112,9 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
                     <CarouselNext className="absolute top-1/2 right-1 transform -translate-y-1/2 z-50" />
                   )}
                 </Carousel>
-                <p className="mt-2 text-sm line-clamp-3">{content}</p>
+                <Link href={`/posts/${slug}`}>
+                  <p className="mt-2 text-sm line-clamp-3">{content}</p>
+                </Link>
               </CardContent>
             </Card>
           );
