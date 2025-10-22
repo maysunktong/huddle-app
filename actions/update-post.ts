@@ -9,6 +9,13 @@ export const UpdatePost = async (
   values: { title?: string; slug?: string; content?: string }
 ) => {
   const supabase = await createServerClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) throw Error("Not authorized");
+
   const { data: updatedPost, error: updatePostError } = await supabase
     .from("posts")
     .update(values)
@@ -25,6 +32,17 @@ export const UpdatePost = async (
     .update({ slug })
     .eq("id", postId);
   if (slugError) console.error("Error updating slug:", slugError);
+
+/* Put create post on logs */
+  const { error: activityLogError } = await supabase.from("logs")
+    .insert({
+      user_id: user.id,
+      action: "Update post",
+      entity: "Post is updated",
+      entity_id: postId
+    })
+  if (activityLogError) console.error("Update Post Error", activityLogError.message);
+  
 
   revalidatePath("/", "layout");
 }
