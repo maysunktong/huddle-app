@@ -7,63 +7,58 @@ import {
   SinglePostsType,
   getSinglePost,
 } from "../../../../utils/supabase/queries";
-
-import {
-  Card,
-  CardHeader,
-  CardDescription,
-  CardContent,
-  CardTitle,
-} from "../../../../components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { CardSettingButton } from "../../../../components/CardSettingButton";
-import { ArrowLeft, Link } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-} from "../../../../components/ui/carousel";
 import PostCard from "../../../../components/PostCard";
+import { ArrowLeft } from "lucide-react";
+import { Card } from "../../../../components/ui/card";
+import { toast } from "sonner";
+import { NoPostElement } from "../../../../components/NoPostElement";
+import { Spinner } from "../../../../components/ui/spinner";
 
 export default function SinglePost() {
-  const params = useParams();
-  const slug = params?.slug as string;
+  const [singlePost, setSinglePost] = useState<SinglePostsType | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const supabase = createClient();
   const router = useRouter();
-
-  const [post, setPost] = useState<SinglePostsType | null>(null);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const params = useParams();
+  const slug = params?.slug as string;
 
   useEffect(() => {
-    const fetchPost = async () => {
-      const { data, error } = await getSinglePost(slug);
-      if (error) {
-        setError(error.message);
-      } else {
-        setPost(data);
+    const timer = setTimeout(async () => {
+      try {
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
+        if (userError) throw userError;
+        setCurrentUserId(user?.id ?? null);
+
+        const { data: post, error } = await getSinglePost(supabase, slug);
+        if (error) throw error;
+
+        setSinglePost(post);
+      } catch (err: any) {
+        console.error("Error loading post:", err.message);
+        toast.error("Failed to load post.");
+      } finally {
+        setLoading(false);
       }
-    };
+    }, 1000);
 
-    const getUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (!error) setCurrentUserId(data.user?.id ?? null);
-    };
+    return () => clearTimeout(timer);
+  }, [supabase, slug]);
 
-    fetchPost();
-    getUser();
-  }, [slug, supabase]);
-
-  if (error) return <p className="text-red-500 text-center">{error}</p>;
-  if (!post) return;
-
-  const { id, title, content, images, author_id, profiles } = post;
-  const isOwner = author_id === currentUserId;
+  if (loading)
+    return (
+      <div className="w-full h-full py-8 flex justify-center items-center flex-1">
+        <Spinner className="size-8" />
+      </div>
+    );
+  if (!singlePost) return <NoPostElement />;
 
   return (
-    <Card className="grid grid-cols-1 gap-6 max-w-xl mx-auto h-full">
+    <Card className="grid grid-cols-1 gap-6 max-w-xl mx-auto h-full p-4">
       <button
         type="button"
         onClick={() => router.back()}
@@ -72,7 +67,12 @@ export default function SinglePost() {
         {""}
         <ArrowLeft size={24} className="text-black w-6 h-6 font-bold" />
       </button>
-      <PostCard key={post.id} post={post} currentUserId={currentUserId} isSinglePost={true} />
+      <PostCard
+        key={singlePost.id}
+        post={singlePost}
+        currentUserId={currentUserId}
+        isSinglePost={true}
+      />
     </Card>
   );
 }

@@ -37,8 +37,7 @@ export async function getUserPosts(supabase: ReturnType<typeof createClient>, cu
     .order("created_at", { ascending: false });
 }
 
-export const getSinglePost = async (slug: string) => {
-  const supabase = createClient();
+export const getSinglePost = async (supabase: ReturnType<typeof createClient>, slug: string) => {
   return await supabase
     .from("posts")
     .select(`
@@ -49,7 +48,7 @@ export const getSinglePost = async (slug: string) => {
       images,
       author_id,
       created_at,
-      profiles(username, avatar_url)
+      profiles(id, username, avatar_url)
     `)
     .eq("slug", slug)
     .single()
