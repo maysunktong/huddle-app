@@ -1,10 +1,5 @@
 "use client";
 
-import {
-  IconHome,
-  IconListDetails,
-} from "@tabler/icons-react";
-
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
 import {
@@ -17,7 +12,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Logo from "./Logo";
-import { ScrollText, User } from "lucide-react";
+import { ScrollText, User, House, LayoutDashboard } from "lucide-react";
 
 const data = {
   user: {
@@ -29,12 +24,12 @@ const data = {
     {
       title: "Home",
       url: "/",
-      icon: IconHome,
+      icon: House,
     },
     {
       title: "Dashboard",
       url: "/dashboard",
-      icon: IconListDetails,
+      icon: LayoutDashboard,
     },
     {
       title: "Account",
