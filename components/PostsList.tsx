@@ -49,7 +49,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto h-full">
+    <Card className="grid grid-cols-1 gap-6 max-w-xl mx-auto h-full">
       {data &&
         data.map(({ id, title, content, slug, profiles, images }) => {
           const isOwner = profiles?.id === currentUserId;
@@ -122,6 +122,6 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
           Error loading posts...
         </p>
       )}
-    </div>
+    </Card>
   );
 }

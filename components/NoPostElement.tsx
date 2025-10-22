@@ -12,8 +12,8 @@ import {
 import CreatePostDialog from "./CreatePostForm";
 
 type NoPostElementPropsTypes = {
-  title: string;
-  subtext: string;
+  title?: string;
+  subtext?: string;
 };
 
 export function NoPostElement({

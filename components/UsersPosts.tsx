@@ -56,8 +56,9 @@ export default function UsersPosts() {
   if (data.length === 0) return <NoPostElement />;
 
   return (
-    <div className="grid grid-col-1 gap-6 max-w-xl mx-auto h-full">
-      {data.map(({ id, title, content, slug, profiles, images, author_id }) => {
+    <Card className="grid grid-col-1 gap-6 max-w-xl mx-auto h-full">
+      <CardTitle>Dashboard</CardTitle>
+      {data && data.map(({ id, title, content, slug, profiles, images, author_id }) => {
         const isOwner = author_id === currentUserId;
 
         return (
@@ -121,6 +122,6 @@ export default function UsersPosts() {
           </Card>
         );
       })}
-    </div>
+    </Card>
   );
 }

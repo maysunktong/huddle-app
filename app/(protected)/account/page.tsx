@@ -1,9 +1,7 @@
-"use client"
+"use client";
+
+import AccountComponent from "../../../components/AccountComponent";
 
 export default function AccountPage() {
-  return (
-    <div>
-      Account Page
-    </div>
-  );
+  return <AccountComponent />;
 }

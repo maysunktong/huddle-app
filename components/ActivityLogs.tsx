@@ -46,30 +46,33 @@ export default function ActivityLogs() {
   if (error)
     return <p className="text-red-500 text-center">Error loading posts</p>;
   if (!data) return;
-  if (data.length === 0) return <NoPostElement title="No Activity Logs" subtext="You haven't created any actions in logs" />;
+  if (data.length === 0)
+    return (
+      <NoPostElement
+        title="No Activity Logs"
+        subtext="You haven't created any actions in logs"
+      />
+    );
 
   return (
-    <Card className="w-full max-w-3xl">
+    <Card className="w-full px-8">
+      <CardTitle>Activity Logs</CardTitle>
       <CardContent>
-        <div className="h-80 w-full space-y-2 pr-2">
+        <div className="w-full space-y-2 pr-2 flex flex-col items-start">
           {data &&
             data.map((item) => (
-              <div key={item.id} className="flex items-start gap-2 py-2">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2">
-                    <div>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {new Date(item.created_at).toLocaleString()}
-                      </p>
-                      <p className="text-sm leading-5">
-                        <span className="text-muted-foreground">
-                          {item.action} --
-                        </span>
-                        <span className="font-medium">{item.entity}</span>
-                        <span className="text-muted-foreground">
-                          {" "}
-                          ID: {item.entity_id}
-                        </span>
+              <div key={item.id}>
+                <div className="flex gap-2">
+                  <div className="flex gap-3 text-sm">
+                    <div className="text-muted-foreground">
+                      {new Date(item.created_at).toLocaleString()}
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="text-muted-foreground">{item.action} --</p>
+                      <p className="font-medium">{item.entity}</p>
+                      <p className="text-muted-foreground">
+                        {" "}
+                        ID: {item.entity_id}
                       </p>
                     </div>
                   </div>
