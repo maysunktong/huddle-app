@@ -33,8 +33,8 @@ export default function PostCard({
           />
         </div>
       )}
-      <CardHeader className="flex gap-2 justify-start items-center">
-        <Avatar className="rounded-md">
+      <CardHeader className="flex gap-2 justify-start items-center px-4 md:px-0">
+        <Avatar className="rounded-full w-8 h-8">
           <AvatarImage
             src="https://github.com/evilrabbit.png"
             alt={profiles?.username || "User"}
@@ -49,13 +49,13 @@ export default function PostCard({
       </CardHeader>
       <CardContent>
         <Link href={`/posts/${slug}`}>
-          <CardTitle className="text-lg pb-6 font-semibold">{title}</CardTitle>
+          <CardTitle className="text-lg font-semibold px-4 md:px-0">{title}</CardTitle>
         </Link>
 
         {images && <PostCarousel images={images} title={title} />}
 
         <Link href={`/posts/${slug}`}>
-          <p className={`mt-2 text-sm ${isSinglePost ? "" : "line-clamp-3"}`}>{content}</p>
+          <p className={`text-sm my-4 px-4 md:px-0 ${isSinglePost ? "" : "line-clamp-3"}`}>{content}</p>
         </Link>
       </CardContent>
     </Card>

@@ -23,7 +23,7 @@ export default function PostCarousel({
             <img
               src={item}
               alt={title || `Image ${index + 1}`}
-              className="h-full w-full object-cover rounded-md"
+              className="h-full w-full object-cover rounded-none md:rounded-md"
             />
           </CarouselItem>
         ))}
