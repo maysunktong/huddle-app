@@ -74,9 +74,9 @@ export async function getActivityLogs(
 ) {
   const { data, error } = await supabase
     .from("logs")
-    .select("id, action, entity, entity_id, created_at")
-    .eq("id", userId)
-    .single();
+    .select("id, action, entity, entity_id, created_at, user_id")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
 
   return { data, error };
 }

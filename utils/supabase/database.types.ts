@@ -14,35 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      bookings: {
-        Row: {
-          facility_id: number
-          get_done: boolean | null
-          id: string
-          user_id: string
-        }
-        Insert: {
-          facility_id: number
-          get_done?: boolean | null
-          id?: string
-          user_id: string
-        }
-        Update: {
-          facility_id?: number
-          get_done?: boolean | null
-          id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_booking_user_id"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       comments: {
         Row: {
           author_id: string | null
@@ -135,6 +106,7 @@ export type Database = {
           id: string
           images: string[] | null
           slug: string
+          tags: string | null
           title: string
           updated_at: string | null
         }
@@ -146,6 +118,7 @@ export type Database = {
           id?: string
           images?: string[] | null
           slug: string
+          tags?: string | null
           title: string
           updated_at?: string | null
         }
@@ -157,6 +130,7 @@ export type Database = {
           id?: string
           images?: string[] | null
           slug?: string
+          tags?: string | null
           title?: string
           updated_at?: string | null
         }
