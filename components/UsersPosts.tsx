@@ -34,9 +34,9 @@ export default function UsersPosts() {
       setCurrentUserId(user?.id ?? null);
     };
     getUser();
-  }, [supabase]);
+  });
 
-  const { data, error, isLoading } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ["user-posts", currentUserId],
     queryFn: async () => {
       if (!currentUserId) return [];
@@ -116,9 +116,7 @@ export default function UsersPosts() {
                   <CarouselNext className="absolute top-1/2 right-1 transform -translate-y-1/2 z-50" />
                 )}
               </Carousel>
-              <p className="mt-2 text-sm text-gray-700 line-clamp-3">
-                {content}
-              </p>
+              <p className="mt-2 text-sm line-clamp-3">{content}</p>
             </CardContent>
           </Card>
         );
