@@ -15,7 +15,7 @@ export default function Logo() {
     return (
       <a href="/">
         <img
-          src="./logo/logo-light.png"
+          src="https://res.cloudinary.com/dpgdy4ayz/image/upload/v1761165608/logo-light_wc1gkc.png"
           alt="Logo"
           width={150}
           height={150}
@@ -30,8 +30,8 @@ export default function Logo() {
       <img
         src={
           resolvedTheme === "dark"
-            ? "./logo/logo-dark.png"
-            : "./logo/logo-light.png"
+            ? "https://res.cloudinary.com/dpgdy4ayz/image/upload/v1761165607/logo-dark_rqcbep.png"
+            : "https://res.cloudinary.com/dpgdy4ayz/image/upload/v1761165608/logo-light_wc1gkc.png"
         }
         alt="Logo"
         width={150}
