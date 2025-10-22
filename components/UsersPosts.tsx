@@ -44,7 +44,6 @@ export default function UsersPosts() {
       if (error) throw new Error(error.message);
       return data;
     },
-    enabled: !!currentUserId,
     refetchOnMount: "always",
     refetchInterval: 3000,
     staleTime: 10000,
@@ -52,12 +51,12 @@ export default function UsersPosts() {
 
   if (error)
     return <p className="text-red-500 text-center">Error loading posts</p>;
-  if (!data) return;
-  if (data.length === 0) return <NoPostElement />;
+
+  if (!data || data.length === 0) return <NoPostElement />;
 
   return (
     <Card className="grid grid-col-1 gap-6 max-w-xl mx-auto h-full">
-      <CardTitle>Dashboard</CardTitle>
+      <CardTitle className="text-center">Dashboard</CardTitle>
       {data &&
         data.map(
           ({ id, title, content, slug, profiles, images, author_id }) => {
