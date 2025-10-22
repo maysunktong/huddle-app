@@ -65,7 +65,7 @@ export type Database = {
       logs: {
         Row: {
           action: string
-          created_at: string | null
+          created_at: string
           entity: string | null
           entity_id: string | null
           id: string
@@ -73,7 +73,7 @@ export type Database = {
         }
         Insert: {
           action: string
-          created_at?: string | null
+          created_at?: string
           entity?: string | null
           entity_id?: string | null
           id?: string
@@ -81,7 +81,7 @@ export type Database = {
         }
         Update: {
           action?: string
-          created_at?: string | null
+          created_at?: string
           entity?: string | null
           entity_id?: string | null
           id?: string

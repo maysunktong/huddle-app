@@ -1,9 +1,6 @@
 "use client";
 
-import * as React from "react";
 import {
-  IconChartBar,
-  IconFolder,
   IconHome,
   IconListDetails,
 } from "@tabler/icons-react";
@@ -20,6 +17,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Logo from "./Logo";
+import { ScrollText, User } from "lucide-react";
 
 const data = {
   user: {
@@ -41,12 +39,12 @@ const data = {
     {
       title: "Account",
       url: "/account",
-      icon: IconChartBar,
+      icon: User,
     },
     {
       title: "Activity Log",
       url: "/activity-logs",
-      icon: IconFolder,
+      icon: ScrollText,
     },
   ],
 };
