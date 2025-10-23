@@ -5,32 +5,32 @@ Requirements
  
 Passing Grade (G)
  
-Authentication:
+✅ Authentication:
 Users should be able to register an account, login, and logout
 The authentication should be powered by Supabase Auth
 The create post page should not be accessible to non-authenticated users
  
-Data Fetching and Error Handling:
+✅ Data Fetching and Error Handling:
 Data should be fetched and revalidated in a way that ensures a smooth user experience
 The user should be informed if an error occurs while trying to perform a CRUD operation
  
-Database Tables and Relational Data:
+✅ Database Tables and Relational Data:
 The following tables should be available in your database:
 Users: This table will be managed by Supabase Auth and can contain additional user data
-Posts: A post should at least have a title, content and a slug. Each post should relate to the user who created it, implying a one-to-many relationship
+✅ Posts: A post should at least have a title, content and a slug. Each post should relate to the user who created it, implying a one-to-many relationship
  
-Images
+✅ Images
 Using a storage bucket the user should be able to:
  attach an image to their post
-edit (change) the image in their post
+❌ edit (change) the image in their post
  
 CRUD Operations:
   Posts
-All users should be able to read posts
+✅ All users should be able to read posts
 An authenticated user should be able to create, update, and delete their own posts
-Only the author of the post should be able to access the edit post page
+✅ Only the author of the post should be able to access the edit post page
  
-Responsive Styling:
+✅ Responsive Styling:
 The design and what tools you want to use for styling is up to you, but the app should of course use modern CSS technologies and be responsive
 
 ----------------------------------------------------
@@ -45,7 +45,8 @@ Logged in users should be able to add comments to any post. Each comment should 
 All users should be able to read comments
 An authenticated user should be able to create and delete their own comments
 An author should be able to delete comments belonging to their posts
- 
+
+----------------------------------------------------
 Super Excellent Grade (MVG)
  
 Comments:
@@ -57,10 +58,16 @@ Allow multiple images to be uploaded, edited and displayed in a post
 Categories:
 Add categories to the application. Posts should belong to a category, and the user should be able to go to a dynamic route that only displays the posts in that category.
  
- 
+----------------------------------------------------
 Assignment Submission
 Repository Access:
 Submit the link to your GitHub repository and make sure the project is public
 Deployment:
 Submit the link to your deployed app on Vercel
- 
+----------------------------------------------------
+// TODO:
+
+// TODO: Implement Category tags
+// TODO: Implement Image uploading for each file and edit image in edit modal
+// TODO: Implement Search functionality for posts
+// TODO: Implement Nested Comments

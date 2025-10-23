@@ -43,6 +43,5 @@ export const UpdatePost = async (
     })
   if (activityLogError) console.error("Update Post Error", activityLogError.message);
   
-
   revalidatePath("/", "layout");
 }
