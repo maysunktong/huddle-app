@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deletePost } from "@/actions/delete-post";
 import { IconTrash } from "@tabler/icons-react";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 type DeleteButtonProps = {
   postId: string;
@@ -14,9 +15,8 @@ export function DeleteButton({ postId }: DeleteButtonProps) {
   const { mutate, isPending } = useMutation({
     mutationFn: () => deletePost(postId),
     onSuccess: () => {
-      setTimeout(() => {
-        toast.success("Post deleted successfully!");
-      }, 1000);
+      toast.success("Post deleted successfully!");
+      setTimeout(() => redirect("/"), 1000);
     },
     onError: (err: any) => {
       toast.error(err.message || "Failed to delete post");

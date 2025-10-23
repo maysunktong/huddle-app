@@ -33,10 +33,10 @@ export default function Dashboard() {
       } finally {
         setLoading(false);
       }
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
-  }, [supabase]);
+  }, [supabase, userPosts]);
 
   if (loading)
     return (
@@ -44,11 +44,12 @@ export default function Dashboard() {
         <Spinner className="size-8" />
       </div>
     );
+
   if (!userPosts || userPosts.length === 0) return <NoPostElement />;
 
   return (
     <div>
-      <UsersPosts posts={userPosts} />
+      <UsersPosts posts={userPosts!} />
     </div>
   );
 }

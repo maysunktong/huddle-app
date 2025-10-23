@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, redirect } from "next/navigation";
 import { createClient } from "../../../../utils/supabase/client";
 import {
   SinglePostsType,
@@ -11,7 +11,6 @@ import PostCard from "../../../../components/PostCard";
 import { ArrowLeft } from "lucide-react";
 import { Card } from "../../../../components/ui/card";
 import { toast } from "sonner";
-import { NoPostElement } from "../../../../components/NoPostElement";
 import { Spinner } from "../../../../components/ui/spinner";
 
 export default function SinglePost() {
@@ -44,7 +43,7 @@ export default function SinglePost() {
       } finally {
         setLoading(false);
       }
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [supabase, slug]);
@@ -55,7 +54,7 @@ export default function SinglePost() {
         <Spinner className="size-8" />
       </div>
     );
-  if (!singlePost) return <NoPostElement />;
+  if (!singlePost) return;
 
   return (
     <Card className="grid grid-cols-1 gap-6 max-w-xl mx-auto h-full p-4">
