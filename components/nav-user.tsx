@@ -48,7 +48,6 @@ export function NavUser() {
 
       const userId = authData.user.id;
 
-      // Get additional profile info from `profiles` table
       const { data: profile, error } = await supabase
         .from("profiles")
         .select("username, avatar_url")
@@ -70,7 +69,7 @@ export function NavUser() {
     fetchUser();
   }, [supabase]);
 
-  if (!user) return null; // or a loading spinner
+  if (!user) return;
 
   return (
     <SidebarMenu>
