@@ -23,7 +23,10 @@ export default function PostCard({
   const isOwner = profiles?.id === currentUserId;
 
   return (
-    <Card key={id} className="relative group duration-200 w-full h-full p-0 md:px-2 md:py-4">
+    <Card
+      key={id}
+      className="relative group duration-200 w-full h-full p-0 md:px-2 md:py-4"
+    >
       {isOwner && (
         <div className="absolute top-5 right-0 z-10">
           <CardSettingButton
@@ -33,20 +36,18 @@ export default function PostCard({
           />
         </div>
       )}
-      <CardHeader className="flex gap-2 justify-start items-center px-4 md:px-0">
-        <Avatar className="rounded-full w-8 h-8">
-          <AvatarImage
-            src="https://github.com/evilrabbit.png"
-            alt={profiles?.username || "User"}
-          />
-          <AvatarFallback>
-            {profiles?.username?.[0]?.toUpperCase() ?? "?"}
-          </AvatarFallback>
-        </Avatar>
-        <CardDescription className="text-sm text-muted-foreground">
-          by {profiles?.username}
-        </CardDescription>
-      </CardHeader>
+      <Link href="/account">
+        <CardHeader className="flex gap-2 justify-start items-center px-4 md:px-0 cursor-pointer">
+          <Avatar className="h-12 w-12 rounded-lg">
+            <AvatarFallback className="bg-[#C4BCFF] hover:bg-[#E5AFAF] text-black">
+              {profiles?.username.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <CardDescription className="text-md font-semibold text-foreground">
+            {profiles?.username}
+          </CardDescription>
+        </CardHeader>{" "}
+      </Link>
       <CardContent>
         <Link href={`/posts/${slug}`}>
           <CardTitle className="text-lg font-semibold px-4 md:px-0">

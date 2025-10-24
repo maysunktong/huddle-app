@@ -58,8 +58,8 @@ export function NavUser() {
       }
 
       setUser({
-        name: profile?.username ?? "Unknown",
-        email: authData.user.email ?? "unknown@example.com",
+        name: profile?.username ?? "",
+        email: authData.user.email ?? "",
         avatar: profile?.avatar_url ?? "",
       });
     };
@@ -78,9 +78,11 @@ export function NavUser() {
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-0 focus:outline-none ring-0"
             >
-              <Avatar className="h-8 w-8 rounded-lg grayscale cursor-pointer">
+              <Avatar className="h-9 w-9 rounded-lg grayscale cursor-pointer">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg border">
+                  {user.name.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight cursor-pointer">
                 <span className="truncate font-medium">{user.name}</span>
@@ -100,9 +102,11 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal cursor-pointer">
               <Link href="/account">
                 <DropdownMenuItem className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="h-8 w-8 rounded-lg">
+                  <Avatar className="h-9 w-9 rounded-lg grayscale cursor-pointer">
                     <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                    <AvatarFallback className="rounded-lg border">
+                      {user.name.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{user.name}</span>

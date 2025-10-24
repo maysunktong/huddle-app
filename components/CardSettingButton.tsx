@@ -37,7 +37,7 @@ export function CardSettingButton({
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton>
+            <SidebarMenuButton className="cursor-pointer">
               <IconDotsVertical />
             </SidebarMenuButton>
           </DropdownMenuTrigger>

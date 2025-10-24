@@ -25,7 +25,7 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupContent className="flex flex-col gap-4">
+      <SidebarGroupContent className="w-full gap-4">
         {/* Dynamic Items */}
         <SidebarMenu>
           {items.map((item) => {
