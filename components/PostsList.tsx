@@ -35,7 +35,7 @@ export default function PostsList({ posts }: { posts: HomePostsType }) {
   });
 
   return (
-    <Card className="grid grid-cols-1 gap-6 max-w-3xl mx-auto h-full">
+    <Card className="grid grid-cols-1 gap-6 max-w-2xl mx-auto h-full">
       {data?.map((post) => (
         <PostCard key={post.id} post={post} currentUserId={currentUserId} />
       ))}
