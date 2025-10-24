@@ -18,7 +18,7 @@ export default function RootLayout({
       <body>
         <QueryClientProvider>
           <Toaster />
-          {children}
+          <div>{children}</div>
         </QueryClientProvider>
       </body>
     </html>

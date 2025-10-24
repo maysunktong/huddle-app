@@ -19,7 +19,7 @@ export default function PostCarousel({
     >
       <CarouselContent>
         {images.map((item, index) => (
-          <CarouselItem key={index} className="w-full h-[400px] md:h-[550px]">
+          <CarouselItem key={index} className="w-full h-full aspect-square">
             <img
               src={item}
               alt={title || `Image ${index + 1}`}
