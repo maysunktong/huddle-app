@@ -73,7 +73,9 @@ export default function ActivityLogs({ logs }: { logs: ActivityLogsType }) {
                       <td className="px-4 py-2 border-b text-muted-foreground">
                         {item.action}
                       </td>
-                      <td className="px-4 py-2 border-b">{item.entity}</td>
+                      <td className="px-4 py-2 border-b text-muted-foreground">
+                        {item.entity}
+                      </td>
                       <td className="px-4 py-2 border-b text-muted-foreground">
                         {item.entity_id}
                       </td>

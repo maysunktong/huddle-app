@@ -27,7 +27,10 @@ export default function ActivityLogsPage() {
           toast.error("User not logged in");
           return;
         }
-        const { data: usersLogs, error } = await getActivityLogs(supabase, userId);
+        const { data: usersLogs, error } = await getActivityLogs(
+          supabase,
+          userId
+        );
         if (error) throw new Error(error.message);
         setLogs(usersLogs);
       } catch (err: any) {
