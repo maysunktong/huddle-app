@@ -11,5 +11,5 @@ export default function PostLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="w-full min-h-screen bg-gray-100">{children}</div>;
+  return <div className="w-full min-h-screen bg-gray-100 dark:bg-neutral-700">{children}</div>;
 }
