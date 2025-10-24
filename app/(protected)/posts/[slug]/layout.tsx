@@ -12,7 +12,7 @@ export default function PostLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body>
         <div className="w-full min-h-screen bg-gray-100">
           {children}
