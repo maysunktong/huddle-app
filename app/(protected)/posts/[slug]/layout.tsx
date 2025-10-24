@@ -11,13 +11,5 @@ export default function PostLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body>
-        <div className="w-full min-h-screen bg-gray-100">
-          {children}
-        </div>
-      </body>
-    </html>
-  );
+  return <div className="w-full min-h-screen bg-gray-100">{children}</div>;
 }
