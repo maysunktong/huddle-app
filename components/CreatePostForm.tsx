@@ -23,19 +23,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CirclePlusIcon } from "lucide-react";
+import { CirclePlusIcon, X } from "lucide-react";
 import { toast } from "sonner";
 import { CreatePost } from "../actions/create-post";
 
 const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
   const [open, setOpen] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const schemaWithImage = addPostSchema.omit({ images: true }).extend({
-    image: z
+    images: z
       .unknown()
       .transform((value) => value as FileList)
       .optional(),
   });
+
+  const MAX_IMAGES_AMOUNT = 3;
+  const MAX_FILE_SIZE_MB = 2;
 
   const {
     register,
@@ -50,46 +54,53 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
     mutationFn: CreatePost,
     onSuccess: () => {
       reset();
+      setSelectedFiles([]);
       setOpen(false);
       setTimeout(() => {
         toast.success("Post added successfully!");
       }, 1000);
     },
     onError: (err: any) => {
-      if (
-        err.message ===
-        'duplicate key value violates unique constraint "posts_slug_key"'
-      ) {
-        return toast.error("Title is duplicated!");
-      }
       toast.error(err.message || "Failed to add post");
     },
   });
 
-  const onSubmit = handleSubmit((values) => {
-    const files = Array.from(values.image || []);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const totalFiles = selectedFiles.length + files.length;
+    if (totalFiles > MAX_IMAGES_AMOUNT) {
+      toast.error(`You can upload a maximum of ${MAX_IMAGES_AMOUNT} images.`);
+      e.target.value = "";
+      return;
+    }
+    setSelectedFiles((prev) => [...prev, ...files]);
+  };
 
-    const MAX_IMAGES_AMOUNT = 3;
+  const handleImageDelete = (index: number) => {
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+    const fileInput = document.getElementById("image") as HTMLInputElement;
+    if (fileInput) fileInput.value = "";
+  };
+
+  const onSubmit = handleSubmit((values) => {
+    const files = selectedFiles;
+
     if (files.length > MAX_IMAGES_AMOUNT) {
       toast.error(`You can upload a maximum of ${MAX_IMAGES_AMOUNT} images.`);
       return;
     }
 
-    const MAX_FILE_SIZE_MB = 2;
-    const tooLarge = files.find(
+    const fileSizeLimit = files.find(
       (file) => file.size > MAX_FILE_SIZE_MB * 1024 * 1024
     );
-    if (tooLarge) {
+    if (fileSizeLimit) {
       toast.error(`Each image must be smaller than ${MAX_FILE_SIZE_MB} MB.`);
       return;
     }
 
     const imageForm = new FormData();
-    if (values.image && values.image.length > 0) {
-      Array.from(values.image)
-        .filter((file) => file.type.startsWith("image/"))
-        .forEach((file) => imageForm.append("images", file));
-    }
+    files.forEach((file) => imageForm.append("images", file));
+
     mutate({
       title: values.title,
       content: values.content,
@@ -99,14 +110,12 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {/* Trigger */}
       <DialogTrigger asChild>
         <Button variant="outline">
           <CirclePlusIcon />
           {text}
         </Button>
       </DialogTrigger>
-      {/* Content */}
       <DialogContent className="sm:max-w-[600px]">
         <form onSubmit={onSubmit}>
           <DialogHeader>
@@ -139,7 +148,7 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
                 <ErrorMessage message={errors.content.message!} />
               )}
             </div>
-            {/* Image */}
+            {/* Image File Input */}
             <div className="grid gap-2">
               <Label htmlFor="image">Upload image</Label>
               <Input
@@ -147,12 +156,38 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
                 multiple
                 id="image"
                 accept="image/*"
-                {...register("image")}
+                className="cursor-pointer"
+                {...register("images")}
+                onChange={(e) => {
+                  handleFileChange(e);
+                  register("images").onChange(e);
+                }}
               />
-              {errors.image && <ErrorMessage message={errors.image.message!} />}
+              {errors.images && (
+                <ErrorMessage message={errors.images.message!} />
+              )}
+              {/* File List Preview */}
+              <ul className="space-y-2">
+                {selectedFiles.map((file, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center justify-between p-2 border rounded-md bg-muted/30"
+                  >
+                    <div className="text-sm">
+                      <p className="font-medium">{file.name}</p>
+                      <p className="text-xs text-gray-500">
+                        {(file.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                    </div>
+                    <X
+                      onClick={() => handleImageDelete(index)}
+                      className="cursor-pointer"
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-          {/* Footer */}
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
