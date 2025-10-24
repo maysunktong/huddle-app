@@ -26,7 +26,6 @@ export function NavMain({
   return (
     <SidebarGroup>
       <SidebarGroupContent className="w-full gap-4">
-        {/* Dynamic Items */}
         <SidebarMenu>
           {items.map((item) => {
             const isActive =

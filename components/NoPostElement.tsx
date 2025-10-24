@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, Spool } from "lucide-react";
+import { Spool } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
