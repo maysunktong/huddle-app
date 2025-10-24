@@ -46,7 +46,6 @@ const SignUpForm = ({ className }: { className?: string }) => {
           <CardHeader className="text-center">
             <CardTitle className="text-xl">Create your account</CardTitle>
           </CardHeader>
-
           <CardContent>
             <form onSubmit={handleSubmit((values) => mutate(values))}>
               <FieldGroup>
@@ -59,6 +58,7 @@ const SignUpForm = ({ className }: { className?: string }) => {
                         id="username"
                         type="text"
                         placeholder="John Doe"
+                        autoComplete="username"
                         {...register("username")}
                       />
                     </TooltipTrigger>
@@ -69,7 +69,6 @@ const SignUpForm = ({ className }: { className?: string }) => {
                     )}
                   </Tooltip>
                 </Field>
-
                 {/* Email */}
                 <Field>
                   <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -78,7 +77,8 @@ const SignUpForm = ({ className }: { className?: string }) => {
                       <Input
                         id="email"
                         type="email"
-                        placeholder="m@example.com"
+                        placeholder="john@example.com"
+                        autoComplete="email"
                         {...register("email")}
                       />
                     </TooltipTrigger>
@@ -89,7 +89,6 @@ const SignUpForm = ({ className }: { className?: string }) => {
                     )}
                   </Tooltip>
                 </Field>
-
                 {/* Password */}
                 <Field>
                   <FieldLabel htmlFor="password">Password</FieldLabel>
@@ -99,6 +98,7 @@ const SignUpForm = ({ className }: { className?: string }) => {
                         id="password"
                         type="password"
                         placeholder="Enter your password"
+                        autoComplete="password"
                         {...register("password")}
                       />
                     </TooltipTrigger>
@@ -109,7 +109,6 @@ const SignUpForm = ({ className }: { className?: string }) => {
                     )}
                   </Tooltip>
                 </Field>
-
                 {/* Submit Button */}
                 <Field className="pt-4">
                   <Button type="submit" disabled={isPending}>
@@ -119,7 +118,6 @@ const SignUpForm = ({ className }: { className?: string }) => {
                 <FieldDescription className="text-center">
                   Already have an account? <a href="/login">Sign in</a>
                 </FieldDescription>
-                {/* General server error */}
                 {error && error.message !== "NEXT_REDIRECT" && (
                   <div className="mt-2">
                     <ErrorMessage message={error.message} />
@@ -129,7 +127,6 @@ const SignUpForm = ({ className }: { className?: string }) => {
             </form>
           </CardContent>
         </Card>
-
         {/* Policy */}
         <p className="px-6 text-center text-sm text-muted-foreground">
           By clicking continue, you agree to our{" "}

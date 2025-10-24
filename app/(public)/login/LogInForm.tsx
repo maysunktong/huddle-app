@@ -60,7 +60,8 @@ const LogInForm = ({ className }: { className?: string }) => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  autoComplete="email"
+                  placeholder="john@example.com"
                   {...register("email")}
                 />
               </TooltipTrigger>
@@ -80,6 +81,7 @@ const LogInForm = ({ className }: { className?: string }) => {
                 <Input
                   id="password"
                   type="password"
+                  autoComplete="password"
                   placeholder="Enter your password"
                   {...register("password")}
                 />
