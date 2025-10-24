@@ -21,7 +21,7 @@ import { Textarea } from "./ui/textarea";
 import { CardSettingTypes } from "./CardSettingButton";
 import { UpdatePost } from "../actions/update-post";
 
-export function EditButton({
+export function EditPostButton({
   postId,
   initialTitle,
   initialContent,
@@ -30,11 +30,8 @@ export function EditButton({
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent || "");
 
-  // create the mutation as a function that calls the server action when executed
-  const {mutate, isPending} = useMutation({
-    // mutationFn should be a function returning a Promise
+  const { mutate, isPending } = useMutation({
     mutationFn: async () => {
-      // call the server action with the current title/content
       return await UpdatePost(postId, { title: title.trim(), content });
     },
     onSuccess: () => {
@@ -48,7 +45,6 @@ export function EditButton({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {/* Trigger */}
       <DialogTrigger asChild>
         <Button
           variant="ghost"
@@ -59,14 +55,13 @@ export function EditButton({
           Edit
         </Button>
       </DialogTrigger>
-
-      {/* Content */}
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Edit Post Title</DialogTitle>
-          <DialogDescription>Update the title of your post below.</DialogDescription>
+          <DialogDescription>
+            Update the title of your post below.
+          </DialogDescription>
         </DialogHeader>
-
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
             <Label htmlFor="title">New Title</Label>
@@ -88,8 +83,6 @@ export function EditButton({
             />
           </div>
         </div>
-
-        {/* Footer */}
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>

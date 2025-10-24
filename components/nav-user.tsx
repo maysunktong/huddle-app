@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from "react";
 import {
-  IconCreditCard,
   IconDotsVertical,
   IconLogout,
   IconNotification,
-  IconUserCircle,
 } from "@tabler/icons-react";
 
 import { createClient } from "@/utils/supabase/client";
@@ -30,6 +28,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
+import { House, LayoutDashboard } from "lucide-react";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -47,13 +47,11 @@ export function NavUser() {
       if (!authData.user) return;
 
       const userId = authData.user.id;
-
       const { data: profile, error } = await supabase
         .from("profiles")
         .select("username, avatar_url")
         .eq("id", userId)
         .single();
-
       if (error) {
         console.error("Error fetching profile:", error.message);
         return;
@@ -93,7 +91,6 @@ export function NavUser() {
               <IconDotsVertical className="ml-auto size-4 cursor-pointer" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
-          {/* Dropdown items in footer */}
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
@@ -101,33 +98,41 @@ export function NavUser() {
             sideOffset={4}
           >
             <DropdownMenuLabel className="p-0 font-normal cursor-pointer">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="text-muted-foreground truncate text-xs">
-                    {user.email}
-                  </span>
-                </div>
-              </div>
+              <Link href="/account">
+                <DropdownMenuItem className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium">{user.name}</span>
+                    <span className="text-muted-foreground truncate text-xs">
+                      {user.email}
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="cursor-pointer">
-                <IconUserCircle />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <IconCreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <IconNotification />
-                Notifications
-              </DropdownMenuItem>
+              <Link href="/">
+                <DropdownMenuItem className="cursor-pointer">
+                  <House />
+                  Home
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/dashboard">
+                <DropdownMenuItem className="cursor-pointer">
+                  <LayoutDashboard />
+                  Dashboard
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/activity-logs">
+                <DropdownMenuItem className="cursor-pointer">
+                  <IconNotification />
+                  Activity logs
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem

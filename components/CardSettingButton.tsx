@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  IconCancel,
-  IconDotsVertical,
-  IconLogout,
-  IconTrash,
-  IconX,
-} from "@tabler/icons-react";
+import { IconDotsVertical, IconX } from "@tabler/icons-react";
 
 import {
   DropdownMenu,
@@ -23,7 +17,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { DeleteButton } from "./DeleteButton";
-import { EditButton } from "./EditButton";
+import { EditPostButton } from "./EditPostButton";
 
 export type CardSettingTypes = {
   postId: string;
@@ -34,7 +28,7 @@ export type CardSettingTypes = {
 export function CardSettingButton({
   postId,
   initialTitle,
-  initialContent
+  initialContent,
 }: CardSettingTypes) {
   const { isMobile } = useSidebar();
 
@@ -54,7 +48,7 @@ export function CardSettingButton({
           >
             <DropdownMenuGroup>
               <div>
-                <EditButton
+                <EditPostButton
                   postId={postId}
                   initialTitle={initialTitle}
                   initialContent={initialContent}
