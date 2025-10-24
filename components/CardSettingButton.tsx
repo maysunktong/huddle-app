@@ -17,7 +17,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { DeleteButton } from "./DeleteButton";
-import { EditPostButton } from "./EditPostButton";
+import { EditPostModal } from "./EditPostModal";
 
 export type CardSettingTypes = {
   postId: string;
@@ -38,7 +38,7 @@ export function CardSettingButton({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton>
-              <IconDotsVertical className="ml-auto cursor-pointer" />
+              <IconDotsVertical />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -48,7 +48,7 @@ export function CardSettingButton({
           >
             <DropdownMenuGroup>
               <div>
-                <EditPostButton
+                <EditPostModal
                   postId={postId}
                   initialTitle={initialTitle}
                   initialContent={initialContent}

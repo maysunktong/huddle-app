@@ -21,7 +21,7 @@ import { Textarea } from "./ui/textarea";
 import { CardSettingTypes } from "./CardSettingButton";
 import { UpdatePost } from "../actions/update-post";
 
-export function EditPostButton({
+export function EditPostModal({
   postId,
   initialTitle,
   initialContent,
@@ -87,7 +87,6 @@ export function EditPostButton({
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-
           <Button
             onClick={() => mutate()}
             disabled={isPending || !title.trim()}
