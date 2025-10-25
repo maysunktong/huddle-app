@@ -37,14 +37,14 @@ The design and what tools you want to use for styling is up to you, but the app 
  
 Excellent Grade (VG)
  
-Search Functionality:
+⚠️ Search Functionality:
 Implement search functionality allowing users to search for posts based on the title
  
-Comments
-Logged in users should be able to add comments to any post. Each comment should relate to the user who wrote it and the post it belongs to, creating a relationship between the users, posts, and comments tables
-All users should be able to read comments
-An authenticated user should be able to create and delete their own comments
-An author should be able to delete comments belonging to their posts
+✅ Comments
+✅ Logged in users should be able to add comments to any post. Each comment should relate to the user who wrote it and the post it belongs to, creating a relationship between the users, posts, and comments tables
+✅ All users should be able to read comments
+✅ An authenticated user should be able to create and delete their own comments
+✅ An author should be able to delete comments belonging to their posts
 
 ----------------------------------------------------
 Super Excellent Grade (MVG)
@@ -52,7 +52,7 @@ Super Excellent Grade (MVG)
 Comments:
 allow comments to be nested: users should be able to reply to specific comments and the nested comments are displayed in a chain
  
-Images:
+✅ Images:
 Allow multiple images to be uploaded, edited and displayed in a post
  
 Categories:
@@ -65,9 +65,3 @@ Submit the link to your GitHub repository and make sure the project is public
 Deployment:
 Submit the link to your deployed app on Vercel
 ----------------------------------------------------
-// TODO:
-
-// TODO: Implement Category tags
-// TODO: Implement Image uploading for each file and edit image in edit modal
-// TODO: Implement Search functionality for posts
-// TODO: Implement Nested Comments
