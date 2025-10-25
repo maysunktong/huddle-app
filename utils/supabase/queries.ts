@@ -104,17 +104,17 @@ export async function getCommentsForPost(
   return roots;
 }
 
-export async function insertComment(
+export async function getCommentCount(
   supabase: ReturnType<typeof createClient>,
-  payload: Pick<CommentType, "content" | "post_id" | "user_id" | "parent_id">,
-) {
-  const { data, error } = await supabase
+  postId: string,
+): Promise<number> {
+  const { count, error } = await supabase
     .from("comments")
-    .insert(payload)
-    .select()
-    .single();
+    .select("*", { count: "exact", head: true })
+    .eq("post_id", postId);
+
   if (error) throw error;
-  return CommentSchema.parse(data);
+  return count ?? 0;
 }
 
 export type HomePostsType = QueryData<ReturnType<typeof getHomePosts>>;

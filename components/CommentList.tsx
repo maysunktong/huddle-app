@@ -1,10 +1,12 @@
 "use client";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createClient } from "@/utils/supabase/client";
-import { getCommentsForPost, insertComment } from "../utils/supabase/queries";
 import CommentForm from "./comments/CommentForm";
 import CommentItem from "./comments/CommentItem";
+import { insertComment } from "../actions/insert-comment";
+import { getCommentsForPost } from "../utils/supabase/queries";
+import { deleteComment } from "../actions/delete-comment";
 
 export default function CommentList({
   postId,
@@ -27,12 +29,14 @@ export default function CommentList({
       content: string;
       parent_id: string | null;
     }) =>
-      insertComment(supabase, {
+      insertComment({
         content,
         parent_id,
         post_id: postId,
         user_id: currentUserId ?? "",
       }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["comments", postId] }),
   });
 
   const handleAdd = async (content: string, parentId: string | null = null) => {
@@ -40,8 +44,20 @@ export default function CommentList({
     await mutation.mutateAsync({ content, parent_id: parentId });
   };
 
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation({
+    mutationFn: (commentId: string) => deleteComment(commentId),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["comments", postId] }),
+  });
+
+  const handleDelete = async (commentId: string) => {
+    await deleteMutation.mutateAsync(commentId);
+  };
+
   return (
-    <div className="space-y-6 mt-10">
+    <div className="space-y-6 mt-10 px-2">
       <h3 className="text-lg font-semibold">Comments</h3>
       {currentUserId && <CommentForm onSubmit={(v) => handleAdd(v, null)} />}
       <div className="space-y-4">
@@ -50,6 +66,7 @@ export default function CommentList({
             key={c.id}
             comment={c}
             onReply={(parentId, value) => handleAdd(value, parentId)}
+            onDelete={(parentId) => handleDelete(parentId)}
           />
         ))}
       </div>

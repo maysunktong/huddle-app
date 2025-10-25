@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { createServerClient } from "../utils/supabase/server";
-import { redirect } from "next/navigation";
 
 export const deletePost = async (postId: string) => {
   const supabase = await createServerClient();

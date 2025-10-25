@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useParams, redirect } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { createClient } from "../../../../utils/supabase/client";
 import {
   SinglePostsType,
@@ -58,11 +58,11 @@ export default function SinglePost() {
   if (!singlePost) return;
 
   return (
-    <Card className="grid grid-cols-1 gap-6 max-w-3xl mx-auto h-full p-4 bg-transparent">
+    <Card className="flex flex-col max-w-3xl mx-auto bg-transparent">
       <button
         type="button"
         onClick={() => router.back()}
-        className="w-12 h-12 flex justify-center items-center hover:underline font-bold rounded-full bg-[#d3cef8] hover:bg-[#C4BCFF] cursor-pointer border border-amber-50"
+        className="w-12 h-12 flex justify-center items-center hover:underline font-bold rounded-full bg-[#d3cef8] hover:bg-[#C4BCFF] cursor-pointer border border-amber-50 mx-2"
       >
         {""}
         <ArrowLeft size={24} className="text-black w-6 h-6 font-bold" />

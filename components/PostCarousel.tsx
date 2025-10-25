@@ -12,6 +12,7 @@ export default function PostCarousel({
   images: string[];
   title: string;
 }) {
+  
   return (
     <Carousel
       opts={{ align: "center", loop: true }}

@@ -13,13 +13,13 @@ export default function CommentForm({ onSubmit, autoFocus }: Props) {
   const [content, setContent] = useState("");
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 px-2">
       <Textarea
         autoFocus={autoFocus}
         placeholder="Write a comment..."
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="min-h-[80px]"
+        className="min-h-[80px] bg-white p-2"
       />
       <Button
         disabled={!content.trim()}
