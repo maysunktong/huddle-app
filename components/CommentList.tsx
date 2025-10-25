@@ -50,6 +50,7 @@ export default function CommentList({
     mutationFn: (commentId: string) => deleteComment(commentId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+      toast.success("Your comment is deleted!");
     },
   });
 
