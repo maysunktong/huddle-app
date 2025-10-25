@@ -1,6 +1,6 @@
 import { QueryData } from "@supabase/supabase-js";
 import { createClient } from "./client";
-import { CommentSchema } from "../../schemas/zod.schemas";
+import { CommentSchema, CommentType } from "../../schemas/zod.schemas";
 
 export const getHomePosts = async (
   supabase: ReturnType<typeof createClient>
@@ -80,20 +80,27 @@ export async function getActivityLogs(
 
 export async function getCommentsForPost(
   supabase: ReturnType<typeof createClient>,
-  postId: string,
-) {
+  postId: string
+): Promise<CommentType[]> {
   const { data, error } = await supabase
     .from("comments")
     .select(`
       *,
-      profiles (id, username, avatar_url)
+      profiles (
+        id,
+        username,
+        avatar_url
+      )
     `)
     .eq("post_id", postId)
     .order("created_at", { ascending: true });
 
   if (error) throw error;
 
-  return data?.map((c) => CommentSchema.parse(c)) ?? [];
+  return data.map((c) => ({
+    ...c,
+    profile: c.profiles ? { username: c.profiles.username, avatar_url: c.profiles.avatar_url } : undefined
+  }));
 }
 
 export async function getCommentCount(

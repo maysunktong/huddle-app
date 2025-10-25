@@ -13,7 +13,7 @@ export default function CommentForm({ onSubmit, autoFocus }: Props) {
   const [content, setContent] = useState("");
 
   return (
-    <div className="space-y-2 px-2 md:px-0">
+    <div className="space-y-2 px-2 md:px-0 max-w-3xl">
       <Textarea
         autoFocus={autoFocus}
         placeholder="Write a comment..."

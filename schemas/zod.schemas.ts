@@ -25,7 +25,16 @@ export const CommentSchema = z.object({
   user_id: z.string(),
 });
 
-export type CommentType = z.infer<typeof CommentSchema>;
+export type CommentType = {
+  id: string;
+  content: string;
+  post_id: string;
+  user_id: string;
+  profile?: {
+    username: string;
+    avatar_url?: string | null;
+  };
+};
 
 export const CommentInsertSchema = z.object({
   content: z.string(),
