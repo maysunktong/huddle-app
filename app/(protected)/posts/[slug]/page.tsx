@@ -65,7 +65,10 @@ export default function SinglePost() {
         className="w-10 h-10 md:w-12 md:h-12 flex justify-center items-center hover:underline font-bold rounded-full bg-[#d3cef8] hover:bg-[#C4BCFF] cursor-pointer border border-amber-50 mx-2 md:mx-0"
       >
         {""}
-        <ArrowLeft size={24} className="text-black w-4 h-4 md:w-6 md:h-6 font-bold" />
+        <ArrowLeft
+          size={24}
+          className="text-black w-4 h-4 md:w-6 md:h-6 font-bold"
+        />
       </button>
       <PostCard
         key={singlePost.id}
@@ -73,7 +76,11 @@ export default function SinglePost() {
         currentUserId={currentUserId}
         isSinglePost={true}
       />
-      <CommentList postId={singlePost.id} currentUserId={currentUserId!} />
+      <CommentList
+        postId={singlePost.id}
+        currentUserId={currentUserId!}
+        postOwnerId={singlePost.author_id!}
+      />
     </Card>
   );
 }

@@ -13,9 +13,11 @@ import { toast } from "sonner";
 export default function CommentList({
   postId,
   currentUserId,
+  postOwnerId,
 }: {
   postId: string;
   currentUserId: string;
+  postOwnerId: string;
 }) {
   const supabase = createClient();
   const queryClient = useQueryClient();
@@ -47,7 +49,7 @@ export default function CommentList({
   };
 
   const deleteMutation = useMutation({
-    mutationFn: (commentId: string) => deleteComment(commentId),
+    mutationFn: (commentId: string) => deleteComment(commentId, currentUserId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postId] });
       toast.success("Your comment is deleted!");
@@ -68,6 +70,7 @@ export default function CommentList({
             key={c.id}
             comment={c}
             currentUserId={currentUserId}
+            postOwnerId={postOwnerId}
             onDelete={handleDelete}
           />
         ))}
