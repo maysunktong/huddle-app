@@ -1,7 +1,6 @@
-
 import { QueryData } from "@supabase/supabase-js";
 import { createClient } from "./client";
-import { NestedComment, CommentSchema, CommentType } from "../../schemas/zod.schemas";
+import { CommentSchema } from "../../schemas/zod.schemas";
 
 export const getHomePosts = async (
   supabase: ReturnType<typeof createClient>
@@ -82,26 +81,19 @@ export async function getActivityLogs(
 export async function getCommentsForPost(
   supabase: ReturnType<typeof createClient>,
   postId: string,
-): Promise<NestedComment[]> {
+) {
   const { data, error } = await supabase
     .from("comments")
-    .select("*")
+    .select(`
+      *,
+      profiles (id, username, avatar_url)
+    `)
     .eq("post_id", postId)
     .order("created_at", { ascending: true });
 
   if (error) throw error;
-  const comments = data?.map((c) => CommentSchema.parse(c)) || [];
 
-  const map = new Map<string, NestedComment>();
-  const roots: NestedComment[] = [];
-
-  comments.forEach((c) => map.set(c.id, { ...c, replies: [] }));
-  map.forEach((c) => {
-    if (c.parent_id) map.get(c.parent_id)?.replies.push(c);
-    else roots.push(c);
-  });
-
-  return roots;
+  return data?.map((c) => CommentSchema.parse(c)) ?? [];
 }
 
 export async function getCommentCount(
@@ -116,6 +108,7 @@ export async function getCommentCount(
   if (error) throw error;
   return count ?? 0;
 }
+
 
 export type HomePostsType = QueryData<ReturnType<typeof getHomePosts>>;
 export type SinglePostsType = QueryData<ReturnType<typeof getSinglePost>>;

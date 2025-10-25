@@ -23,13 +23,14 @@ export const CommentSchema = z.object({
   content: z.string(),
   post_id: z.string(),
   user_id: z.string(),
-  parent_id: z.string().nullable(),
-  created_at: z.string().nullable(),
-  updated_at: z.string().nullable(),
 });
 
 export type CommentType = z.infer<typeof CommentSchema>;
 
-export interface NestedComment extends CommentType {
-  replies: NestedComment[];
-}
+export const CommentInsertSchema = z.object({
+  content: z.string(),
+  post_id: z.string(),
+  user_id: z.string(),
+});
+
+export type CommentInsertType = z.infer<typeof CommentInsertSchema>;

@@ -73,7 +73,7 @@ export default function SinglePost() {
         currentUserId={currentUserId}
         isSinglePost={true}
       />
-      <CommentList postId={singlePost.id} currentUserId={currentUserId} />
+      <CommentList postId={singlePost.id} currentUserId={currentUserId!} />
     </Card>
   );
 }
