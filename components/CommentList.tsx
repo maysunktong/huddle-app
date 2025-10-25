@@ -57,7 +57,7 @@ export default function CommentList({
   };
 
   return (
-    <div className="space-y-6 mt-10 px-2">
+    <div className="space-y-6 px-2">
       <h3 className="text-lg font-semibold">Comments</h3>
       {currentUserId && <CommentForm onSubmit={(v) => handleAdd(v, null)} />}
       <div className="space-y-4">
