@@ -17,3 +17,19 @@ export const addPostSchema = z.object({
   content: z.string("").optional(),
   images: z.instanceof(FormData).optional()
 })
+
+export const CommentSchema = z.object({
+  id: z.string(),
+  content: z.string(),
+  post_id: z.string(),
+  user_id: z.string(),
+  parent_id: z.string().nullable(),
+  created_at: z.string().nullable(),
+  updated_at: z.string().nullable(),
+});
+
+export type CommentType = z.infer<typeof CommentSchema>;
+
+export interface NestedComment extends CommentType {
+  replies: NestedComment[];
+}

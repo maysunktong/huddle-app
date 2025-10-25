@@ -16,39 +16,43 @@ export type Database = {
     Tables: {
       comments: {
         Row: {
-          author_id: string | null
-          body: string
+          content: string
           created_at: string | null
-          deleted: boolean | null
           id: string
           parent_id: string | null
-          post_id: string | null
+          post_id: string
           updated_at: string | null
+          user_id: string
         }
         Insert: {
-          author_id?: string | null
-          body: string
+          content: string
           created_at?: string | null
-          deleted?: boolean | null
           id?: string
           parent_id?: string | null
-          post_id?: string | null
+          post_id: string
           updated_at?: string | null
+          user_id: string
         }
         Update: {
-          author_id?: string | null
-          body?: string
+          content?: string
           created_at?: string | null
-          deleted?: boolean | null
           id?: string
           parent_id?: string | null
-          post_id?: string | null
+          post_id?: string
           updated_at?: string | null
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "fk_author_id"
-            columns: ["author_id"]
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -155,7 +159,6 @@ export type Database = {
           first_name: string | null
           id: string
           last_name: string | null
-          role: string | null
           updated_at: string
           username: string
         }
@@ -166,7 +169,6 @@ export type Database = {
           first_name?: string | null
           id: string
           last_name?: string | null
-          role?: string | null
           updated_at?: string
           username: string
         }
@@ -177,7 +179,6 @@ export type Database = {
           first_name?: string | null
           id?: string
           last_name?: string | null
-          role?: string | null
           updated_at?: string
           username?: string
         }

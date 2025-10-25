@@ -12,6 +12,7 @@ import { ArrowLeft } from "lucide-react";
 import { Card } from "../../../../components/ui/card";
 import { toast } from "sonner";
 import { Spinner } from "../../../../components/ui/spinner";
+import CommentList from "../../../../components/CommentList";
 
 export default function SinglePost() {
   const [singlePost, setSinglePost] = useState<SinglePostsType | null>(null);
@@ -72,6 +73,7 @@ export default function SinglePost() {
         currentUserId={currentUserId}
         isSinglePost={true}
       />
+      <CommentList postId={singlePost.id} currentUserId={currentUserId} />
     </Card>
   );
 }
