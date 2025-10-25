@@ -1,13 +1,19 @@
 import Link from "next/link";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CardSettingButton } from "./CardSettingButton";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import PostCarousel from "./PostCarousel";
 import { createClient } from "../utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { getCommentCount } from "../utils/supabase/queries";
 import { MessageSquare } from "lucide-react";
 import { Badge } from "./ui/badge";
-import UserProfile from "./UserProfile";
 
 export default function PostCard({
   post,
@@ -29,12 +35,9 @@ export default function PostCard({
 
   return (
     <>
-      <Card
-        key={id}
-        className="relative group duration-200 w-full h-full bg-background"
-      >
+      <Card key={id} className="relative group duration-200 w-full h-full">
         {isOwner && (
-          <div className="absolute -top-5 right-0 z-10">
+          <div className="absolute -top-5 right-0 z-10 px-4">
             <CardSettingButton
               postId={id}
               initialTitle={title}
@@ -42,7 +45,16 @@ export default function PostCard({
             />
           </div>
         )}
-        <UserProfile />
+        <CardHeader className="flex gap-2 justify-start items-center px-4 md:px-0">
+          <Avatar className="h-10 w-10 rounded-lg font-semibold">
+            <AvatarFallback className="bg-[#e4e4e4] hover:bg-[#E5AFAF] text-black">
+              {profiles?.username.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <CardDescription className="text-md font-semibold text-foreground">
+            {profiles?.username}
+          </CardDescription>
+        </CardHeader>
         <CardContent>
           <Link href={`/posts/${slug}`}>
             <CardTitle className="text-lg font-semibold px-4 md:px-0">
