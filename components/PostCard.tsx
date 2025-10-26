@@ -69,7 +69,7 @@ export default function PostCard({
                 className="flex items-center gap-1 text-xs font-medium py-2 px-3 border bg-muted"
               >
                 <MessageSquare size={12} strokeWidth={2} />
-                {commentCount ?? 0} comments
+                {commentCount ?? 0}
               </Badge>
             </div>
             <p
