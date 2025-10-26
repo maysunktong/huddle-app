@@ -14,7 +14,7 @@ export const uploadImages = async (images: File[]): Promise<string[]> => {
 
       const { data, error } = await supabase.storage
         .from(BUCKET_NAME)
-        .upload(path, image);
+        .upload(path, image, { contentType: image.type });
       if (error) throw error;
 
       const {
