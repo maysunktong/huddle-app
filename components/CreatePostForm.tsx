@@ -39,7 +39,7 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
   });
 
   const MAX_IMAGES_AMOUNT = 3;
-  const MAX_FILE_SIZE_MB = 2;
+  const MAX_FILE_SIZE_MB = 3;
 
   const {
     register,
