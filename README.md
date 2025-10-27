@@ -5,6 +5,10 @@ Database Schema on Supabase
 ### Functionalities
 - Users can create post, upload images
 - Users can edit title and content of the post
+- Users can delete post
+- comment under the post
+- Commentor can only delete his own comments 
+- Owner of the post can delete all comments
 - Activity logs
   
 Registeration 
@@ -12,3 +16,6 @@ Registeration
 
 Log In Page
 <img width="2870" height="1628" alt="CleanShot 2568-10-14 at 22 13 55@2x" src="https://github.com/user-attachments/assets/a20320d7-7a65-44ea-9553-75291004a408" />
+
+Home
+<img width="1440" height="1024" alt="Desktop - 4" src="https://github.com/user-attachments/assets/b733d068-12b2-4d07-94e7-f66e49aa92be" />
