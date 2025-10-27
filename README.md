@@ -5,7 +5,7 @@ Database Schema on Supabase
 ### Functionalities
 - Users can create post, upload images
 - Users can edit title and content of the post
-- Users can see activity logs
+- Activity logs
   
 Registeration 
 <img width="2840" height="1604" alt="CleanShot 2568-10-14 at 22 12 36@2x" src="https://github.com/user-attachments/assets/9fa31655-93e5-48cb-8c80-16fa81f8aae2" />
