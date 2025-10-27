@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { Textarea } from "./ui/textarea";
 import { CardSettingTypes } from "./CardSettingButton";
 import { UpdatePost } from "../actions/update-post";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function EditPostModal({
   postId,
@@ -74,13 +75,15 @@ export function EditPostModal({
           </div>
           <div className="grid gap-2">
             <Label htmlFor="content">New Content</Label>
-            <Textarea
-              id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Enter new content"
-              className="border rounded p-2 w-full"
-            />
+            <ScrollArea className="max-h-[220px] w-full rounded border">
+              <Textarea
+                id="content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Enter new content"
+                rows={6}
+              />
+            </ScrollArea>
           </div>
         </div>
         <DialogFooter>

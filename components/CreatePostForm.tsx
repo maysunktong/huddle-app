@@ -142,7 +142,7 @@ const CreatePostDialog = ({ text = "Create Post" }: { text?: string }) => {
                 id="content"
                 placeholder="Write your post..."
                 {...register("content")}
-                rows={5}
+                rows={6}
               />
               {errors.content && (
                 <ErrorMessage message={errors.content.message!} />
