@@ -82,7 +82,7 @@ export async function getCommentsForPost(
   supabase: ReturnType<typeof createClient>,
   postId: string
 ): Promise<CommentType[]> {
-  const { data, error } = await supabase
+  const { data: AllComments, error } = await supabase
     .from("comments")
     .select(`
       *,
@@ -97,9 +97,9 @@ export async function getCommentsForPost(
 
   if (error) throw error;
 
-  return data.map((c) => ({
-    ...c,
-    profile: c.profiles ? { username: c.profiles.username, avatar_url: c.profiles.avatar_url } : undefined
+  return AllComments.map((comment) => ({
+    ...comment,
+    profile: comment.profiles && { username: comment.profiles.username, avatar_url: comment.profiles.avatar_url }
   }));
 }
 

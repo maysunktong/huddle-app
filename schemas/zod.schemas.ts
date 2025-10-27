@@ -35,3 +35,11 @@ export type CommentType = {
     avatar_url?: string | null;
   };
 };
+
+export const CommentInsertSchema = z.object({
+  content: z.string(),
+  post_id: z.string(),
+  user_id: z.string(),
+});
+
+export type CommentInsertType = z.infer<typeof CommentInsertSchema>;
