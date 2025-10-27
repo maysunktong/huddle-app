@@ -3,6 +3,8 @@ import { getHomePosts } from "@/utils/supabase/queries";
 import PostsList from "../../components/PostsList";
 import { NoPostElement } from "../../components/NoPostElement";
 import LoginToast from "../../components/LogInToast";
+import Search from "../../components/Search";
+
 
 export default async function Home() {
   const supabase = createClient();
@@ -29,6 +31,7 @@ export default async function Home() {
   return (
     <>
       <LoginToast />
+      <Search />
       <PostsList posts={posts!} />
     </>
   );
