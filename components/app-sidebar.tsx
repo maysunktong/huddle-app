@@ -32,11 +32,6 @@ const data = {
       icon: LayoutDashboard,
     },
     {
-      title: "Account",
-      url: "/account",
-      icon: User,
-    },
-    {
       title: "Activity Log",
       url: "/activity-logs",
       icon: ScrollText,

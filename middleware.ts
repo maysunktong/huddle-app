@@ -33,7 +33,7 @@ export const middleware = async (request: NextRequest) => {
   } = await supabase.auth.getUser();
 
   /* Protected Route */
-  const protectedRoutes = [/^\/$/, /^\/account/, /^\/dashboard/,/^\/posts/,];
+  const protectedRoutes = [/^\/$/, /^\/dashboard/, /^\/posts/, /^\/posts(\/.*)?$/,  /^\/activity-logs/,];
 
   if (!user && protectedRoutes.some(route => route.test(request.nextUrl.pathname))) {
     const newrUrl: NextURL = request.nextUrl.clone();
