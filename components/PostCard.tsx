@@ -73,7 +73,7 @@ export default function PostCard({
               </Badge>
             </div>
             <p
-              className={`text-sm my-4 px-4 md:px-0 ${
+              className={`text-sm my-4 px-4 md:px-0 whitespace-pre-wrap ${
                 isSinglePost ? "" : "line-clamp-3"
               }`}
             >
