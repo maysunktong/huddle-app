@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "../utils/supabase/client";
-import { getSearchedPosts } from "../utils/supabase/queries";
+import { getHomePosts, getSearchedPosts } from "../utils/supabase/queries";
 import PostCard from "./PostCard";
 import { Card } from "./ui/card";
+import { NoPostElement } from "./NoPostElement";
 
-export default function Search() {
+export default function HomePosts() {
   const supabase = createClient();
   const [userInput, setUserInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,6 +23,11 @@ export default function Search() {
     };
     getUser();
   }, [supabase]);
+
+  const { data: posts, isLoading: postsLoading } = useQuery({
+    queryKey: ["home-posts"],
+    queryFn: () => getHomePosts(supabase).then((res) => res.data),
+  });
 
   const { data: searchResults } = useQuery({
     queryKey: ["search-results", searchTerm],
@@ -41,6 +47,10 @@ export default function Search() {
     }
   };
 
+  if (postsLoading) return <p>Loading posts...</p>;
+
+  const visiblePosts = searchTerm ? searchResults : posts;
+
   return (
     <div className="space-y-4">
       <input
@@ -51,15 +61,18 @@ export default function Search() {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      {searchResults && searchResults.length > 0 ? (
+
+      {visiblePosts && visiblePosts.length > 0 ? (
         <Card className="grid grid-cols-1 gap-6 max-w-2xl mx-auto h-full">
-          {searchResults.map((post) => (
+          {visiblePosts.map((post) => (
             <PostCard key={post.id} post={post} currentUserId={currentUserId} />
           ))}
         </Card>
       ) : searchTerm ? (
-        <p>No posts found for "{searchTerm}"</p>
-      ) : null}
+       <NoPostElement title={`No post for keyword ${searchTerm}`} subtext="Change your search keywords" />
+      ) : (
+        <NoPostElement />
+      )}
     </div>
   );
 }
