@@ -9,6 +9,7 @@ Database Schema on Supabase
 - comment under the post
 - Commentor can only delete his own comments 
 - Owner of the post can delete all comments
+- Search Functionality
 - Activity logs
   
 Registeration 
