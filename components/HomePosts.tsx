@@ -1,19 +1,19 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import { getUserPosts, getSearchedUserPosts } from "../utils/supabase/queries";
-import { NoPostElement } from "./NoPostElement";
+import { useQuery } from "@tanstack/react-query";
+import { createClient } from "../utils/supabase/client";
+import { getHomePosts, getSearchedPosts } from "../utils/supabase/queries";
 import PostCard from "./PostCard";
 import { Card } from "./ui/card";
-import { createClient } from "../utils/supabase/client";
+import { NoPostElement } from "./NoPostElement";
 import SearchBar from "./SearchBar";
 
-export default function UsersPosts() {
+export default function HomePosts() {
   const supabase = createClient();
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const getUser = async () => {
@@ -34,29 +34,18 @@ export default function UsersPosts() {
   }, [searchTerm]);
 
   const { data: allPosts, isLoading: allPostsLoading } = useQuery({
-    queryKey: ["user-posts", currentUserId],
-    queryFn: async () => {
-      if (!currentUserId) return [];
-      const { data, error } = await getUserPosts(supabase, currentUserId);
-      if (error) throw new Error(error.message);
-      return data;
-    },
-    enabled: !searchValue && !!currentUserId,
+    queryKey: ["home-posts"],
+    queryFn: () => getHomePosts(supabase).then((res) => res.data),
+    enabled: !searchValue,
   });
 
   const { data: searchedPosts, isLoading: searchedPostsLoading } = useQuery({
-    queryKey: ["searched-user-posts", currentUserId, searchValue],
+    queryKey: ["searched-posts", searchValue],
     queryFn: async ({ signal }) => {
-      if (!currentUserId) return [];
-      const result = await getSearchedUserPosts(
-        supabase,
-        currentUserId,
-        searchValue,
-        signal
-      );
+      const result = await getSearchedPosts(supabase, searchValue, signal);
       return result.data;
     },
-    enabled: !!searchValue && !!currentUserId,
+    enabled: !!searchValue,
   });
 
   const posts = searchValue ? searchedPosts : allPosts;
@@ -65,7 +54,6 @@ export default function UsersPosts() {
   return (
     <div className="space-y-4 mx-auto">
       <SearchBar onSearchChange={setSearchTerm} />
-      <p className="text-center py-3 font-mono font-bold">Welcome to your dashboard</p>
       {isLoading ? (
         <div className="text-center text-muted-foreground">Loading...</div>
       ) : posts && posts.length > 0 ? (

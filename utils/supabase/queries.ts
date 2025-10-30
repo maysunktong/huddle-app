@@ -78,6 +78,22 @@ export async function getSearchedPosts(
     .abortSignal(signal);
 }
 
+export async function getSearchedUserPosts(
+  supabase: ReturnType<typeof createClient>,
+  currentUserId: string,
+  searchTerm: string,
+  signal: AbortSignal
+) {
+  return await supabase
+    .from("posts")
+    .select(
+      "id, title, content, slug, images, author_id, created_at, profiles(id, username)"
+    )
+    .eq("author_id", currentUserId)
+    .or(`title.ilike.%${searchTerm}%,content.ilike.%${searchTerm}%`)
+    .abortSignal(signal);
+}
+
 
 export async function getActivityLogs(
   supabase: ReturnType<typeof createClient>,
