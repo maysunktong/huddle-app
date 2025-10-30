@@ -15,8 +15,5 @@ Database Schema on Supabase
 Registeration 
 <img width="2047" height="1220" alt="image" src="https://github.com/user-attachments/assets/8666617c-ec89-4bbf-9814-2a617938753f" />
 
-Log In Page
-<img width="2870" height="1628" alt="CleanShot 2568-10-14 at 22 13 55@2x" src="https://github.com/user-attachments/assets/a20320d7-7a65-44ea-9553-75291004a408" />
-
-Home
-<img width="1440" height="1024" alt="Desktop - 4" src="https://github.com/user-attachments/assets/b733d068-12b2-4d07-94e7-f66e49aa92be" />
+Functionalities
+<img width="1440" height="950" alt="createpost" src="https://github.com/user-attachments/assets/33839697-ee5b-4caa-b6a9-f232ca175546" />
